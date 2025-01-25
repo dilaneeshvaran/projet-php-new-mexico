@@ -1,0 +1,27 @@
+/:
+  controller: MainController
+  action: home
+
+/login:
+  controller: LoginController
+  action: index
+
+/login/submit:
+  controller: LoginController
+  action: post
+
+/articles/{slug}:
+  controller: ArticleController
+  action: index
+
+/register:
+  controller: RegisterController
+  action: index
+
+/register/submit:
+  controller: RegisterController
+  action: post
+
+/logout:
+  controller: LoginController
+  action: logout

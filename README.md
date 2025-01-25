@@ -1,72 +1,59 @@
-# docker-php-nginx-mariadb-template
+# New Mexico 🌄
 
-Template for running PHP and MariaDB behind NGINX using Docker, Docker Compose & GNU/Make for orchestration.
+Roadtrips & Adventures with your friends !
 
 ## Requirements
 
 - [GNU/Bash](https://www.gnu.org/software/bash/)
 - [GNU/Make]()
-- [Git](https://git-scm.com/)
-- [Docker](https://www.docker.com/)
-- [Docker Compose](https://docs.docker.com/compose/)
-
-## Clone
-
-```bash
-git clone https://github.com/aminnairi/docker-php-nginx-mariadb-template my-project
-cd my-project
-```
 
 ## Setup
+
+```bash
+
+cd projet-php-new-mexico
+```
+
+Copy env
 
 ```bash
 cp .env.example .env
 ```
 
-> *Note: edit the `.env` file to setup your environment.*
-
-## Startup
+Make sure docker is running !
 
 ```bash
 make start
 ```
 
-> *Note: you can change the port listened by the server with the `SERVER_PORT` environment variable by editing it in the `.env` file.*
+visit : localhost:8000 (you can change the port listened by the server by editing `SERVER_PORT` in the `.env` file.)
 
-## Database
+> Create the necessary tables in db, using the src/models structure
+
+## Other helpful commands
 
 ```bash
 make database
 ```
 
-> *Note: this will login to your database using a command line interface using your environment setup.*
-
-## Shutdown
+access db (this will login to your database using a command line interface using .env.)
 
 ```bash
 make stop
 ```
 
-## Restart
+stops containers
 
 ```bash
 make restart
 ```
 
-> *Note: this is equivalent to running `make stop start`.*
-
-## PHP
+stop containers then start again.
 
 ```bash
-docker compose exec php php --version
+docker compose exec php /bin/sh
 ```
 
-> *Note: replace `--version` with the PHP argument of your choice.*
+access php
 
-## MariaDB
-
-```bash
-docker compose exec mariadb mariadb --version
-```
-
-> *Note: replace `--version` with the MariaDB argument of your choice.*
+## With 💕 by EESHVARAN Dilan & TO Vincent & BAI Aissame

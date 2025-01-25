@@ -3,7 +3,7 @@ server {
 
   server_name _;
 
-  root ${PHP_USER_HOME_DIRECTORY};
+  root ${PHP_USER_PUBLIC_DIRECTORY};
 
   index index.php;
 
