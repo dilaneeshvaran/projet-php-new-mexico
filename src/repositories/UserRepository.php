@@ -25,7 +25,7 @@ class UserRepository
 
         $userData = $result[0];
 
-        // Map database result to a User object
+        //add database result to a User object
         $user = new User();
         $user->setFirstname($userData['firstname']);
         $user->setLastname($userData['lastname']);
@@ -49,4 +49,18 @@ class UserRepository
             'password' => $user->getPassword(),
         ]);
     }
+
+    public function resetPassword(string $email, string $newPassword): bool
+{
+    $query = "
+        UPDATE users 
+        SET password = :password 
+        WHERE email = :email
+    ";
+
+    return $this->db->executePrepared($query, [
+        'email' => $email,
+        'password' => $newPassword,
+    ]);
+}
 }

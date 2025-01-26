@@ -18,8 +18,6 @@ class RegisterService
 
     public function registerUser(array $data): array
     {
-        $errors = [];
-
         //use RegisterRequest for sanitization
         $registerRequest = new RegisterRequest($data);
 
@@ -28,20 +26,14 @@ class RegisterService
         $user->setFirstname($registerRequest->firstname);
         $user->setLastname($registerRequest->lastname);
         $user->setEmail($registerRequest->email);
-        $password = $registerRequest->password;
-        $pwdConfirm = $registerRequest->passwordConfirm;
 
         //validate the user
-        $userValidator = new UserValidator($user, $password, $pwdConfirm);
-        $validationErrors = $userValidator->getErrors();
+        $validator = new UserValidator($user, $registerRequest->password, $registerRequest->passwordConfirm);
+        $errors = $validator->getErrors();
 
-        if (!empty($validationErrors)) {
-            $errors = array_merge($errors, $validationErrors);
-        }
 
         //check if email already exists
-        $existingUser = $this->userRepository->findOneByEmail($user->getEmail());
-        if ($existingUser) {
+        if ($this->userRepository->findOneByEmail($user->getEmail())) {
             $errors[] = "L'adresse e-mail est déjà utilisée.";
         }
         
@@ -50,7 +42,7 @@ class RegisterService
             return $errors;
         }
         //hash the password
-        $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
+        $user->setPassword(password_hash($registerRequest->password, PASSWORD_DEFAULT));
 
         //save the user
         if (!$this->userRepository->save($user)) {

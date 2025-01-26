@@ -31,8 +31,9 @@ class RegisterController
         $formData = $_POST;
 
         try {
-            if ($_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-                throw new \Exception("Invalid CSRF token.");
+            if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || 
+                $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+                throw new \Exception("Token invalid.");
             }
 
             $errors = $this->registerService->registerUser($_POST);

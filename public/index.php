@@ -1,10 +1,20 @@
 <?php
 
 use App\Core\Router;
+use Dotenv\Dotenv;
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+$autoloadPath = __DIR__ . '/../vendor/autoload.php';
+if (!file_exists($autoloadPath)) {
+    die("Autoload file not found at: " . $autoloadPath);
+}
+require_once $autoloadPath;
+
+$dotenv = Dotenv::createImmutable(__DIR__.'/../');
+$dotenv->load();
 
 // Autoloader for dynamic loading of classes
 spl_autoload_register(function ($class) {

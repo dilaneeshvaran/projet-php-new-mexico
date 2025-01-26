@@ -24,3 +24,5 @@ $formData = $formData ?? [];
     <input type="password" name="passwordConfirm" required placeholder="Confirmation"><br>
     <input type="submit" value="S'inscrire"><br>
 </form>
+
+<a href="/login">Déjà inscrit ? Connectez-vous</a>

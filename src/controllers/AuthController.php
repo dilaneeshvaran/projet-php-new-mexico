@@ -10,7 +10,7 @@ use App\Core\View;
 use App\Core\Session;
 
 
-class LoginController
+class AuthController
 {
     private PageRepository $pageRepository;
     private LoginService $loginService;
@@ -33,8 +33,9 @@ class LoginController
         $formData = $_POST;
 
         try {
-            if ($_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-                throw new \Exception("Invalid CSRF token.");
+            if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || 
+                $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+                throw new \Exception("Token invalid.");
             }
 
             $this->loginService->loginUser($formData);

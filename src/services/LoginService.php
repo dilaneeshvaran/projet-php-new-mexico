@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\User;
 use App\Requests\LoginRequest;
 use App\Repositories\UserRepository;
 
@@ -17,7 +16,7 @@ class LoginService
 
     public function loginUser(array $data): void
     {
-        //use LoginRequest for sanitization
+        //use LoginRequest for sanitization & validation
         $loginRequest = new LoginRequest($data);
 
         if (!$loginRequest->isValid()) {

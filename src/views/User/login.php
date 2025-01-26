@@ -21,3 +21,6 @@ $formData = $formData ?? [];
     <input type="password" required name="password" placeholder="Votre mot de passe"><br>
     <input type="submit" value="Se connecter">
 </form>
+
+<a href=/forgot-password> Mot de passe oublié ?</a>
+<a href=/register> Créer un compte</a>

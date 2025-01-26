@@ -14,10 +14,23 @@ Roadtrips & Adventures with your friends !
 cd projet-php-new-mexico
 ```
 
+Setup SMTP - Example for gmail:
+
+> Enable 2 factor authentication for your gmail account
+> then visit : https://myaccount.google.com/apppasswords
+
+Use the generated password instead of email password in .env to send mail via your app.
+
 Copy env
 
 ```bash
 cp .env.example .env
+```
+
+Install dependencies
+
+```bash
+composer install
 ```
 
 Make sure docker is running !
@@ -26,34 +39,34 @@ Make sure docker is running !
 make start
 ```
 
-visit : localhost:8000 (you can change the port listened by the server by editing `SERVER_PORT` in the `.env` file.)
+visit : localhost:8000 (you can change the port by editing `SERVER_PORT` in the `.env` file.)
 
-> Create the necessary tables in db, using the src/models structure
-
-## Other helpful commands
+Access the db (this will login to your database using credentials from .env.)
 
 ```bash
 make database
 ```
 
-access db (this will login to your database using a command line interface using .env.)
+> Run the queries from db/migrations to create the necessary tables
+
+## Other helpful commands
+
+stops containers
 
 ```bash
 make stop
 ```
 
-stops containers
+stop containers then start again.
 
 ```bash
 make restart
 ```
 
-stop containers then start again.
+access php
 
 ```bash
 docker compose exec php /bin/sh
 ```
-
-access php
 
 ## With 💕 by EESHVARAN Dilan & TO Vincent & BAI Aissame

@@ -3,16 +3,16 @@
   action: home
 
 /login:
-  controller: LoginController
+  controller: AuthController
   action: index
 
 /login/submit:
-  controller: LoginController
+  controller: AuthController
   action: post
 
-/articles/{slug}:
-  controller: ArticleController
-  action: index
+/logout:
+  controller: AuthController
+  action: logout
 
 /register:
   controller: RegisterController
@@ -22,6 +22,30 @@
   controller: RegisterController
   action: post
 
-/logout:
-  controller: LoginController
-  action: logout
+/forgot-password:
+  controller: ForgotPasswordController
+  action: index
+
+/forgot-password/submit:
+  controller: ForgotPasswordController
+  action: submit
+
+/forgot-password/success:
+  controller: ForgotPasswordController
+  action: success
+
+/reset-password/{token}:
+  controller: ResetPasswordController
+  action: index
+
+/reset-password/{token}/submit:
+  controller: ResetPasswordController
+  action: submit
+
+/reset-password/{token}/success:
+  controller: ResetPasswordController
+  action: success
+
+/articles/{slug}:
+  controller: ArticleController
+  action: index
