@@ -6,6 +6,7 @@ use App\Repositories\UserRepository;
 use App\Repositories\ResetPasswordTokenRepository;
 use App\Requests\ForgotPasswordRequest;
 use App\Core\Mailer;
+use App\Core\MailerResend;
 
 class ForgotPasswordService
 {
@@ -39,6 +40,9 @@ class ForgotPasswordService
 
             $resetLink = "http://localhost:8000/reset-password/{$token}";
             Mailer::send($email, "Reinitialisation de votre mot de passe", "Voici le lien pour réinitialiser votre mot de passe: {$resetLink}");
+            
+            //Resend Mailer is not used because the project's php version is not compatible with the Resend library.
+            //MailerResend::send($email, "Reinitialisation de votre mot de passe", "Voici le lien pour réinitialiser votre mot de passe: {$resetLink}");
         }
     }
 }

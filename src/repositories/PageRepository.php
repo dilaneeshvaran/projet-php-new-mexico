@@ -16,7 +16,7 @@ class PageRepository
 
     public function findOneById(int $id): ?Page
     {
-        $query = "SELECT id, title, description, content, date_created FROM page WHERE id = :id";
+        $query = "SELECT id, title, description, content, date_created FROM pages WHERE id = :id";
         $result = $this->db->queryPrepared($query, ['id' => $id]);
 
         if (empty($result)) {

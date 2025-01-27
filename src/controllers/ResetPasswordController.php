@@ -44,7 +44,8 @@ class ResetPasswordController
         try {
             if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || 
                 $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-                throw new \Exception("Token invalid.");
+                header('Location: /reset-password/'.urlencode($token));
+                exit();
             }
             $password = $_POST['password'] ?? '';
             $passwordConfirm = $_POST['password_confirm'] ?? '';

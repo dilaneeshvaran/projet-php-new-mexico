@@ -33,7 +33,8 @@ class RegisterController
         try {
             if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || 
                 $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-                throw new \Exception("Token invalid.");
+                header('Location: /register');
+                exit();
             }
 
             $errors = $this->registerService->registerUser($_POST);

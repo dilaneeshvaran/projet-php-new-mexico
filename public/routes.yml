@@ -2,6 +2,12 @@
   controller: MainController
   action: home
 
+/articles/{slug}:
+  controller: ArticleController
+  action: index
+
+#login
+
 /login:
   controller: AuthController
   action: index
@@ -14,6 +20,8 @@
   controller: AuthController
   action: logout
 
+#register
+
 /register:
   controller: RegisterController
   action: index
@@ -21,6 +29,8 @@
 /register/submit:
   controller: RegisterController
   action: post
+
+#forgot password
 
 /forgot-password:
   controller: ForgotPasswordController
@@ -34,6 +44,8 @@
   controller: ForgotPasswordController
   action: success
 
+#reset password
+
 /reset-password/{token}:
   controller: ResetPasswordController
   action: index
@@ -46,6 +58,16 @@
   controller: ResetPasswordController
   action: success
 
-/articles/{slug}:
-  controller: ArticleController
+#upload photo
+
+/upload:
+  controller: PhotoController
   action: index
+
+/upload/post:
+  controller: PhotoController
+  action: post
+
+/upload/success:
+  controller: PhotoController
+  action: success

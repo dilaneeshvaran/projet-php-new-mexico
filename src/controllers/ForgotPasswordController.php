@@ -37,7 +37,8 @@ class ForgotPasswordController
         $errors = [];
         if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || 
                 $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-                throw new \Exception("Token invalid.");
+                    header('Location: /forgot-password');
+                    exit();
             }
         try {
             $email = $_POST['email'] ?? '';
