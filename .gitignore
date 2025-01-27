@@ -2,5 +2,7 @@
 **/.env
 **/database
 **/vendor
+public/uploads/*
+!/public/uploads/.gitkeep
 
 TODO.md

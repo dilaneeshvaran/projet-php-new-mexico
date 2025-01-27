@@ -2,12 +2,16 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . index.php [L]
-
+LimitRequestBody 5242880
+php_value upload_max_filesize 5M
+php_value post_max_size 5M 
 # Prevent directory listing
+
 Options -Indexes
 
 # Deny access to sensitive files
+
 <FilesMatch "^\.">
-    Order allow,deny
-    Deny from all
+Order allow,deny
+Deny from all
 </FilesMatch>

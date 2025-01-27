@@ -34,5 +34,6 @@ class LoginService
 
         $_SESSION["log"] = true;
         $_SESSION["firstname"] = $user->getFirstname();
+        $_SESSION["user_id"] = $user->getId();
     }
 }

@@ -27,6 +27,7 @@ class UserRepository
 
         //add database result to a User object
         $user = new User();
+        $user->setId($userData['id']);
         $user->setFirstname($userData['firstname']);
         $user->setLastname($userData['lastname']);
         $user->setEmail($userData['email']);

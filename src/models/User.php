@@ -7,6 +7,15 @@ class User{
     private $lastname;
     private $email;
     private $password;
+
+    public function getId(){
+        return $this->id;
+    }
+
+    public function setId($id){
+        $this->id = $id;
+    }
+
     public function getFirstname(){
         return $this->firstname;
     }

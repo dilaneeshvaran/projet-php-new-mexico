@@ -6,6 +6,7 @@ use Dotenv\Dotenv;
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+//phpinfo();
 
 $autoloadPath = __DIR__ . '/../vendor/autoload.php';
 if (!file_exists($autoloadPath)) {

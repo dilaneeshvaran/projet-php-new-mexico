@@ -1,0 +1,9 @@
+CREATE TABLE user_groups (
+user_id INT NOT NULL,
+group_id INT NOT NULL,
+role VARCHAR(50) DEFAULT 'member',
+joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (user_id, group_id),
+FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE
+);
