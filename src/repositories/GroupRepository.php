@@ -12,21 +12,45 @@ class GroupRepository {
         $this->db = $database;
     }
 
-    public function save(Group $group): bool {
-        $sql = "INSERT INTO groups (name, description, created_at)
-                VALUES (:name, :description, :created_at)";
-        
-        return $this->db->executePrepared($sql, [
-            'name' => $group->getName(),
-            'description' => $group->getDescription(),
-            'created_at' => $group->getCreatedAt(),
-        ]);
-    }
+    //save & return the created grp id
+    public function save(Group $group): ?int
+{
+    $sql = "INSERT INTO groups (name, description, created_at)
+            VALUES (:name, :description, :created_at)";
+    
+    $this->db->executePrepared($sql, [
+        'name' => $group->getName(),
+        'description' => $group->getDescription(),
+        'created_at' => $group->getCreatedAt(),
+    ]);
+
+    return $this->db->lastInsertId(); //return the created grp id
+}
 
     public function findById(int $id): ?Group {
         $sql = "SELECT * FROM groups WHERE id = :id";
         
         $rows = $this->db->queryPrepared($sql, ['id' => $id]);
+        
+        if (!empty($rows)) {
+            $row = $rows[0];
+            if (isset($row['id'], $row['name'], $row['description'], $row['created_at'])) {
+                $group = new Group();
+                $group->setId($row['id']);
+                $group->setName($row['name']);
+                $group->setDescription($row['description']);
+                $group->setCreatedAt($row['created_at']);
+                return $group;
+            }
+        }
+        
+        return null;
+    }
+
+    public function findByName(string $name): ?Group {
+        $sql = "SELECT * FROM groups WHERE name = :name";
+        
+        $rows = $this->db->queryPrepared($sql, ['name' => $name]);
         
         if (!empty($rows)) {
             $row = $rows[0];

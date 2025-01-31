@@ -58,4 +58,15 @@ class UserGroupRepository
 
         return $groups;
     }
+
+    public function adminCreateGroup(UserGroup $userGroup): bool
+    {
+        $query = "INSERT INTO user_groups (user_id, group_id, role, joined_at) VALUES (:user_id, :group_id, :role, :joined_at)";
+        return $this->db->executePrepared($query, [
+            'user_id'   => $userGroup->getUserId(),
+            'group_id'  => $userGroup->getGroupId(),
+            'role'      => $userGroup->getRole(),
+            'joined_at' => $userGroup->getJoinedAt(),
+        ]);
+    }
 }

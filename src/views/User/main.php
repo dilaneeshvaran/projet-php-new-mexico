@@ -20,9 +20,13 @@ if (isset($_SESSION["firstname"])) {
     </a><br>
 <?php endforeach; ?>
 
+<br>
+<br>
+<a href="/group/create">Créer un groupe</a>
+
 <?php
-    $pageController = new PageController();
-    $pageController->show();
+    //$pageController = new PageController();
+    //$pageController->show();
 } else {
     header('Location: /login');
     exit();
