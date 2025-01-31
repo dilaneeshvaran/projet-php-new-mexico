@@ -77,7 +77,7 @@
   controller: PhotoController
   action: index
 
-#group
+#create & delete group
 /group/create:
   controller: GroupController
   action: renderCreateGroupPage
@@ -90,6 +90,11 @@
   controller: GroupController
   action: createSuccess
 
+/group/{groupId}/delete:
+  controller: GroupController
+  action: delete
+
+#group settings
 /group/{groupId}/settings:
   controller: GroupController
   action: settings
@@ -102,14 +107,28 @@
   controller: GroupController
   action: settingsSuccess
 
-/group/{groupId}/delete:
-  controller: GroupController
-  action: delete
-
 /group/delete/success:
   controller: GroupController
   action: deleteSuccess
 
+#group members settings
+/group/{groupId}/members:
+  controller: UserGroupController
+  action: index
+
+/group/{groupId}/member/{memberId}/manage:
+  controller: UserGroupController
+  action: manageMember
+
+/group/{groupId}/member/{memberId}/update-access:
+  controller: UserGroupController
+  action: updateAccess
+
+/group/{groupId}/member/{memberId}/remove:
+  controller: UserGroupController
+  action: removeMember
+
+#view group
 /group/{groupId}:
   controller: GroupController
   action: index
