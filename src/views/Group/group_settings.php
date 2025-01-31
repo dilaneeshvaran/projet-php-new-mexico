@@ -18,9 +18,9 @@
 
         <label for="access_type">Access Type:</label>
         <select id="access_type" name="access_type">
-            <option value="open" <?php echo ($access_type == 'open') ? 'selected' : ''; ?>>Ouvert</option>
-            <option value="on_invitation" <?php echo ($access_type == 'on_invitation') ? 'selected' : ''; ?>>Sur Invitation</option>
-            <option value="closed" <?php echo ($access_type == 'closed') ? 'selected' : ''; ?>>Fermé</option>
+            <option value="open" <?php echo ($group->getAccessType() == 'open') ? 'selected' : ''; ?>>Ouvert</option>
+            <option value="on_invitation" <?php echo ($group->getAccessType() == 'on_invitation') ? 'selected' : ''; ?>>Sur Invitation</option>
+            <option value="closed" <?php echo ($group->getAccessType() == 'closed') ? 'selected' : ''; ?>>Fermé</option>
         </select>
         <br><br>
 
@@ -30,3 +30,5 @@
     <?php $groupId = $this->data['groupId'] ?? null; ?>
 
     <a href="/group/<?=$groupId?>">back</a>
+
+    <a href="/group/<?=$groupId?>/delete">delete</a>

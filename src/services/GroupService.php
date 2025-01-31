@@ -27,6 +27,7 @@ class GroupService {
         $group->setName($data['name'] ?? '');
         $group->setDescription($data['description'] ?? '');
         $group->setCreatedAt(date('Y-m-d H:i:s'));
+        $group->setAccessType($data['access_type'] ?? 'open');
 
         $validator = new GroupValidator($group);
         $errors = $validator->getErrors();
@@ -53,6 +54,7 @@ class GroupService {
 
         $group->setName($data['group_name'] ?? $group->getName());
         $group->setDescription($data['description'] ?? $group->getDescription());
+        $group->setAccessType($data['access_type'] ?? $group->getAccessType());
 
         $validator = new GroupValidator($group);
         $errors = $validator->getErrors();
@@ -63,6 +65,21 @@ class GroupService {
 
         if (!$this->groupRepository->update($group)) {
             $errors[] = "ERREUR - lors de la mise à jour dans la bdd.";
+        }
+
+        return $errors;
+    }
+
+    public function deleteGroup(int $groupId): array {
+        $errors = [];
+
+        $group = $this->groupRepository->findById($groupId);
+        if (!$group) {
+            return ['Groupe non trouvé.'];
+        }
+
+        if (!$this->groupRepository->delete($group->getId())) {
+            $errors[] = "ERREUR - lors de la suppression dans la bdd.";
         }
 
         return $errors;

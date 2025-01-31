@@ -102,6 +102,14 @@
   controller: GroupController
   action: settingsSuccess
 
+/group/{groupId}/delete:
+  controller: GroupController
+  action: delete
+
+/group/delete/success:
+  controller: GroupController
+  action: deleteSuccess
+
 /group/{groupId}:
   controller: GroupController
   action: index
