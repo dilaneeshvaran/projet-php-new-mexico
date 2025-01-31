@@ -107,6 +107,14 @@ public function getUserRole(int $groupId, int $userId): ?string
     $result = $this->db->queryPrepared($query, ['group_id' => $groupId, 'user_id' => $userId]);
     return $result[0]['role'] ?? null;
 }
+
+public function getGroupAccess(int $groupId, int $userId): ?string
+{
+    $query = "SELECT group_access FROM user_groups WHERE group_id = :group_id AND user_id = :user_id";
+    $result = $this->db->queryPrepared($query, ['group_id' => $groupId, 'user_id' => $userId]);
+    return $result[0]['group_access'] ?? null;
+}
+
 public function updateGroupAccess(int $groupId, int $userId, string $access): bool
 {
     $query = "UPDATE user_groups SET group_access = :access WHERE group_id = :group_id AND user_id = :user_id";

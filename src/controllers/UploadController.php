@@ -54,6 +54,16 @@ class UploadController {
             $title = trim($_POST['title'] ?? '');
             $description = trim($_POST['description'] ?? '');
 
+            $userRole= $this->userGroupRepository->getUserRole($groupId,$_SESSION['user_id']);
+            $groupAccess = $this->userGroupRepository->getGroupAccess($groupId,$_SESSION['user_id']);
+
+            if ($userRole === null) {
+                $errors[] = 'You are not a member of this group.';
+            }
+            if ($groupAccess !== 'write') {
+                $errors[] = 'You do not have permission to upload photos to this group.';
+            }
+
             if ($fileData) {
                 $errors = $this->uploadService->uploadPhoto($fileData, $groupId, $_SESSION['user_id'],$title, $description);
             } else {

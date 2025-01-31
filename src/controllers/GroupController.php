@@ -23,6 +23,8 @@ class GroupController {
     private GroupService $groupService;
 
     private UserGroupService $userGroupService;
+
+    private UserGroupRepository $userGroupRepository;
     
     public function __construct() {
         $db = new SQL();
@@ -30,6 +32,7 @@ class GroupController {
         $this->GroupRepository = new GroupRepository($db);
         $this->groupService = new GroupService($this->GroupRepository);
         $this->userGroupService = new UserGroupService(new UserGroupRepository($db));
+        $this->userGroupRepository = new UserGroupRepository($db);
     }
 
     public function index(array $errors = [], array $formData = []): void
@@ -61,6 +64,12 @@ class GroupController {
         $csrfToken = $_SESSION['csrf_token'] ?? bin2hex(random_bytes(32));
         $_SESSION['csrf_token'] = $csrfToken;
 
+        $groupId = $this->retrieveGroupId();
+        $userId = $_SESSION['user_id'] ?? 0;
+
+        $groupAccess = $this->userGroupRepository->getGroupAccess($groupId, $userId) ?? "No Access";
+        $groupRole = $this->userGroupRepository->getUserRole($groupId, $userId) ?? "No Role";
+
         $view = new View("Group/group.php", "front.php");
         $view->addData("title", $title);
         $view->addData("description", $description);
@@ -68,6 +77,8 @@ class GroupController {
         $view->addData("csrfToken", $csrfToken);
         $view->addData("errors", $errors);
         $view->addData("group", $group);
+        $view->addData("groupAccess", $groupAccess);
+        $view->addData("groupRole", $groupRole);
         echo $view->render();
     }
 
