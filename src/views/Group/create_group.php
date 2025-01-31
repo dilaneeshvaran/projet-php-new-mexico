@@ -8,7 +8,7 @@
 
 <form action="/group/create/submit" method="post">
     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
-
+    
     <label for="name">Group Name:</label>
     <input type="text" id="name" name="name" required>
 

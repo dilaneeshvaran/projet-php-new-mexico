@@ -43,5 +43,28 @@ class GroupService {
         return ['groupId' => $groupId, 'errors' => []];
     }
 
-    
+    public function updateGroup(int $groupId, array $data): array {
+        $errors = [];
+
+        $group = $this->groupRepository->findById($groupId);
+        if (!$group) {
+            return ['Groupe non trouvé.'];
+        }
+
+        $group->setName($data['group_name'] ?? $group->getName());
+        $group->setDescription($data['description'] ?? $group->getDescription());
+
+        $validator = new GroupValidator($group);
+        $errors = $validator->getErrors();
+
+        if (!empty($errors)) {
+            return $errors;
+        }
+
+        if (!$this->groupRepository->update($group)) {
+            $errors[] = "ERREUR - lors de la mise à jour dans la bdd.";
+        }
+
+        return $errors;
+    }
 }

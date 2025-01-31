@@ -71,15 +71,7 @@ class GroupController {
         echo $view->render();
     }
 
-    private function retrieveGroupId(): int {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            return $_POST['groupId'] ?? 0;
-        } 
-
-        $urlParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
-        $groupIndex = array_search('group', $urlParts);
-        return ($groupIndex !== false && isset($urlParts[$groupIndex + 1])) ? (int)$urlParts[$groupIndex + 1] : 0;
-    }
+    
 
     // CREATE GROUP
     public function renderCreateGroupPage(array $errors = [],array $formData = []): void
@@ -151,4 +143,96 @@ class GroupController {
         echo $view->render();
     }
 
+
+    //SETTINGS
+
+    public function settings(): void
+    {
+        if(!(new Session())->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
+        $groupId = $this->retrieveGroupId();
+        $group = $this->groupService->getGroupById((int)$groupId);
+        if ($group) {
+            $this->renderGroupSettingsPage([], $groupId, $group);
+        } else {
+            //TODO : group not found
+            $this->renderGroupSettingsPage(['Group not found'], $groupId);
+        }
+    }
+
+    public function renderGroupSettingsPage(array $errors = [],int $groupId, ?Group $group = null): void
+    {
+        $pageId = 1;
+        $pageData = $this->pageRepository->findOneById($pageId);
+
+        //alternative values if $pageData is null
+        $title = $pageData ? $pageData->getTitle() : "Upload Photo";
+        $description = $pageData ? $pageData->getDescription() : "Upload your photos";
+        $content = $pageData ? $pageData->getContent() : "";
+
+        $csrfToken = $_SESSION['csrf_token'] ?? bin2hex(random_bytes(32));
+        $_SESSION['csrf_token'] = $csrfToken;
+
+        $view = new View("Group/group_settings.php", "front.php");
+        $view->addData("title", $title);
+        $view->addData("description", $description);
+        $view->addData("content", $content);
+        $view->addData("csrfToken", $csrfToken);
+        $view->addData("errors", $errors);
+        $view->addData("groupId", $groupId);
+        $view->addData("group", $group);
+        echo $view->render();
+    }
+
+    public function settingsSave(): void
+    {
+        $groupId = $this->retrieveGroupId();
+        $errors = [];
+        $formData = $_POST;
+        try {
+            // CSRF validation
+            if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || 
+            $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+            header("Location: /group/$groupId/settings");
+            exit();
+            }
+
+            if (!$groupId || !is_numeric($groupId)) {
+                $errors[] = "ID du groupe invalide.";
+            } else {
+                $errors = $this->groupService->updateGroup((int) $groupId, $formData);
+            }
+
+            if (empty($errors)) {
+                //redirect to group page : TODO
+                header("Location: /group/$groupId/settings/success");
+                exit();
+            }
+
+        } catch (\Exception $e) {
+            $errors[] = $e->getMessage();
+            }
+            $this->renderGroupSettingsPage($errors, $groupId);
+
+    }
+
+    public function settingsSuccess(): void
+    {
+        $view = new View('Group/group_settings_success.php', 'front.php');
+        $groupId = $this->retrieveGroupId();
+        $view->addData('groupId', $groupId);
+        echo $view->render();
+    }
+
+    private function retrieveGroupId(): int {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            return $_POST['groupId'] ?? 0;
+        } 
+
+        $urlParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+        $groupIndex = array_search('group', $urlParts);
+        return ($groupIndex !== false && isset($urlParts[$groupIndex + 1])) ? (int)$urlParts[$groupIndex + 1] : 0;
+    }
 }

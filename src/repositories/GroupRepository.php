@@ -27,6 +27,16 @@ class GroupRepository {
     return $this->db->lastInsertId(); //return the created grp id
 }
 
+public function update(Group $group): bool {
+    $sql = "UPDATE groups SET name = :name, description = :description WHERE id = :id";
+    
+    return $this->db->executePrepared($sql, [
+        'id' => $group->getId(),
+        'name' => $group->getName(),
+        'description' => $group->getDescription(),
+    ]);
+}
+
     public function findById(int $id): ?Group {
         $sql = "SELECT * FROM groups WHERE id = :id";
         
