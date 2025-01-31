@@ -7,6 +7,7 @@ class UserGroup
     private $user_id;
     private $group_id;
     private $role;
+    private $group_access;
     private $joined_at;
 
     public function getUserId()
@@ -47,5 +48,15 @@ class UserGroup
     public function setJoinedAt($joined_at)
     {
         $this->joined_at = $joined_at;
+    }
+
+    public function getGroupAccess()
+    {
+        return $this->group_access;
+    }
+
+    public function setGroupAccess($group_access)
+    {
+        $this->group_access = $group_access;
     }
 }

@@ -23,6 +23,7 @@ if (isset($_SESSION["firstname"])) {
 <br>
 <br>
 <a href="/group/create">Créer un groupe</a>
+<a href="/group/join">Rejoindre un groupe</a>
 
 <?php
     //$pageController = new PageController();

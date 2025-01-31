@@ -259,10 +259,11 @@ class GroupController {
         echo $view->render();
     }
 
+
     private function retrieveGroupId(): int {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             return $_POST['groupId'] ?? 0;
-        } 
+        }
 
         $urlParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
         $groupIndex = array_search('group', $urlParts);
