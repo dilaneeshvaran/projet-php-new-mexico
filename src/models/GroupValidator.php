@@ -22,6 +22,9 @@ class GroupValidator
             if (strlen($this->group->getDescription()) < 10) {
                 $this->errors[] = "La description du groupe doit contenir au moins 10 caractères.";
             }
+            if (!in_array($this->group->getAccessType(), ['open', 'on_invitation', 'closed'])) {
+                $this->errors[] = "Type d'accès invalide.";
+            }
         }
     }
 

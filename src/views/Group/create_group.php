@@ -20,11 +20,11 @@
     <br>
 
     <label for="access_type">Access Type:</label>
-    <select id="access_type" name="access_type" required>
-        <option value="open">Ouvert</option>
-        <option value="on_invitation">Sur Invitation</option>
-        <option value="closed">Fermé</option>
-    </select>
+<select id="access_type" name="access_type" required>
+    <option value="open">Ouvert</option>
+    <option value="on_invitation">Sur Invitation</option>
+    <option value="closed">Fermé</option>
+</select>
     
     <button type="submit">Create Group</button>
 </form>

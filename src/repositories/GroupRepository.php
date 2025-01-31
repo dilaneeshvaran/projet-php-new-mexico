@@ -15,26 +15,35 @@ class GroupRepository {
     //save & return the created grp id
     public function save(Group $group): ?int
 {
-    $sql = "INSERT INTO groups (name, description, created_at)
-            VALUES (:name, :description, :created_at)";
-    
+    $sql = "INSERT INTO groups (name, description, created_at, access_type)
+            VALUES (:name, :description, :created_at, :access_type)";
+
     $this->db->executePrepared($sql, [
         'name' => $group->getName(),
         'description' => $group->getDescription(),
         'created_at' => $group->getCreatedAt(),
+        'access_type' => $group->getAccessType(),
     ]);
 
     return $this->db->lastInsertId(); //return the created grp id
 }
 
 public function update(Group $group): bool {
-    $sql = "UPDATE groups SET name = :name, description = :description WHERE id = :id";
+    $sql = "UPDATE groups SET name = :name, description = :description, access_type = :access_type WHERE id = :id";
     
     return $this->db->executePrepared($sql, [
         'id' => $group->getId(),
         'name' => $group->getName(),
         'description' => $group->getDescription(),
+        'access_type' => $group->getAccessType(),
     ]);
+}
+
+
+public function delete(int $id): bool {
+    $sql = "DELETE FROM groups WHERE id = :id";
+
+    return $this->db->executePrepared($sql, ['id' => $id]);
 }
 
     public function findById(int $id): ?Group {
@@ -50,6 +59,7 @@ public function update(Group $group): bool {
                 $group->setName($row['name']);
                 $group->setDescription($row['description']);
                 $group->setCreatedAt($row['created_at']);
+                $group->setAccessType($row['access_type']);
                 return $group;
             }
         }
@@ -70,6 +80,7 @@ public function update(Group $group): bool {
                 $group->setName($row['name']);
                 $group->setDescription($row['description']);
                 $group->setCreatedAt($row['created_at']);
+                $group->setAccessType($row['access_type']);
                 return $group;
             }
         }
@@ -89,6 +100,7 @@ public function update(Group $group): bool {
             $group->setName($row['name']);
             $group->setDescription($row['description']);
             $group->setCreatedAt($row['created_at']);
+            $group->setAccessType($row['access_type']);
             $groups[] = $group;
         }
         

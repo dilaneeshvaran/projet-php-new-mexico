@@ -6,6 +6,7 @@ class Group{
     private $name;
     private $description;
     private $created_at;
+    private $access_type;
     
     public function getId(){
         return $this->id;
@@ -36,5 +37,13 @@ class Group{
 
     public function setCreatedAt($created_at){
         $this->created_at = $created_at;
+    }
+
+    public function getAccessType() {
+        return $this->access_type;
+    }
+
+    public function setAccessType($access_type) {
+        $this->access_type = $access_type;
     }
 }

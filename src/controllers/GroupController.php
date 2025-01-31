@@ -226,6 +226,39 @@ class GroupController {
         echo $view->render();
     }
 
+
+    //DELETE
+
+    public function delete(): void
+    {
+        $groupId = $this->retrieveGroupId();
+        $errors = [];
+        try {
+            if (!$groupId || !is_numeric($groupId)) {
+                $errors[] = "ID du groupe invalide.";
+            } else {
+                $errors = $this->groupService->deleteGroup((int) $groupId);
+            }
+
+            if (empty($errors)) {
+                //redirect to group page : TODO
+                header("Location: /group/delete/success");
+                exit();
+            }
+
+        } catch (\Exception $e) {
+            $errors[] = $e->getMessage();
+            }
+            $this->renderGroupSettingsPage($errors, $groupId);
+
+    }
+
+    public function deleteSuccess(): void
+    {
+        $view = new View('Group/delete_group_success.php', 'front.php');
+        echo $view->render();
+    }
+
     private function retrieveGroupId(): int {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             return $_POST['groupId'] ?? 0;
@@ -235,4 +268,6 @@ class GroupController {
         $groupIndex = array_search('group', $urlParts);
         return ($groupIndex !== false && isset($urlParts[$groupIndex + 1])) ? (int)$urlParts[$groupIndex + 1] : 0;
     }
+
+    
 }
