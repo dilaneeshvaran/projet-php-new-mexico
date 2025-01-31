@@ -64,4 +64,22 @@ class UserRepository
         'password' => $newPassword,
     ]);
 }
+
+public function findOneById(int $id): ?User
+{
+    $query = "SELECT id, firstname, lastname FROM users WHERE id = :id";
+    $result = $this->db->queryPrepared($query, ['id' => $id]);
+
+    if (empty($result)) {
+        return null;
+    }
+
+    $userData = $result[0];
+    $user = new User();
+    $user->setId($userData['id']);
+    $user->setFirstname($userData['firstname']);
+    $user->setLastname($userData['lastname']);
+
+    return $user;
+}
 }

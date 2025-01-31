@@ -3,38 +3,28 @@
 namespace App\Controllers;
 
 use App\Repositories\PageRepository;
-use App\Repositories\PhotoRepository;
 use App\Repositories\GroupRepository;
-use App\Repositories\UserRepository;
-use App\Services\PhotoService;
 use App\Services\GroupService;
 use App\Models\Group;
 use App\Core\View;
 use App\Core\SQL;
 use App\Core\Session;
 
-class PhotoController {
+class GroupController {
+
+    private UploadService $uploadService;
 
     private PageRepository $pageRepository;
 
-    private PhotoRepository $photoRepository;
-
-    private PhotoService $photoService;
-
-    private GroupRepository $groupRepository;
+    private GroupRepository $GroupRepository;
 
     private GroupService $groupService;
-
-    private UserRepository $userRepository;
     
     public function __construct() {
         $db = new SQL();
-        $this->photoRepository = new PhotoRepository($db);
-        $this->userRepository = new UserRepository($db);
-        $this->photoService = new PhotoService($this->photoRepository,$this->userRepository);
         $this->pageRepository = new PageRepository($db);
-        $this->groupRepository = new GroupRepository($db);
-        $this->groupService = new GroupService($this->groupRepository);
+        $this->GroupRepository = new GroupRepository($db);
+        $this->groupService = new GroupService($this->GroupRepository);
     }
 
     public function index(array $errors = [], array $formData = []): void
@@ -43,10 +33,24 @@ class PhotoController {
             header('Location: /login');
             exit();
         }
-        $this->renderView();
+        $groupId = $this->retrieveGroupId();
+        $group = $this->groupService->getGroupById((int)$groupId);
+        if ($group) {
+            $this->renderGroupPage([], $groupId, $group);
+        } else {
+            //TODO : group not found
+            $this->renderGroupPage(['Group not found'], $groupId);
+        }
     }
 
-    private function renderView(array $errors = [], array $formData = []): void
+    public function post(): void
+    {
+        $errors = [];
+        $formData = $_POST;
+        
+    }
+
+    private function renderGroupPage(array $errors = [], int $groupId, ?Group $group = null): void
     {
         $pageId = 1;
         $pageData = $this->pageRepository->findOneById($pageId);
@@ -59,17 +63,15 @@ class PhotoController {
         $csrfToken = $_SESSION['csrf_token'] ?? bin2hex(random_bytes(32));
         $_SESSION['csrf_token'] = $csrfToken;
 
-        $groupId = $this->retrieveGroupId();
-        $photos = $this->photoService->fetchPhotosByGroupId($groupId);
-        $group = $this->groupService->getGroupById($groupId);
+        //fetch groups of the user
+        $userId = $_SESSION['user_id'] ?? null;
 
-        $view = new View("photo/group_photos.php", "front.php");
+        $view = new View("Group/group.php", "front.php");
         $view->addData("title", $title);
         $view->addData("description", $description);
         $view->addData("content", $content);
         $view->addData("csrfToken", $csrfToken);
         $view->addData("errors", $errors);
-        $view->addData("photos", $photos);
         $view->addData("group", $group);
         echo $view->render();
     }

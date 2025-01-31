@@ -9,24 +9,31 @@
     </div>
     <?php endif; ?>
 
-    <form action="/upload/post" method="POST" enctype="multipart/form-data">
+
+    <?php $groupId = $this->data['groupId'] ?? null; ?>
+
+    <form action="/group/<?= $groupId ?>/upload/post" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
+        <input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">
 
         <div>
-            <label for="group">Select Group:</label>
             <br>
-            <select name="group_id" id="group" required>
-                <option value="">Select a group...</option>
-                <?php foreach ($groups as $groupData): ?>
-                <?php $group = $groupData['group']; ?>
-                <option value="<?= htmlspecialchars($group->getId()) ?>"
-                    <?= isset($formData['group_id']) && $formData['group_id'] == $group->getId() ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($group->getName()) ?>
-                </option>
-                <?php endforeach; ?>
-            </select>
         </div>
+        <div>
+    <label for="title">Titre:</label>
+    <br>
+    <input type="text" name="title" id="title" required>
+</div>
 
+<div>
+    <label for="description">Description:</label>
+    <br>
+    <textarea name="description" id="description" required></textarea>
+</div>
+<div>
+            <br>
+        </div>
+        <div>
         <div>
             <label for="photo">Choose Photo:</label>
             <br>

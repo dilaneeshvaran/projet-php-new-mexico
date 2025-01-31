@@ -60,14 +60,24 @@
 
 #upload photo
 
-/upload:
+/group/{groupId}/upload:
+  controller: UploadController
+  action: index
+
+/group/{groupId}/upload/post:
+  controller: UploadController
+  action: post
+
+/group/{groupId}/upload/success:
+  controller: UploadController
+  action: success
+
+#view photos
+/group/{groupId}/photos:
   controller: PhotoController
   action: index
 
-/upload/post:
-  controller: PhotoController
-  action: post
-
-/upload/success:
-  controller: PhotoController
-  action: success
+#group
+/group/{groupId}:
+  controller: GroupController
+  action: index

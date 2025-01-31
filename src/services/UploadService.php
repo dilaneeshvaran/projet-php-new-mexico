@@ -19,7 +19,7 @@ class UploadService
         $this->userGroupRepository = $userGroupRepository;
     }
 
-    public function uploadPhoto(array $fileData, ?int $groupId, int $userId): array
+    public function uploadPhoto(array $fileData, ?int $groupId, int $userId, string $title, string $description): array
     {
         $errors = [];
 
@@ -28,6 +28,10 @@ class UploadService
         if ($groupId === null || !$this->userGroupRepository->exists($groupId)) {
             $errors[] = 'Groupe invalide';
             return $errors;
+        }
+
+        if (empty($title) || empty($description)) {
+            $errors[] = "Title and description are required.";
         }
 
         $validator = new PhotoValidator($fileData);
@@ -46,6 +50,8 @@ class UploadService
         $photo = new Photo();
         $photo->setFilename($filename);
         $photo->setOriginalName($fileData['name']);
+        $photo->setTitle($title);
+        $photo->setDescription($description);
         $photo->setMimeType($fileData['type']);
         $photo->setSize($fileData['size']);
         $photo->setGroupId($groupId);
