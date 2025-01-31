@@ -23,6 +23,11 @@ class UserGroupService
     {
         return $this->userGroupRepository->getUserRole($groupId, $userId);
     }
+
+    public function getGroupAccess(int $groupId, int $userId): ?string
+    {
+        return $this->userGroupRepository->getGroupAccess($groupId, $userId);
+    }
     
     public function updateMemberAccess(int $groupId, int $memberId, string $access): bool
     {

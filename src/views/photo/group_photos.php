@@ -1,10 +1,11 @@
-<h1><?= htmlspecialchars($title) ?></h1>
-<p><?= htmlspecialchars($description) ?></p>
 
 <?php $group = $this->data['group'] ?? null; ?>
-<a href="/group/<?= $group->getId() ?>">Back</a>
-<a href="/group/<?= $group->getId() ?>/upload">Ajouter une Photo</a>
+<?php $groupAccess = $this->data['group_access'] ?? null; ?>
 
+<a href="/group/<?= $group->getId() ?>">Back</a>
+<?php if ($groupAccess === 'writer'): ?>
+    <a href="/group/<?= $group->getId() ?>/upload">Ajouter une Photo</a>
+<?php endif; ?>
 <?php if (!empty($errors)): ?>
     <div>
         <ul>
@@ -16,7 +17,9 @@
 <?php endif; ?>
 
 <h2>Group Photos</h2>
-<?php if (!empty($photos)): ?>
+<?php if (!empty($photos)): 
+?>
+    
     <ul>
         <?php foreach ($photos as $photo): ?>
             <li>

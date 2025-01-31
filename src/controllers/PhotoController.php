@@ -6,6 +6,7 @@ use App\Repositories\PageRepository;
 use App\Repositories\PhotoRepository;
 use App\Repositories\GroupRepository;
 use App\Repositories\UserRepository;
+use App\Repositories\UserGroupRepository;
 use App\Services\PhotoService;
 use App\Services\GroupService;
 use App\Models\Group;
@@ -26,9 +27,12 @@ class PhotoController {
     private GroupService $groupService;
 
     private UserRepository $userRepository;
+
+    private UserGroupRepository $userGroupRepository;
     
     public function __construct() {
         $db = new SQL();
+        $this->userGroupRepository = new UserGroupRepository($db);
         $this->photoRepository = new PhotoRepository($db);
         $this->userRepository = new UserRepository($db);
         $this->photoService = new PhotoService($this->photoRepository,$this->userRepository);
@@ -60,9 +64,12 @@ class PhotoController {
         $_SESSION['csrf_token'] = $csrfToken;
 
         $groupId = $this->retrieveGroupId();
+        $userId = $_SESSION['user_id'] ?? 0;
+
+        $groupAccess = $this->userGroupRepository->getGroupAccess($groupId, $userId) ?? "No Access";
         $photos = $this->photoService->fetchPhotosByGroupId($groupId);
         $group = $this->groupService->getGroupById($groupId);
-
+        
         $view = new View("photo/group_photos.php", "front.php");
         $view->addData("title", $title);
         $view->addData("description", $description);
@@ -71,6 +78,7 @@ class PhotoController {
         $view->addData("errors", $errors);
         $view->addData("photos", $photos);
         $view->addData("group", $group);
+        $view->addData("group_access", $groupAccess);
         echo $view->render();
     }
 
