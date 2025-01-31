@@ -12,4 +12,5 @@ if ($group) {
 ?>
 
 <a href="/group/<?= $group->getId() ?>/photos">Voir les images publiés</a>
+<a href="/group/<?= $group->getId() ?>/settings">Parametres du groupe</a>
 <a href="/">Back</a>

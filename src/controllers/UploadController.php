@@ -43,7 +43,6 @@ class UploadController {
         $fileData = $_FILES['photo'] ?? null;
         $groupId = $this->retrieveGroupId();
 
-        echo "grp id".$groupId;
         try {
             // CSRF validation
             if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || 

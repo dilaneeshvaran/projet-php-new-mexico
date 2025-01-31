@@ -32,4 +32,9 @@ class SQL
         $stmt = $this->pdo->prepare($query);
         return $stmt->execute($params);
     }
+
+    public function lastInsertId(): int
+{
+    return (int) $this->pdo->lastInsertId();
+}
 }

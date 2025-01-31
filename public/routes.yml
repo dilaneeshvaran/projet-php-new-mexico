@@ -78,6 +78,30 @@
   action: index
 
 #group
+/group/create:
+  controller: GroupController
+  action: renderCreateGroupPage
+
+/group/create/submit:
+  controller: GroupController
+  action: create
+
+/group/create/success:
+  controller: GroupController
+  action: createSuccess
+
+/group/{groupId}/settings:
+  controller: GroupController
+  action: settings
+
+/group/{groupId}/settings/save:
+  controller: GroupController
+  action: settingsSave
+
+/group/{groupId}/settings/success:
+  controller: GroupController
+  action: settingsSuccess
+
 /group/{groupId}:
   controller: GroupController
   action: index
