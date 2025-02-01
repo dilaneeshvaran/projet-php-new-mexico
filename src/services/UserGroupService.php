@@ -74,4 +74,52 @@ class UserGroupService
 {
     return $this->userGroupRepository->getGroupMemberById($groupId, $memberId);
 }
+
+public function joinGroup(int $groupId, int $userId): array
+{
+    $errors = [];
+    
+    //get the access type of the group
+    $accessType = $this->userGroupRepository->getGroupAccessType($groupId);
+
+    if (!$accessType) {
+        $errors[] = "Groupe introuvable.";
+        return $errors;
+    }
+
+    if ($accessType === 'open') {
+        //directly join the group
+        $userGroup = new UserGroup();
+        $userGroup->setUserId($userId);
+        $userGroup->setGroupId($groupId);
+        $userGroup->setRole('member');
+        $userGroup->setJoinedAt(date('Y-m-d H:i:s'));
+        $userGroup->setGroupAccess('reader');
+
+        if (!$this->userGroupRepository->adminCreateGroup($userGroup)) {
+            $errors[] = "Erreur lors de l'adhésion au groupe.";
+        }
+    } elseif ($accessType === 'on_invitation') {
+        //check if there's already a pending request
+        if ($this->userGroupRepository->hasPendingJoinRequest($groupId, $userId)) {
+            $errors[] = "Votre demande est déjà en attente.";
+        } else {
+            //create join request in db
+            if (!$this->userGroupRepository->addJoinRequest($groupId, $userId)) {
+                $errors[] = "Erreur lors de la demande d'adhésion.";
+            } else {
+                $errors[] = "Votre demande a été envoyée.";
+            }
+        }
+    } else {
+        $errors[] = "Vous ne pouvez pas rejoindre ce groupe.";
+    }
+
+    return $errors;
+}
+
+public function leaveGroup(int $groupId, int $userId): bool
+{
+    return $this->userGroupRepository->leaveGroup($groupId, $userId);
+}
 }

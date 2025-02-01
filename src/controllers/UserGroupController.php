@@ -60,6 +60,8 @@ class UserGroupController {
         $_SESSION['csrf_token'] = $csrfToken;
 
         $members = $this->userGroupService->getUsersByGroupId($groupId);
+        $userId = $_SESSION['user_id'];
+        $userRole = $this->userGroupService->getUserRole($groupId, $userId);
 
         $view = new View("Group/group_members.php", "front.php");
         $view->addData("title", $title);
@@ -69,6 +71,7 @@ class UserGroupController {
         $view->addData("errors", $errors);
         $view->addData("groupId", $groupId);
         $view->addData("members", $members);
+        $view->addData("userRole", $userRole);
         echo $view->render();
     }
 
@@ -221,6 +224,150 @@ class UserGroupController {
             $this->renderManageMemberPage($errors, $groupId);
     }
 
+
+    //JOIN GROUP
+
+    public function renderJoinGroupPage(array $errors = []): void
+    {
+        $pageId = 1;
+        $pageData = $this->pageRepository->findOneById($pageId);
+
+        //alternative values if $pageData is null
+        $title = $pageData ? $pageData->getTitle() : "Upload Photo";
+        $description = $pageData ? $pageData->getDescription() : "Upload your photos";
+        $content = $pageData ? $pageData->getContent() : "";
+
+        $csrfToken = $_SESSION['csrf_token'] ?? bin2hex(random_bytes(32));
+        $_SESSION['csrf_token'] = $csrfToken;
+
+        $view = new View("Group/search_group.php", "front.php");
+        $view->addData("title", $title);
+        $view->addData("description", $description);
+        $view->addData("content", $content);
+        $view->addData("csrfToken", $csrfToken);
+        $view->addData("errors", $errors);
+        $view->addData("groupId", $groupId);
+        $view->addData("memberId", $memberId);
+        $view->addData("memberDetails", $memberDetails);
+        echo $view->render();
+        
+    }
+
+    public function joinGroup(): void
+    {
+        $session = new Session();
+        if (!$session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
+        $currentUserId =  $_SESSION['user_id'];
+        $groupId = $this->retrieveGroupId();
+        $errors = [];
+
+        // CSRF validation
+        if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || 
+        $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        header("Location: /group/search/result");
+        exit();
+        }
+
+        try {
+            if (!$groupId || !is_numeric($groupId)) {
+                $errors[] = "ID du groupe invalide.";
+            }
+            else {
+                if ($this->userGroupService->joinGroup($groupId, $currentUserId)) {
+                    $errors[] = "Échec de l’adhésion au groupe.";
+                    header("Location: /group/search/result");
+                    exit();
+                } else {
+                    $errors['Failed to join group'];
+                }
+            }
+
+            if (empty($errors)) {
+                //redirect to group page : TODO
+                header("Location: /group/$groupId");
+                exit();
+            }
+
+        } catch (\Exception $e) {
+            $errors[] = $e->getMessage();
+        }
+        $this->renderJoinGroupPage($errors);
+    }
+    
+
+    //LEAVE GROUP
+    public function renderMemberSettings(?array $errors = []):void{
+        $pageId = 1;
+        $pageData = $this->pageRepository->findOneById($pageId);
+
+        $groupId = $this->retrieveGroupId();
+        $memberId = $_SESSION['user_id'];
+
+        //alternative values if $pageData is null
+        $title = $pageData ? $pageData->getTitle() : "Upload Photo";
+        $description = $pageData ? $pageData->getDescription() : "Upload your photos";
+        $content = $pageData ? $pageData->getContent() : "";
+
+        $csrfToken = $_SESSION['csrf_token'] ?? bin2hex(random_bytes(32));
+        $_SESSION['csrf_token'] = $csrfToken;
+
+        $view = new View("Group/member_settings.php", "front.php");
+        $view->addData("title", $title);
+        $view->addData("description", $description);
+        $view->addData("content", $content);
+        $view->addData("csrfToken", $csrfToken);
+        $view->addData("errors", $errors);
+        $view->addData("groupId", $groupId);
+        $view->addData("memberId", $memberId);
+        echo $view->render();
+    }
+
+    public function leaveGroup(): void
+    {
+        $session = new Session();
+        if (!$session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
+        $currentUserId =  $_SESSION['user_id'];
+        $groupId = $this->retrieveGroupId();
+        $errors = [];
+
+        // CSRF valida0tion
+        if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || 
+        $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        header("Location: /group/member/settings");
+        exit();
+        }
+
+        try {
+            if (!$groupId || !is_numeric($groupId)) {
+                $errors[] = "ID du groupe invalide.";
+            }
+            else {
+                if (!$this->userGroupService->leaveGroup($groupId, $currentUserId)) {
+                    $errors[] = "Erreur lors de la sortie du groupe.";
+                    header("Location: /group/member/settings");
+                    exit();
+                } else {
+                    $errors['Failed to leave group'];
+                }
+            }
+
+            if (empty($errors)) {
+                //redirect to group page : TODO
+                header("Location: /");
+                exit();
+            }
+
+        } catch (\Exception $e) {
+            $errors[] = $e->getMessage();
+        }
+        $this->renderMemberSettings($errors);
+    }
 
     private function retrieveGroupId(): int {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

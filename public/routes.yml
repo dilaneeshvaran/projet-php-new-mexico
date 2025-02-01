@@ -94,6 +94,11 @@
   controller: GroupController
   action: delete
 
+#leave group
+/group/member/settings:
+  controller: UserGroupController
+  action: renderMemberSettings
+
 #group settings
 /group/{groupId}/settings:
   controller: GroupController
@@ -127,6 +132,19 @@
 /group/{groupId}/member/{memberId}/remove:
   controller: UserGroupController
   action: removeMember
+
+#search & join group
+/group/search/result:
+  controller: GroupController
+  action: searchGroup
+
+/group/join:
+  controller: UserGroupController
+  action: joinGroup
+
+/group/leave:
+  controller: UserGroupController
+  action: leaveGroup
 
 #view group
 /group/{groupId}:

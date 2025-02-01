@@ -130,4 +130,49 @@ public function deleteUserFromGroup(int $groupId, int $userId): bool
     $query = "DELETE FROM user_groups WHERE group_id = :group_id AND user_id = :user_id";
     return $this->db->executePrepared($query, ['group_id' => $groupId, 'user_id' => $userId]);
 }
+
+public function getTotalMembersByGroupId(int $groupId): int
+{
+    $query = "SELECT COUNT(*) as total_members FROM user_groups WHERE group_id = :group_id";
+    $result = $this->db->queryPrepared($query, ['group_id' => $groupId]);
+    return (int)$result[0]['total_members'];
+}
+
+public function getGroupAccessType(int $groupId): ?string
+{
+    $query = "SELECT access_type FROM groups WHERE id = :group_id";
+    $result = $this->db->queryPrepared($query, ['group_id' => $groupId]);
+    return $result[0]['access_type'] ?? null;
+}
+
+public function addJoinRequest(int $groupId, int $userId): bool
+{
+    $query = "INSERT INTO group_join_requests (user_id, group_id, status) VALUES (:user_id, :group_id, 'pending')";
+    return $this->db->executePrepared($query, [
+        'user_id'  => $userId,
+        'group_id' => $groupId
+    ]);
+}
+
+public function hasPendingJoinRequest(int $groupId, int $userId): bool
+{
+    $query = "SELECT COUNT(*) as count FROM group_join_requests WHERE group_id = :group_id AND user_id = :user_id AND status = 'pending'";
+    $result = $this->db->queryPrepared($query, ['group_id' => $groupId, 'user_id' => $userId]);
+    return (int)$result[0]['count'] > 0;
+}
+
+public function isMember(int $groupId, int $userId): bool
+{
+    $query = "SELECT COUNT(*) as count FROM user_groups WHERE group_id = :group_id AND user_id = :user_id";
+    $result = $this->db->queryPrepared($query, ['group_id' => $groupId, 'user_id' => $userId]);
+    return (int)$result[0]['count'] > 0;
+}
+
+public function leaveGroup(int $groupId, int $userId): bool
+{
+    $query = "DELETE FROM user_groups WHERE group_id = :group_id AND user_id = :user_id";
+    return $this->db->executePrepared($query, ['group_id' => $groupId, 'user_id' => $userId]);
+
+}
+
 }

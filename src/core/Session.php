@@ -20,6 +20,11 @@ class Session
         return $_SESSION['roles'] ?? [];
     }
 
+    public function getUserId(): int
+    {
+        return $_SESSION['user_id'] ?? 0;
+    }
+
     public function logout(): void
     {
         if (session_status() === PHP_SESSION_ACTIVE) {

@@ -17,6 +17,10 @@ class GroupService {
         return $this->groupRepository->findById($id);
     }
 
+    public function getGroupByName(string $name, int $userId): array {
+        return $this->groupRepository->findByName($name, $userId);
+    }
+
     public function createGroup(array $data): array {
         //dont allow group with same name to be created
         if ($this->groupRepository->findByName($data['name'] ?? '')) {
@@ -84,4 +88,5 @@ class GroupService {
 
         return $errors;
     }
+
 }

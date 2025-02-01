@@ -4,9 +4,10 @@
         <p><?= htmlspecialchars($error) ?></p>
         <?php endforeach; ?>
     </div>
-    <?php endif; ?>
+<?php endif; ?>
 
 <?php $groupId = $this->data['groupId'] ?? null; ?>
+<?php $userRole = $this->data['userRole'] ?? null; ?>
 
 <table border="1" cellpadding="10">
     <thead>
@@ -18,7 +19,9 @@
             <th>Joined At</th>
             <th>Group Access</th>
             <th>Role</th>
-            <th>Actions</th>
+            <?php if ($userRole === 'admin'): ?>
+                <th>Actions</th>
+            <?php endif; ?>
         </tr>
     </thead>
     <tbody>
@@ -32,19 +35,21 @@
                     <td><?= htmlspecialchars($member['joined_at']) ?></td>
                     <td><?= htmlspecialchars($member['group_access']) ?></td>
                     <td><?= htmlspecialchars($member['role']) ?></td>
-                    <td>
-                        <form method="POST" action="/group/<?= htmlspecialchars($groupId) ?>/member/<?= htmlspecialchars($member['id']) ?>/manage">
-                            <input type="hidden" name="memberId" value="<?= htmlspecialchars($member['id']) ?>">
-                            <input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">
-                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
-                            <button type="submit">Manage</button>
-                        </form>
-                    </td>
+                    <?php if ($userRole === 'admin'): ?>
+                        <td>
+                            <form method="POST" action="/group/<?= htmlspecialchars($groupId) ?>/member/<?= htmlspecialchars($member['id']) ?>/manage">
+                                <input type="hidden" name="memberId" value="<?= htmlspecialchars($member['id']) ?>">
+                                <input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">
+                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
+                                <button type="submit">Manage</button>
+                            </form>
+                        </td>
+                    <?php endif; ?>
                 </tr>
             <?php endforeach; ?>
         <?php else: ?>
             <tr>
-                <td colspan="8">No members found in this group.</td>
+                <td colspan="<?= $userRole === 'admin' ? 8 : 7 ?>">No members found in this group.</td>
             </tr>
         <?php endif; ?>
     </tbody>

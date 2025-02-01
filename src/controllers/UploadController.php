@@ -33,6 +33,12 @@ class UploadController {
             exit();
         }
         $groupId = $this->retrieveGroupId();
+        $userId = (new Session())->getUserId();
+
+        if (!$this->userGroupRepository->isMember((int)$groupId, (int)$userId)) {
+            $this->renderUploadPage(["Vous n'êtes pas membre de ce groupe !"],[], $groupId);
+            return;
+        }
         $this->renderUploadPage([],[],$groupId);
     }
 
