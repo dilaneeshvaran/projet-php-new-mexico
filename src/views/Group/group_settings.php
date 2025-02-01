@@ -2,7 +2,14 @@
 
 <?php $groupId = $this->data['groupId'] ?? null; ?>
 
-
+<?php if (!empty($errors)): ?>
+    <div style="color: red; margin-bottom: 20px;">
+        <?php foreach ($errors as $error): ?>
+        <p><?= htmlspecialchars($error) ?></p>
+        <?php endforeach; ?>
+    </div>
+    <?php endif; ?>
+    
 <form action="/group/<?= htmlspecialchars($groupId) ?>/settings/save" method="POST">
 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
 <input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">

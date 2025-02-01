@@ -67,13 +67,19 @@ public function delete(int $id): bool {
         return null;
     }
 
-    public function findByName(string $name): ?Group {
-        $sql = "SELECT * FROM groups WHERE name = :name";
+    public function findByName(string $name, int $userId): array
+    {
+        $sql = "
+            SELECT g.*, 
+                   (SELECT COUNT(*) FROM user_groups WHERE group_id = g.id) AS total_members,
+                   (SELECT COUNT(*) FROM user_groups WHERE group_id = g.id AND user_id = :user_id) AS is_member
+            FROM groups g 
+            WHERE g.name LIKE :name";
         
-        $rows = $this->db->queryPrepared($sql, ['name' => $name]);
-        
-        if (!empty($rows)) {
-            $row = $rows[0];
+        $rows = $this->db->queryPrepared($sql, ['name' => '%' . $name . '%', 'user_id' => $userId]);
+    
+        $groups = [];
+        foreach ($rows as $row) {
             if (isset($row['id'], $row['name'], $row['description'], $row['created_at'])) {
                 $group = new Group();
                 $group->setId($row['id']);
@@ -81,11 +87,13 @@ public function delete(int $id): bool {
                 $group->setDescription($row['description']);
                 $group->setCreatedAt($row['created_at']);
                 $group->setAccessType($row['access_type']);
-                return $group;
+                $group->total_members = (int) $row['total_members'];//membre total
+                $group->is_member = (bool) $row['is_member']; //deja membre
+                $groups[] = $group;
             }
         }
-        
-        return null;
+    
+        return $groups;
     }
 
     public function findAll(): array {

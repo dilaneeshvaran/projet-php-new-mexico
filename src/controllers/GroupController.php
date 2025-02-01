@@ -42,6 +42,13 @@ class GroupController {
             exit();
         }
         $groupId = $this->retrieveGroupId();
+        $userId = (new Session())->getUserId();
+
+        if (!$this->userGroupRepository->isMember((int)$groupId, (int)$userId)) {
+            $this->renderGroupPage(["Vous n'êtes pas membre de ce groupe !"], $groupId);
+            return;
+        }
+
         $group = $this->groupService->getGroupById((int)$groupId);
         if ($group) {
             $this->renderGroupPage([], $groupId, $group);
@@ -269,6 +276,53 @@ class GroupController {
         $view = new View('Group/delete_group_success.php', 'front.php');
         echo $view->render();
     }
+
+    # SEARCH GROUP
+            public function renderSearchGroupPage(array $errors = [], ?array $groups = []): void
+            {
+                $pageId = 1;
+                $pageData = $this->pageRepository->findOneById($pageId);
+        
+                //alternative values if $pageData is null
+                $title = $pageData ? $pageData->getTitle() : "Upload Photo";
+                $description = $pageData ? $pageData->getDescription() : "Upload your photos";
+                $content = $pageData ? $pageData->getContent() : "";
+        
+                $csrfToken = $_SESSION['csrf_token'] ?? bin2hex(random_bytes(32));
+                $_SESSION['csrf_token'] = $csrfToken;
+        
+                $view = new View("Group/search_group.php", "front.php");
+                $view->addData("title", $title);
+                $view->addData("description", $description);
+                $view->addData("content", $content);
+                $view->addData("csrfToken", $csrfToken);
+                $view->addData("errors", $errors);
+                $view->addData("groups", $groups);
+                echo $view->render();
+            }
+        
+        
+            public function searchGroup(): void
+            {
+                $session = new Session();
+                if (!$session->isLogged()) {
+                    header('Location: /login');
+                    exit();
+                }
+            
+                $errors = [];
+                $searchGroupName = $_POST['searchGroupName'] ?? '';
+                $userId = $_SESSION['user_id'] ?? null;
+            
+                try {
+                    $groups = $this->groupService->getGroupByName($searchGroupName, $userId);
+                    $this->renderSearchGroupPage($errors, $groups);
+                } catch (\Exception $e) {
+                    $errors[] = $e->getMessage();
+                    $this->renderSearchGroupPage($errors);
+                }
+            }
+            
 
 
     private function retrieveGroupId(): int {
