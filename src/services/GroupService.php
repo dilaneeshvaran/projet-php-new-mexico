@@ -18,7 +18,7 @@ class GroupService {
     }
 
     public function getGroupByName(string $name, int $userId): array {
-        return $this->groupRepository->findByName($name, $userId);
+        return $this->groupRepository->searchByName($name, $userId);
     }
 
     public function createGroup(array $data): array {

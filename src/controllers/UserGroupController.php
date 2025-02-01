@@ -17,7 +17,7 @@ class UserGroupController {
 
     private PageRepository $pageRepository;
 
-    private GroupRepository $GroupRepository;
+    private GroupRepository $groupRepository;
 
     private GroupService $groupService;
 
@@ -26,8 +26,8 @@ class UserGroupController {
     public function __construct() {
         $db = new SQL();
         $this->pageRepository = new PageRepository($db);
-        $this->GroupRepository = new GroupRepository($db);
-        $this->groupService = new GroupService($this->GroupRepository);
+        $this->groupRepository = new GroupRepository($db);
+        $this->groupService = new GroupService($this->groupRepository);
         $this->userGroupService = new UserGroupService(new UserGroupRepository($db));
     }
 
@@ -227,7 +227,7 @@ class UserGroupController {
 
     //JOIN GROUP
 
-    public function renderJoinGroupPage(array $errors = []): void
+    public function renderJoinRequest(array $errors = [],  ?array $groups = []): void
     {
         $pageId = 1;
         $pageData = $this->pageRepository->findOneById($pageId);
@@ -246,11 +246,8 @@ class UserGroupController {
         $view->addData("content", $content);
         $view->addData("csrfToken", $csrfToken);
         $view->addData("errors", $errors);
-        $view->addData("groupId", $groupId);
-        $view->addData("memberId", $memberId);
-        $view->addData("memberDetails", $memberDetails);
+        $view->addData("groups", $groups);
         echo $view->render();
-        
     }
 
     public function joinGroup(): void
@@ -271,18 +268,8 @@ class UserGroupController {
         exit();
         }
 
-        try {
-            if (!$groupId || !is_numeric($groupId)) {
-                $errors[] = "ID du groupe invalide.";
-            }
-            else {
-                if ($this->userGroupService->joinGroup($groupId, $currentUserId)) {
-                    $errors[] = "Échec de l’adhésion au groupe.";
-                    header("Location: /group/search/result");
-                    exit();
-                } else {
-                    $errors['Failed to join group'];
-                }
+            if (empty($errors)) {
+                $errors[] = $this->userGroupService->joinGroup($groupId, $currentUserId);
             }
 
             if (empty($errors)) {
@@ -291,10 +278,17 @@ class UserGroupController {
                 exit();
             }
 
-        } catch (\Exception $e) {
-            $errors[] = $e->getMessage();
-        }
-        $this->renderJoinGroupPage($errors);
+            $searchGroupName = $_POST['searchGroupName'] ?? '';
+            $userId = $_SESSION['user_id'] ?? null;
+
+
+            try {
+                $groups = $this->groupService->getGroupByName($searchGroupName, $userId);
+                $this->renderJoinRequest($errors, $groups);
+            } catch (\Exception $e) {
+                $errors[] = $e->getMessage();
+                $this->renderJoinRequest($errors);
+            }
     }
     
 

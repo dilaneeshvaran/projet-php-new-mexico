@@ -67,7 +67,27 @@ public function delete(int $id): bool {
         return null;
     }
 
-    public function findByName(string $name, int $userId): array
+    public function findByName(string $name): ?Group {
+        $sql = "SELECT * FROM groups WHERE name = :name";
+
+        $rows = $this->db->queryPrepared($sql, ['name' => $name]);
+
+        if (!empty($rows)) {
+            $row = $rows[0];
+            if (isset($row['id'], $row['name'], $row['description'], $row['created_at'])) {
+                $group = new Group();
+                $group->setId($row['id']);
+                $group->setName($row['name']);
+                $group->setDescription($row['description']);
+                $group->setCreatedAt($row['created_at']);
+                return $group;
+            }
+        }
+
+        return null;
+    }
+
+    public function searchByName(string $name, int $userId): array
     {
         $sql = "
             SELECT g.*, 
@@ -99,7 +119,7 @@ public function delete(int $id): bool {
     public function findAll(): array {
         $sql = "SELECT * FROM groups ORDER BY created_at DESC";
         
-        $rows = $this->db->query($sql);
+        $rows = $this->db->queryPrepared($sql);
         
         $groups = [];
         foreach ($rows as $row) {

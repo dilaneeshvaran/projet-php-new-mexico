@@ -97,18 +97,18 @@ public function joinGroup(int $groupId, int $userId): array
         $userGroup->setGroupAccess('reader');
 
         if (!$this->userGroupRepository->adminCreateGroup($userGroup)) {
-            $errors[] = "Erreur lors de l'adhésion au groupe.";
+            $errors[] = "Erreur lors de l'adhesion au groupe.";
         }
     } elseif ($accessType === 'on_invitation') {
         //check if there's already a pending request
         if ($this->userGroupRepository->hasPendingJoinRequest($groupId, $userId)) {
-            $errors[] = "Votre demande est déjà en attente.";
+            $errors[] = "Votre demande est deja en attente.";
         } else {
             //create join request in db
             if (!$this->userGroupRepository->addJoinRequest($groupId, $userId)) {
-                $errors[] = "Erreur lors de la demande d'adhésion.";
+                $errors[] = "Erreur lors de la demande d adhésion.";
             } else {
-                $errors[] = "Votre demande a été envoyée.";
+                $errors[] = "Votre demande a ete envoyée.";
             }
         }
     } else {

@@ -6,19 +6,10 @@
     <button type="submit">Search</button>
 </form>
 
-<?php if (isset($_SESSION['join_group_errors'])): ?>
-    <div class="alert">
-        <?php foreach ($_SESSION['join_group_errors'] as $error): ?>
-            <p><?= htmlspecialchars($error) ?></p>
-        <?php endforeach; ?>
-    </div>
-    <?php unset($_SESSION['join_group_errors']); ?>
-<?php endif; ?>
-
 <?php if (!empty($errors)): ?>
-    <div class="errors">
+    <div style="color: red; margin-bottom: 20px;">
         <?php foreach ($errors as $error): ?>
-            <p><?= htmlspecialchars($error) ?></p>
+            <p><?= htmlspecialchars(is_array($error) ? json_encode($error) : $error) ?></p>
         <?php endforeach; ?>
     </div>
 <?php endif; ?>

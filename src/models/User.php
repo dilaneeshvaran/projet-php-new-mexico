@@ -7,6 +7,7 @@ class User{
     private $lastname;
     private $email;
     private $password;
+    private $created_at;
 
     public function getId(){
         return $this->id;
@@ -45,5 +46,13 @@ class User{
     public function setPassword(string $password): void
     {
         $this->password = $password;
+    }
+
+    public function getCreatedAt(): string {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(string $created_at): void {
+        $this->created_at = $created_at;
     }
 }

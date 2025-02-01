@@ -55,4 +55,12 @@
     </tbody>
 </table>
 
+<?php if ($userRole === 'admin'): ?>
+<form method="POST" action="/group/<?= htmlspecialchars($groupId) ?>/join-requests">
+    <input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">
+    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
+    <button type="submit">Voir les demandes reçues</button>
+</form>
+<?php endif; ?>
+
 <a href="/group/<?= htmlspecialchars($groupId) ?>">back</a>

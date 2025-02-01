@@ -146,6 +146,15 @@
   controller: UserGroupController
   action: leaveGroup
 
+#manage group join requests
+/group/{groupId}/join-requests:
+  controller: GroupJoinRequestController
+  action: index
+
+/group/{groupId}/join-requests/{requestId}/process:
+  controller: GroupJoinRequestController
+  action: processRequest
+
 #view group
 /group/{groupId}:
   controller: GroupController
