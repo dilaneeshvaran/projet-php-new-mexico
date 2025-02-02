@@ -155,6 +155,31 @@
   controller: GroupJoinRequestController
   action: processRequest
 
+#add member to group
+/group/{groupId}/invite-member:
+  controller: InviteMemberController
+  action: index
+
+#search user to invite
+/group/{groupId}/invite-member/search:
+  controller: InviteMemberController
+  action: searchUser
+
+#send invite
+/group/{groupId}/invite-member/{memberId}/send:
+  controller: InviteMemberController
+  action: sendInvitation
+
+#see received invitations
+/invitations:
+  controller: InvitationController
+  action: index
+
+#respond invitation
+/invitations/{invitationId}/respond:
+  controller: InvitationController
+  action: respondInvitation
+
 #view group
 /group/{groupId}:
   controller: GroupController

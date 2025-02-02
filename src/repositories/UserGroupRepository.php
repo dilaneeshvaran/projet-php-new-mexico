@@ -108,6 +108,21 @@ public function getUserRole(int $groupId, int $userId): ?string
     return $result[0]['role'] ?? null;
 }
 
+public function getGroupAdmin(int $groupId): ?array
+{
+    $query = "
+        SELECT u.id, u.firstname, u.lastname, u.email
+        FROM user_groups ug
+        JOIN users u ON ug.user_id = u.id
+        WHERE ug.group_id = :group_id AND ug.role = 'admin'
+    ";
+
+    $params = ['group_id' => $groupId];
+    $result = $this->db->queryPrepared($query, $params);
+
+    return $result ? $result[0] : null;
+}
+
 public function getGroupAccess(int $groupId, int $userId): ?string
 {
     $query = "SELECT group_access FROM user_groups WHERE group_id = :group_id AND user_id = :user_id";

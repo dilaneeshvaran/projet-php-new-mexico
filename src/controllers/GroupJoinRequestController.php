@@ -62,7 +62,6 @@ class GroupJoinRequestController {
         $requestId = $_POST['requestId'] ?? null;
         $status = $_POST['status'] ?? null;
         $groupId = $this->retrieveGroupId();
-        var_dump($groupId);
 
         if (!$requestId || !$status) {
             die("Invalid request");

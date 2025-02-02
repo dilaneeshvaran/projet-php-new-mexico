@@ -9,6 +9,14 @@
 <?php $groupId = $this->data['groupId'] ?? null; ?>
 <?php $userRole = $this->data['userRole'] ?? null; ?>
 
+<?php if ($userRole === 'admin'): ?>
+<form method="POST" action="/group/<?= htmlspecialchars($groupId) ?>/invite-member">
+    <input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">
+    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
+    <button type="submit">Ajouter un membre</button>
+</form>
+<?php endif; ?>
+
 <table border="1" cellpadding="10">
     <thead>
         <tr>
