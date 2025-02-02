@@ -14,6 +14,26 @@ class UserRepository
         $this->db = $db;
     }
 
+    public function findAllUsers(): array
+    {
+        $query = "SELECT id, firstname, lastname, email, created_at FROM users";
+        $result = $this->db->queryPrepared($query);
+
+        $users = [];
+        foreach ($result as $userData) {
+            $user = new User();
+            $user->setId($userData['id']);
+            $user->setFirstname($userData['firstname']);
+            $user->setLastname($userData['lastname']);
+            $user->setEmail($userData['email']);
+            $user->setCreatedAt($userData['created_at']);
+
+            $users[] = $user;
+        }
+
+        return $users;
+    }
+
     public function findOneByEmail(string $email): ?User
     {
         $query = "SELECT id, firstname, lastname, email, password FROM users WHERE email = :email";
@@ -102,4 +122,38 @@ public function findUserById(int $id): ?User
 
     return $user;
 }
+
+public function exists(int $id): bool
+{
+    $query = "SELECT id FROM users WHERE id = :id";
+    $result = $this->db->queryPrepared($query, ['id' => $id]);
+
+    return !empty($result);
+}
+
+public function searchUsersByNameOrEmail(string $keyword): array
+{
+    $query = "SELECT * FROM users WHERE 
+              firstname LIKE :keyword OR 
+              lastname LIKE :keyword OR 
+              email LIKE :keyword";
+    
+    $params = ['keyword' => "%$keyword%"];
+    
+    $results = $this->db->queryPrepared($query, $params);
+    
+    $users = [];
+    foreach ($results as $result) {
+        $user = new User();
+        $user->setId($result['id']);
+        $user->setFirstname($result['firstname']);
+        $user->setLastname($result['lastname']);
+        $user->setEmail($result['email']);
+        $user->setCreatedAt($result['created_at']);
+        $users[] = $user;
+    }
+    
+    return $users;
+}
+
 }

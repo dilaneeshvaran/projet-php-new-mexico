@@ -33,6 +33,8 @@ class GroupJoinRequestService {
     }
 
     public function processRequest(int $requestId, string $status, int $groupId): bool {
+
+        
         $request = $this->groupJoinRequestRepository->findById($requestId);
         if (!$request) {
             return false;

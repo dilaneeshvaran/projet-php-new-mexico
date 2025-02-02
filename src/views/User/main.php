@@ -24,7 +24,8 @@ if (isset($_SESSION["firstname"])) {
 <br>
 <a href="/group/create">Créer un groupe</a>
 <a href="/group/search/result">Rejoindre un groupe</a>
-
+<br>
+<a href="/invitations">Voir les invitations reçues</a>
 <?php
     //$pageController = new PageController();
     //$pageController->show();
