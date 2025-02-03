@@ -66,6 +66,9 @@ class PhotoController {
         $groupId = $this->retrieveGroupId();
         $userId = $_SESSION['user_id'] ?? 0;
 
+        //check if user is the creator of the photo or admin of the group
+        $userRole = $this->userGroupRepository->getUserRole($groupId, $userId);
+        
         $groupAccess = $this->userGroupRepository->getGroupAccess($groupId, $userId) ?? "No Access";
         $photos = $this->photoService->fetchPhotosByGroupId($groupId);
         $group = $this->groupService->getGroupById($groupId);
@@ -78,7 +81,9 @@ class PhotoController {
         $view->addData("errors", $errors);
         $view->addData("photos", $photos);
         $view->addData("group", $group);
+        $view->addData("userRole", $userRole);
         $view->addData("group_access", $groupAccess);
+        $view->addData("userId", $userId);
         echo $view->render();
     }
 

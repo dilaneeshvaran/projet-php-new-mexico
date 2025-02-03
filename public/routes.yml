@@ -72,6 +72,11 @@
   controller: UploadController
   action: success
 
+#delete photo
+/group/{groupId}/photo/{photoId}/delete:
+  controller: DeletePhotoController
+  action: delete
+
 #view photos
 /group/{groupId}/photos:
   controller: PhotoController
