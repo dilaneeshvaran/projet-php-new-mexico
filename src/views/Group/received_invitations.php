@@ -1,4 +1,7 @@
 <h1>Pending Invitations</h1>
+<?php if (empty($invitations)): ?>
+    <p>No pending invitations.</p>
+<?php else: ?>
     <table border="1">
         <thead>
             <tr>
@@ -26,5 +29,6 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+<?php endif; ?>
 
 <a href="/">Back</a>

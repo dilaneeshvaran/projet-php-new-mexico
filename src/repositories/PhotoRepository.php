@@ -51,4 +51,36 @@ public function findByGroupId(int $groupId): array {
     }
     return $photos;
 }
+
+public function findById(int $photoId): ?Photo {
+    $sql = "SELECT * FROM photos WHERE id = :id";
+    $rows = $this->db->queryPrepared($sql, ['id' => $photoId]);
+
+    if (empty($rows)) {
+        return null; 
+    }
+
+    $row = $rows[0]; //fetch first row
+
+
+    $photo = new Photo();
+    $photo->setId($row['id'] ?? null);
+    $photo->setFilename($row['filename'] ?? null);
+    $photo->setOriginalName($row['original_name'] ?? null);
+    $photo->setDescription($row['description'] ?? null);
+    $photo->setTitle($row['title'] ?? null);
+    $photo->setMimeType($row['mime_type'] ?? null);
+    $photo->setSize($row['size'] ?? null);
+    $photo->setGroupId($row['group_id'] ?? null);
+    $photo->setUserId($row['user_id'] ?? null);
+    $photo->setCreatedAt($row['created_at'] ?? null);
+
+    return $photo;
+}
+
+public function delete(int $photoId): bool {
+    $sql = "DELETE FROM photos WHERE id = :id";
+    return $this->db->executePrepared($sql, ['id' => $photoId]);
+}
+
 }
