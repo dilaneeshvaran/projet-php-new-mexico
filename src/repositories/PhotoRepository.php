@@ -12,43 +12,66 @@ class PhotoRepository {
         $this->db = $database;
     }
 
-    public function save(Photo $photo): bool
-{
-    $sql = "INSERT INTO photos (filename, original_name, description, title, mime_type, size, group_id, user_id)
-            VALUES (:filename, :original_name, :description, :title, :mime_type, :size, :group_id, :user_id)";
-    
-    return $this->db->executePrepared($sql, [
-        'filename' => $photo->getFilename(),
-        'original_name' => $photo->getOriginalName(),
-        'description' => $photo->getDescription(),
-        'title' => $photo->getTitle(),
-        'mime_type' => $photo->getMimeType(),
-        'size' => $photo->getSize(),
-        'group_id' => $photo->getGroupId(),
-        'user_id' => $photo->getUserId(),
-    ]);
-}
-
-
-public function findByGroupId(int $groupId): array {
-    $sql = "SELECT * FROM photos WHERE group_id = :group_id ORDER BY created_at DESC";
-    $rows = $this->db->queryPrepared($sql, ['group_id' => $groupId]);
-    
-    $photos = [];
-    foreach ($rows as $row) {
-        $photo = new Photo();
-        $photo->setId($row['id']);
-        $photo->setFilename($row['filename']);
-        $photo->setOriginalName($row['original_name']);
-        $photo->setDescription($row['description'] ?? '');
-        $photo->setTitle($row['title'] ?? '');
-        $photo->setMimeType($row['mime_type']);
-        $photo->setSize($row['size']);
-        $photo->setGroupId($row['group_id']);
-        $photo->setUserId($row['user_id']);
-        $photo->setCreatedAt($row['created_at']);
-        $photos[] = $photo;
+    public function save(Photo $photo): bool {
+        $sql = "INSERT INTO photos (filename, original_name, description, title, mime_type, size, group_id, user_id, is_public, share_token)
+                VALUES (:filename, :original_name, :description, :title, :mime_type, :size, :group_id, :user_id, :is_public, :share_token)";
+        
+        return $this->db->executePrepared($sql, [
+            'filename' => $photo->getFilename(),
+            'original_name' => $photo->getOriginalName(),
+            'description' => $photo->getDescription(),
+            'title' => $photo->getTitle(),
+            'mime_type' => $photo->getMimeType(),
+            'size' => $photo->getSize(),
+            'group_id' => $photo->getGroupId(),
+            'user_id' => $photo->getUserId(),
+            'is_public' => $photo->isPublic(),
+            'share_token' => $photo->getShareToken(),
+        ]);
     }
-    return $photos;
-}
+
+    public function findByGroupId(int $groupId): array {
+        $sql = "SELECT * FROM photos WHERE group_id = :group_id ORDER BY created_at DESC";
+        $rows = $this->db->queryPrepared($sql, ['group_id' => $groupId]);
+        
+        $photos = [];
+        foreach ($rows as $row) {
+            $photos[] = $this->hydrate($row);
+        }
+        return $photos;
+    }
+
+    public function updateSharing(int $photoId, bool $isPublic, ?string $token): bool {
+        return $this->db->executePrepared(
+            "UPDATE photos SET is_public = ?, share_token = ? WHERE id = ?",
+            [$isPublic, $token, $photoId]
+        );
+    }
+
+    public function findByToken(string $token): ?Photo {
+        $result = $this->db->queryPrepared(
+            "SELECT * FROM photos WHERE share_token = ? AND is_public = TRUE LIMIT 1",
+            [$token]
+        );
+
+        return $result ? $this->hydrate($result[0]) : null;
+    }
+
+    private function hydrate(array $data): Photo {
+        $photo = new Photo();
+        $photo->setId($data['id']);
+        $photo->setFilename($data['filename']);
+        $photo->setOriginalName($data['original_name']);
+        $photo->setDescription($data['description'] ?? '');
+        $photo->setTitle($data['title'] ?? '');
+        $photo->setMimeType($data['mime_type']);
+        $photo->setSize($data['size']);
+        $photo->setGroupId($data['group_id']);
+        $photo->setUserId($data['user_id']);
+        $photo->setCreatedAt($data['created_at']);
+        $photo->setIsPublic((bool)$data['is_public']);
+        $photo->setShareToken($data['share_token']);
+
+        return $photo;
+    }
 }

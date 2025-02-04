@@ -8,5 +8,10 @@ group_id INT NOT NULL,
 user_id INT NOT NULL,
 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 FOREIGN KEY (group_id) REFERENCES groups(id),
-FOREIGN KEY (user_id) REFERENCES users(id)
+FOREIGN KEY (user_id) REFERENCES users(id),
+is_public TINYINT(1) DEFAULT 0 NOT NULL, 
+share_token VARCHAR(255) DEFAULT NULL
 );
+
+
+    

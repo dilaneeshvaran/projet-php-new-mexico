@@ -17,17 +17,11 @@ use App\Core\Session;
 class PhotoController {
 
     private PageRepository $pageRepository;
-
     private PhotoRepository $photoRepository;
-
     private PhotoService $photoService;
-
     private GroupRepository $groupRepository;
-
     private GroupService $groupService;
-
     private UserRepository $userRepository;
-
     private UserGroupRepository $userGroupRepository;
     
     public function __construct() {
@@ -35,7 +29,7 @@ class PhotoController {
         $this->userGroupRepository = new UserGroupRepository($db);
         $this->photoRepository = new PhotoRepository($db);
         $this->userRepository = new UserRepository($db);
-        $this->photoService = new PhotoService($this->photoRepository,$this->userRepository);
+        $this->photoService = new PhotoService($this->photoRepository, $this->userRepository);
         $this->pageRepository = new PageRepository($db);
         $this->groupRepository = new GroupRepository($db);
         $this->groupService = new GroupService($this->groupRepository);
@@ -43,7 +37,7 @@ class PhotoController {
 
     public function index(array $errors = [], array $formData = []): void
     {
-        if(!(new Session())->isLogged()) {
+        if (!(new Session())->isLogged()) {
             header('Location: /login');
             exit();
         }
@@ -55,7 +49,7 @@ class PhotoController {
         $pageId = 1;
         $pageData = $this->pageRepository->findOneById($pageId);
 
-        //alternative values if $pageData is null
+        // Alternative values if $pageData is null
         $title = $pageData ? $pageData->getTitle() : "Upload Photo";
         $description = $pageData ? $pageData->getDescription() : "Upload your photos";
         $content = $pageData ? $pageData->getContent() : "";
@@ -90,5 +84,29 @@ class PhotoController {
         $urlParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
         $groupIndex = array_search('group', $urlParts);
         return ($groupIndex !== false && isset($urlParts[$groupIndex + 1])) ? (int)$urlParts[$groupIndex + 1] : 0;
+    }
+
+    public function toggleSharing(int $photoId): void {
+        $photo = $this->photoRepository->find($photoId);
+        
+        if (!$photo) {
+            header("Location: /error?message=Photo not found");
+            exit();
+        }
+
+        $userId = $_SESSION['user_id'] ?? 0;
+
+        if (!$this->photoService->canManage($photo, $userId, $photo->getGroupId())) {
+            header("Location: /error?message=Unauthorized action");
+            exit();
+        }
+
+        $newStatus = !$photo->isPublic();
+        $token = $newStatus ? $this->photoService->generateShareToken() : null;
+
+        $this->photoRepository->updateSharing($photoId, $newStatus, $token);
+
+        header("Location: /photo/$photoId?shared=" . ($newStatus ? "true" : "false"));
+        exit();
     }
 }

@@ -184,3 +184,15 @@
 /group/{groupId}:
   controller: GroupController
   action: index
+
+photo_sharing:
+  path: /photos/{id}/sharing
+  controller: App\Controllers\PhotoController
+  action: toggleSharing
+  methods: POST
+
+public_photo:
+  path: /share/{token}
+  controller: App\Controllers\PublicPhotoController
+  action: show
+  methods: GET
