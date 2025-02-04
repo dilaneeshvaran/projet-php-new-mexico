@@ -31,6 +31,7 @@ Install dependencies
 
 ```bash
 composer install
+npm install
 ```
 
 Make sure docker is running !
@@ -48,6 +49,13 @@ make database
 ```
 
 > Run the queries from db/migrations to create the necessary tables
+
+Build scss+js (into 'public/assets' folder) & watch changes scss+js
+
+```bash
+npm build-style
+npm watch-style
+```
 
 ## Other helpful commands
 

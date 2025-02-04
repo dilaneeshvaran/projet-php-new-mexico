@@ -5,11 +5,14 @@
     <meta charset="UTF-8">
     <title><?php echo htmlspecialchars($title ?? "Titre de ma page"); ?></title>
     <meta name="description" content="<?php echo htmlspecialchars($description ?? "Ceci est la description de la page"); ?>">
-</head>
+    <link rel="stylesheet" href="/assets/main.css">
+    <script src="/assets/main.js"></script>
+    </head>
 
 <body>
-    <h1>Template du front</h1>
+    <h1 class="button">Template du front</h1>
     <?php echo $content; ?>
-</body>
+   </body>
 
 </html>
+

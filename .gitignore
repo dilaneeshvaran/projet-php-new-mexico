@@ -2,7 +2,9 @@
 **/.env
 **/database
 **/vendor
+**/node_modules
 public/uploads/*
+public/assets/*
 !/public/uploads/.gitkeep
 
 TODO.md
