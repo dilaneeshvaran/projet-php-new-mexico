@@ -11,7 +11,9 @@
 
 <body>
     <h1 class="button">Template du front</h1>
+    <div class="container">
     <?php echo $content; ?>
+    </div>
    </body>
 
 </html>

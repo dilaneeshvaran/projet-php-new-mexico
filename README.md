@@ -54,7 +54,14 @@ Build scss+js (into 'public/assets' folder) & watch changes scss+js
 
 ```bash
 npm build-style
-npm watch-style
+npm watch-style (doesnt work > use watch-css)
+```
+
+Build scss only (into 'public/assets' folder) & watch scss only
+
+```bash
+npm build-css
+npm watch-css
 ```
 
 ## Other helpful commands

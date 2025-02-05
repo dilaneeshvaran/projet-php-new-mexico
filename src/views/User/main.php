@@ -4,32 +4,38 @@ use App\Controllers\MainController;
 use App\Controllers\PageController;
 
 $mainController = new MainController();
-
-if (isset($_SESSION["firstname"])) {
-    if ($mainController->getPseudo() == $_SESSION["firstname"]) {
-        echo "Welcome back " . htmlspecialchars($mainController->getPseudo());
-        echo '<br><a href="/logout">Se déconnecter</a>';
-    }
 ?>
-<h1>Vos Groupes:</h1>
-<br>
-<?php foreach ($groups as $groupData):
-    $group = $groupData['group']; ?>
-    <a href="group/<?= htmlspecialchars($group->getId()) ?>">
-        <?= htmlspecialchars($group->getName()) ?>
-    </a><br>
-<?php endforeach; ?>
 
-<br>
-<br>
-<a href="/group/create">Créer un groupe</a>
-<a href="/group/search/result">Rejoindre un groupe</a>
-<br>
-<a href="/invitations">Voir les invitations reçues</a>
-<?php
-    //$pageController = new PageController();
+<div class="main">
+    <div class="main__welcome">
+        <?php if (isset($_SESSION["firstname"])): ?>
+            <p>Welcome back <?= htmlspecialchars($mainController->getPseudo()); ?></p>
+            <a href="/logout" class="main__logout">Se déconnecter</a>
+    </div>
+
+    <div class="main__groups">
+        <h1>Vos Groupes:</h1>
+        <?php foreach ($groups as $groupData): 
+            $group = $groupData['group']; ?>
+            <a href="group/<?= htmlspecialchars($group->getId()) ?>">
+                <?= htmlspecialchars($group->getName()) ?>
+            </a>
+        <?php endforeach; ?>
+    </div>
+
+    <div class="main__actions">
+        <a href="/group/create">Créer un groupe</a>
+        <a href="/group/search/result">Rejoindre un groupe</a>
+        <a href="/invitations">Voir les invitations reçues</a>
+    </div>
+</div>
+
+
+
+    <?php else:
+            //$pageController = new PageController();
     //$pageController->show();
-} else {
-    header('Location: /login');
-    exit();
-}
+            header('Location: /login');
+            exit();
+        
+    endif; ?>

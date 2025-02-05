@@ -1,6 +1,5 @@
 <?php $groupId = $this->data['groupId'] ?? null; ?>
-
-
-L'image a bien été posté.
-<br>
-<a href="/group/<?=htmlspecialchars($groupId)?>/photos">Retour à l'accueil</a>
+<div class="success">
+    <p class="success__message">L'image a bien été postée.</p>
+    <a href="/group/<?=htmlspecialchars($groupId)?>/photos" class="success__link">Retour à l'accueil</a>
+</div>

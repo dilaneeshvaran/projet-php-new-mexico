@@ -1,6 +1,6 @@
 @use "partials/layers";
 @use "vendor/modern-normalize.css";
-@use "partials/globals";
+//@use "partials/globals";
 @use "partials/utilities";
 
 @use "components/container";
@@ -9,3 +9,7 @@
 @use "components/grid";
 @use "components/spinner";
 @use "components/navbar";
+
+@use "components/form";
+@use "components/errors";
+@use "components/success";

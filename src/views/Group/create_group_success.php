@@ -1,3 +1,4 @@
-Votre groupe a bien été créé.
-<br>
-<a href="/">Retour</a>
+<div class="success">
+    <p class="success__message">Votre groupe a bien été créé.</p>
+    <a href="/" class="success__link">Retour</a>
+</div>

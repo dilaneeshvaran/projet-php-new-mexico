@@ -8,5 +8,7 @@ esbuild
     outfile: "public/assets/main.js",
     plugins: [sassPlugin()],
     sourcemap: true,
+    //format: "esm",
+    //globalName: "NewMexicoFramework",
   })
   .catch(() => process.exit(1));
