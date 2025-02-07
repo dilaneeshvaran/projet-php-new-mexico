@@ -2,8 +2,9 @@
 <?php $groupAccess = $this->data['group_access'] ?? null; ?>
 
 <div class="group-photos">
+
     <div class="group-photos__navigation">
-        <a class="link__back" href="/group/<?= $group->getId() ?>">Back</a>
+        <a class="link__back" href="/group/<?= $group->getId() ?>">Retour</a>
         <?php if ($groupAccess === 'writer'): ?>
         <a class="link__main" href="/group/<?= $group->getId() ?>/upload">Ajouter une Photo</a>
         <?php endif; ?>
@@ -19,8 +20,8 @@
         </ul>
     </div>
     <?php endif; ?>
+    <h2 class="group-photos__title">Groupe : <?= $group->getName() ?></h2>
 
-    <h2 class="group-photos__title">Group Photos</h2>
 
     <?php if (!empty($photos)): ?>
     <ul class="group-photos__list">
@@ -33,20 +34,20 @@
                     alt="<?= htmlspecialchars($photo->getOriginalName()) ?>">
             </div>
             <div class="group-photos__content">
-                <p><strong>Title:</strong> <?= htmlspecialchars($photo->getTitle()) ?></p>
+                <p><strong>Titre:</strong> <?= htmlspecialchars($photo->getTitle()) ?></p>
                 <p><strong>Description:</strong> <?= htmlspecialchars($photo->getDescription()) ?></p>
-                <p><strong>Uploaded by:</strong> <?= htmlspecialchars($photo->userFullName) ?></p>
-                <p><strong>Uploaded at:</strong> <?= htmlspecialchars($photo->getCreatedAt()) ?></p>
+                <p><strong>Posté par:</strong> <?= htmlspecialchars($photo->userFullName) ?></p>
+                <p><strong>Posté le:</strong> <?= htmlspecialchars($photo->getCreatedAt()) ?></p>
             </div>
             <?php if ($deleteAccess): ?>
             <div class="group-photos__actions">
                 <form
                     action="/group/<?= htmlspecialchars($group->getId()) ?>/photo/<?= htmlspecialchars($photo->getId()) ?>/delete"
-                    method="POST" onsubmit="return confirm('Are you sure you want to delete this photo?');">
+                    method="POST" onsubmit="return confirm('Êtes vous sûr de supprimer la photo?');">
                     <input type="hidden" name="photoId" value="<?= htmlspecialchars($photo->getId()) ?>">
                     <input type="hidden" name="groupId" value="<?= htmlspecialchars($group->getId()) ?>">
                     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
-                    <button class="button__delete" type="submit">Delete</button>
+                    <button class="button__delete" type="submit">Supprimer</button>
                 </form>
             </div>
             <?php endif; ?>
@@ -55,7 +56,7 @@
     </ul>
     <?php else: ?>
     <div class="group-photos__empty">
-        <p>No photos available.</p>
+        <p>Aucune photo dans ce groupe.</p>
     </div>
     <?php endif; ?>
 </div>

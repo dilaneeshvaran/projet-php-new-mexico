@@ -2,21 +2,17 @@
 @use "sass:color";
 @use "../partials/mixins" as m;
 
-//updated colors for alerts & noritifications
 $notification-colors: (
     "success": #10b981,
-    //emerald
     "success-light": #d1fae5,
     "success-dark": #065f46,
     "error": #ef4444,
-    //eed
     "error-light": #fee2e2,
     "error-dark": #991b1b,
     ) !default;
 
 @layer components {
 
-    //base notification styles
     %notification-base {
         border-radius: 12px;
         padding: 1rem;
@@ -25,7 +21,6 @@ $notification-colors: (
         );
 }
 
-//success
 .success {
     display: flex;
     flex-direction: column;
@@ -85,7 +80,6 @@ $notification-colors: (
     }
 }
 
-//error component
 .errors {
     @extend %notification-base;
     background-color: map-get($notification-colors, "error-light");
@@ -121,7 +115,7 @@ $notification-colors: (
         }
     }
 
-    //toast variant pop-up notifications
+    //popup??
     &--toast {
         position: fixed;
         top: 1rem;
@@ -133,7 +127,7 @@ $notification-colors: (
 }
 }
 
-//animation toast notifications
+//animation popup???
 @keyframes slideIn {
     from {
         transform: translateX(100%);

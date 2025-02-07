@@ -25,14 +25,14 @@ class DeletePhotoService
         $photo = $this->photoRepository->findById($photoId);
 
         if (!$photo || $photo->getGroupId() !== $groupId) {
-            $errors[] = 'Photo not found or does not belong to this group.';
+            $errors[] = 'Photo non trouvé !';
             return $errors;
         }
 
         //check if user is the creator of the photo or admin of the group
         $userRole = $this->userGroupRepository->getUserRole($groupId, $userId);
         if ($photo->getUserId() !== $userId && $userRole !== 'admin') {
-            $errors[] = 'You are not authorized to delete this photo.';
+            $errors[] = "Vous n'avez pas les droits !.";
             return $errors;
         }
 
@@ -44,7 +44,7 @@ class DeletePhotoService
 
         //delete photo from database
         if (!$this->photoRepository->delete($photoId)) {
-            $errors[] = 'Failed to delete the photo.';
+            $errors[] = 'Erreur : échec lors de la suppression de la photo.';
         }
 
         return $errors;

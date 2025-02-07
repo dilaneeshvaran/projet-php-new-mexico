@@ -42,7 +42,7 @@ class UserGroupController {
             $this->renderGroupMembersPage([], $groupId);
         } else {
             //TODO : group not found
-            $this->renderGroupMembersPage(['Group not found'], $groupId);
+            $this->renderGroupMembersPage(['Groupe invalide'], $groupId);
         }
     }
 
@@ -52,8 +52,8 @@ class UserGroupController {
         $pageData = $this->pageRepository->findOneById($pageId);
 
         //alternative values if $pageData is null
-        $title = $pageData ? $pageData->getTitle() : "Upload Photo";
-        $description = $pageData ? $pageData->getDescription() : "Upload your photos";
+        $title = $pageData ? $pageData->getTitle() : "Membres";
+        $description = $pageData ? $pageData->getDescription() : "Membre du groupe";
         $content = $pageData ? $pageData->getContent() : "";
 
         $csrfToken = $_SESSION['csrf_token'] ?? bin2hex(random_bytes(32));
@@ -87,12 +87,12 @@ class UserGroupController {
         if ($groupId && $memberId) {
             $memberDetails = $this->userGroupService->getGroupMemberDetails($groupId, $memberId);
             if (!$memberDetails) {
-                $this->renderManageMemberPage(['Member not found or not part of the group'], $groupId, $memberId);
+                $this->renderManageMemberPage(['Utilisateur non trouvé dans le groupe'], $groupId, $memberId);
             } else {
                 $this->renderManageMemberPage([], $groupId, $memberId, $memberDetails);
             }
         } else {
-            $this->renderManageMemberPage(['Group not found'], $groupId, $memberId);
+            $this->renderManageMemberPage(['Groupe Invalide'], $groupId, $memberId);
         }
     }
 
@@ -102,8 +102,8 @@ class UserGroupController {
         $pageData = $this->pageRepository->findOneById($pageId);
 
         //alternative values if $pageData is null
-        $title = $pageData ? $pageData->getTitle() : "Upload Photo";
-        $description = $pageData ? $pageData->getDescription() : "Upload your photos";
+        $title = $pageData ? $pageData->getTitle() : "Gesion du membre";
+        $description = $pageData ? $pageData->getDescription() : "Gestion du membre";
         $content = $pageData ? $pageData->getContent() : "";
 
         $csrfToken = $_SESSION['csrf_token'] ?? bin2hex(random_bytes(32));
@@ -162,7 +162,7 @@ class UserGroupController {
                 header("Location: /group/$groupId/member/$memberId/manage");
                 exit();
             } else {
-                $errors['Failed to update access'];
+                $errors['Mise à jour de l\'accès échouée'];
             }
             }
 
@@ -233,8 +233,8 @@ class UserGroupController {
         $pageData = $this->pageRepository->findOneById($pageId);
 
         //alternative values if $pageData is null
-        $title = $pageData ? $pageData->getTitle() : "Upload Photo";
-        $description = $pageData ? $pageData->getDescription() : "Upload your photos";
+        $title = $pageData ? $pageData->getTitle() : "Demandes pour rejoindre";
+        $description = $pageData ? $pageData->getDescription() : "Demandes pour rejoindre";
         $content = $pageData ? $pageData->getContent() : "";
 
         $csrfToken = $_SESSION['csrf_token'] ?? bin2hex(random_bytes(32));
@@ -301,8 +301,8 @@ class UserGroupController {
         $memberId = $_SESSION['user_id'];
 
         //alternative values if $pageData is null
-        $title = $pageData ? $pageData->getTitle() : "Upload Photo";
-        $description = $pageData ? $pageData->getDescription() : "Upload your photos";
+        $title = $pageData ? $pageData->getTitle() : "Paramètres du membre";
+        $description = $pageData ? $pageData->getDescription() : "Gerer les paramètres du membre";
         $content = $pageData ? $pageData->getContent() : "";
 
         $csrfToken = $_SESSION['csrf_token'] ?? bin2hex(random_bytes(32));
@@ -347,12 +347,11 @@ class UserGroupController {
                     header("Location: /group/member/settings");
                     exit();
                 } else {
-                    $errors['Failed to leave group'];
+                    $errors['Erreur lors de la sortie du groupe'];
                 }
             }
 
             if (empty($errors)) {
-                //redirect to group page : TODO
                 header("Location: /");
                 exit();
             }

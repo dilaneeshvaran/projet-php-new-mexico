@@ -13,6 +13,7 @@
         background-color: map-get($colors, "neutral");
         padding: 2rem;
 
+
         &--large {
             .form__container {
                 max-width: 600px;
@@ -75,6 +76,7 @@
             color: map-get($colors, "text-secondary");
             font-size: 0.875rem;
             font-weight: 500;
+            margin-bottom: 0.5rem;
         }
 
         &__input {
@@ -192,6 +194,15 @@
                 &:not(:last-child) {
                     margin-bottom: 0.5rem;
                 }
+            }
+        }
+
+        @media (max-width: map-get($breakpoints, "sm")) {
+            padding: 1rem;
+            margin: 1rem;
+
+            .form__title {
+                font-size: 1.25rem;
             }
         }
     }

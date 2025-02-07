@@ -14,8 +14,8 @@
         <input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">
         <input type="hidden" name="memberId" value="<?= htmlspecialchars($memberId) ?>">
         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
-        <button class="button button--danger button--lg" type="submit">Leave Group</button>
+        <button class="button button--danger button--lg" type="submit">Quitter le Groupe</button>
     </form>
     <br>
-    <a class="button button--secondary button__top" href="/group/<?= htmlspecialchars($groupId) ?>">Back to Group</a>
+    <a class="button button--secondary button__top" href="/group/<?= htmlspecialchars($groupId) ?>">Retour</a>
 </div>

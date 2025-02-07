@@ -1,15 +1,15 @@
 <div class="data-table">
-    <h1 class="data-table__title">Join Requests</h1>
+    <h1 class="data-table__title">Demandes pour rejoindre</h1>
 
     <div class="data-table__container">
         <table class="data-table__table">
             <thead>
                 <tr>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
                     <th>Email</th>
-                    <th>Registered On</th>
-                    <th>Received On</th>
+                    <th>Inscrit Le</th>
+                    <th>Reçue Le</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -31,9 +31,9 @@
                             <input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">
                             <div class="data-table__actions">
                                 <button type="submit" name="status" value="approved"
-                                    class="data-table__button data-table__button--success">Accept</button>
+                                    class="data-table__button data-table__button--success">Accepter</button>
                                 <button type="submit" name="status" value="rejected"
-                                    class="data-table__button data-table__button--danger">Reject</button>
+                                    class="data-table__button data-table__button--danger">Rejecter</button>
                             </div>
                         </form>
                         <?php else: ?>
@@ -49,11 +49,11 @@
                 <?php endforeach; ?>
                 <?php else: ?>
                 <tr>
-                    <td colspan="6" class="data-table__empty">No join requests available.</td>
+                    <td colspan="6" class="data-table__empty">Aucune demande pour rejoindre le groupe.</td>
                 </tr>
                 <?php endif; ?>
             </tbody>
         </table>
     </div>
-    <a href="/group/<?= htmlspecialchars($groupId) ?>/members" class="data-table__back-link">Back to group</a>
+    <a href="/group/<?= htmlspecialchars($groupId) ?>/members" class="data-table__back-link">Retour</a>
 </div>

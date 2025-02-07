@@ -15,7 +15,7 @@ class PhotoValidator {
 
     private function validate(): void {
         if ($this->file['error'] === UPLOAD_ERR_INI_SIZE) {
-            $this->errors[] = 'File size exceeds the maximum limit of 5MB.';
+            $this->errors[] = 'Le Fichier dépasse la taille limite: 5MO.';
             return; //exit if file is larger than 5MB
         }
 
@@ -35,11 +35,11 @@ class PhotoValidator {
         finfo_close($finfo);
 
         if (!in_array($mimeType, self::ALLOWED_TYPES)) {
-            $this->errors[] = 'Invalid file type. Allowed types: JPG, JPEG, PNG, GIF.';
+            $this->errors[] = 'Type du fichier invalide. Types Autorisés: JPG, JPEG, PNG, GIF.';
         }
 
         if ($this->file['size'] > self::MAX_FILE_SIZE) {
-            $this->errors[] = 'File size exceeds the maximum limit of 5MB.';
+            $this->errors[] = 'Le fichier dépasse la taille maximum autorisé: 5MO.';
         }
     }
 

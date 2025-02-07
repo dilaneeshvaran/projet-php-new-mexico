@@ -1,15 +1,15 @@
 <div class="data-table">
-    <h1 class="data-table__title">Pending Invitations</h1>
+    <h1 class="data-table__title">Invitations reçues</h1>
     <?php if (empty($invitations)): ?>
-    <p class="data-table__empty">No pending invitations.</p>
+    <p class="data-table__empty">Aucune invitation en attente.</p>
     <?php else: ?>
     <div class="data-table__container">
         <table class="data-table__table">
             <thead>
                 <tr>
-                    <th>Group Name</th>
+                    <th>Nom Groupe</th>
                     <th>Description</th>
-                    <th>Sent Date</th>
+                    <th>Reçue le</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -25,9 +25,9 @@
                             <input type="hidden" name="invitationId" value="<?= htmlspecialchars($invitation['id']) ?>">
                             <div class="data-table__actions">
                                 <button type="submit" name="action" value="accept"
-                                    class="data-table__button data-table__button--success">Accept</button>
+                                    class="data-table__button data-table__button--success">Accepter</button>
                                 <button type="submit" name="action" value="reject"
-                                    class="data-table__button data-table__button--danger">Reject</button>
+                                    class="data-table__button data-table__button--danger">Rejecter</button>
                             </div>
                         </form>
                     </td>
@@ -37,5 +37,5 @@
         </table>
     </div>
     <?php endif; ?>
-    <a href="/" class="data-table__back-link">Back</a>
+    <a href="/" class="data-table__back-link">Retour</a>
 </div>

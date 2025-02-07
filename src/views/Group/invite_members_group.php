@@ -1,5 +1,5 @@
 <div class="data-table">
-    <h1 class="data-table__title">Search Users</h1>
+    <h1 class="data-table__title">Rechercher un utilisateur</h1>
 
     <?php $groupId = $this->data['groupId'] ?? null; ?>
 
@@ -7,8 +7,8 @@
         action="/group/<?= htmlspecialchars($groupId) ?>/invite-member/search">
         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
         <input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">
-        <input type="text" name="searchUser" placeholder="Search by name or email..." required>
-        <button type="submit">Search</button>
+        <input type="text" name="searchUser" placeholder="Rechercher par le nom-prénom ou l'email..." required>
+        <button type="submit">Rechercher</button>
     </form>
     <?php if (!empty($errors)): ?>
     <div class="data-table__empty">
@@ -22,10 +22,10 @@
         <table class="data-table__table">
             <thead>
                 <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
                     <th>Email</th>
-                    <th>Created At</th>
+                    <th>Crée Le</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -38,7 +38,7 @@
                     <td><?= htmlspecialchars($user->getCreatedAt()) ?></td>
                     <td>
                         <?php if ($user->invitationStatus === 'member'): ?>
-                        <span class="data-table__status data-table__status--success">Member</span>
+                        <span class="data-table__status data-table__status--success">Membre</span>
                         <?php elseif (isset($user->invitationStatus)): ?>
                         <span class="data-table__status data-table__status--warning">
                             <?= htmlspecialchars(ucfirst($user->invitationStatus)) ?>
@@ -50,7 +50,8 @@
                                 value="<?= htmlspecialchars($this->data['csrfToken']) ?>">
                             <input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">
                             <input type="hidden" name="memberId" value="<?= htmlspecialchars($user->getId()) ?>">
-                            <button class="data-table__button data-table__button--primary" type="submit">Invite</button>
+                            <button class="data-table__button data-table__button--primary"
+                                type="submit">Inviter</button>
                         </form>
                         <?php endif; ?>
                     </td>
@@ -60,7 +61,7 @@
         </table>
     </div>
     <?php else: ?>
-    <p class="data-table__empty">No users found.</p>
+    <p class="data-table__empty">Aucun Utilisateur trouvé.</p>
     <?php endif; ?>
-    <a href="/group/<?= htmlspecialchars($groupId) ?>/members" class="data-table__back-link">Back</a>
+    <a href="/group/<?= htmlspecialchars($groupId) ?>/members" class="data-table__back-link">Retour</a>
 </div>

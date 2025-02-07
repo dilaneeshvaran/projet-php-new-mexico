@@ -1,5 +1,5 @@
 <div class="data-table">
-    <h1 class="data-table__title">Manage Group Member</h1>
+    <h1 class="data-table__title">Gestion du membre:</h1>
 
     <?php if (!empty($errors)): ?>
     <div class="data-table__empty data-table__status--danger">
@@ -13,12 +13,12 @@
         <table class="data-table__table">
             <thead>
                 <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
                     <th>Email</th>
-                    <th>Role</th>
-                    <th>Access</th>
-                    <th>Joined At</th>
+                    <th>Rôle</th>
+                    <th>Accèss</th>
+                    <th>Rejoint Le</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,7 +33,7 @@
                 </tr>
                 <?php else: ?>
                 <tr>
-                    <td colspan="6" class="data-table__empty">No member details available.</td>
+                    <td colspan="6" class="data-table__empty">Informations du membre indisponible.</td>
                 </tr>
                 <?php endif; ?>
             </tbody>
@@ -47,21 +47,25 @@
             <input type="hidden" name="groupId" value="<?= $groupId ?>">
             <?php if ($memberDetails['group_access'] === 'writer'): ?>
             <button type="submit" name="update_access" value="remove_write"
-                class="data-table__button data-table__button--danger">Remove Write Access</button>
+                class="data-table__button data-table__button--danger">Retirer les droits d'écriture dans le
+                groupe</button>
             <?php else: ?>
             <button type="submit" name="update_access" value="give_write"
-                class="data-table__button data-table__button--success">Give Write Access</button>
+                class="data-table__button data-table__button--success">Donner les droits d'écriture dans le
+                groupe</button>
             <?php endif; ?>
         </form>
-
         <form method="POST" action="/group/<?= $groupId ?>/member/<?= $memberId ?>/remove"
-            onsubmit="return confirm('Are you sure?');">
+            onsubmit="return confirm('Êtes vous sûr?');">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
             <input type="hidden" name="memberId" value="<?= $memberId ?>">
             <input type="hidden" name="groupId" value="<?= $groupId ?>">
-            <button type="submit" class="data-table__button data-table__button--danger">Remove from Group</button>
+            <button type="submit" class="data-table__button data-table__button--danger">Virer le membre du
+                groupe</button>
         </form>
     </div>
+    <br>
+    <br>
 
-    <a href="/group/<?= htmlspecialchars($groupId) ?>/members" class="data-table__back-link">Back</a>
+    <a href="/group/<?= htmlspecialchars($groupId) ?>/members" class="data-table__back-link">Retour</a>
 </div>

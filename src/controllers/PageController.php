@@ -27,8 +27,8 @@ class PageController
             $view->addData("created", $result->getDateCreated());
             $view->render();
         } else {
-            // Handle page not found
-            echo "Page not found.";
+            //Page non trouvé
+            echo "Page introuvable.";
         }
     }
 }

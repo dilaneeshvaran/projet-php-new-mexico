@@ -23,7 +23,7 @@ class ForgotPasswordService
         //using ForgotPasswordRequest for sanitization
         $forgotPasswordRequest = new ForgotPasswordRequest($email);
         if (!$forgotPasswordRequest->isValid()) {
-            throw new \InvalidArgumentException("Email invalid.");
+            throw new \InvalidArgumentException("Email invalide.");
         }
         $email = $forgotPasswordRequest->email;
 

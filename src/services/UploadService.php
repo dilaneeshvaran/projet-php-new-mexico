@@ -31,7 +31,7 @@ class UploadService
         }
 
         if (empty($title) || empty($description)) {
-            $errors[] = "Title and description are required.";
+            $errors[] = "Le titre et la description sont demandées.";
         }
 
         $validator = new PhotoValidator($fileData);

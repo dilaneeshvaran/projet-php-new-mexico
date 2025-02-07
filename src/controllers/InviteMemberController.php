@@ -67,9 +67,9 @@ class InviteMemberController {
             $userRole= $this->userGroupRepository->getUserRole($groupId,$_SESSION['user_id']);
 
             if ($userRole === null) {
-                $errors[] = 'You are not a member of this group.';
+                $errors[] = "Vous n'êtes pas membre de ce groupe.";
             } else if ($userRole !== 'admin') {
-                $errors[] = 'You do not have permission to invite members to this group.';
+                $errors[] = "Vous n'avez pas le permission.";
             }
         
             //process here
@@ -77,7 +77,7 @@ class InviteMemberController {
 
             if (empty($errors)) {
                 //redirect to group page : TODO
-                $this->renderView(["invitation envoyée"], [], $groupId);
+                $this->renderView(["Invitation envoyée"], [], $groupId);
                 exit();
             }
         } catch (\Exception $e) {
@@ -102,29 +102,29 @@ class InviteMemberController {
         $userRole= $this->userGroupRepository->getUserRole($groupId, $session->getUserId());
 
             if ($userRole === null) {
-                $errors[] = 'You are not a member of this group.';
+                $errors[] =  "Vous n'êtes pas membre de ce groupe.";
             } else if ($userRole !== 'admin') {
-                $errors[] = 'You do not have permission.';
+                $errors[] = "Vous n'avez pas le permission.";
             }
     
             try {
                 $users = empty($searchUserKeyword) ? [] : $this->userRepository->searchUsersByNameOrEmail($searchUserKeyword);
 
                 foreach ($users as $user) {
-                    // First check if user is a member of the group
+                    //check again if user is already a member
                     $isMember = $this->userGroupRepository->isMember($groupId, $user->getId());
                     
                     if ($isMember) {
                         $user->invitationStatus = 'member';
                     } else {
-                        // If not a member, get their latest invitation status
+                        //get latest invitation status if not already member
                         $latestInvitation = $this->inviteMemberRepository->findLatestInvitationStatus($groupId, $user->getId());
                         
-                        // Only show pending invitations. If accepted but not a member, they must have left
+                        //show only pending invitations bcoz if accepted but not member, they left
                         if ($latestInvitation && $latestInvitation['status'] === 'pending') {
                             $user->invitationStatus = 'pending';
                         } else {
-                            // Either no invitation or they left after accepting
+                            //maybe not invited or they accepted then left
                             $user->invitationStatus = null;
                         }
                     }

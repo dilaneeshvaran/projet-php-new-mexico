@@ -14,9 +14,7 @@
 		padding: 0.75rem 1rem;
 		width: 100%;
 
-
 		&__label {
-
 			color: map-get($colors, "text-primary");
 			font-size: 1.25rem;
 			font-weight: 500;
@@ -35,6 +33,28 @@
 				max-height: 64px;
 				width: auto;
 				object-fit: contain;
+				max-width: 150px;
+				transition: transform 0.3s ease;
+				filter: drop-shadow(0 2px 4px map-get($colors, "shadow"));
+				margin: 1rem 0;
+
+				@media (min-width: map-get($breakpoints, "sm")) {
+					margin: 1.5rem 0;
+					max-width: 175px;
+				}
+
+				@media (min-width: map-get($breakpoints, "md")) {
+					margin: 2rem 0;
+					max-width: 200px;
+				}
+
+				&:hover {
+					transform: scale(1.05);
+				}
+
+				@media (prefers-color-scheme: dark) {
+					filter: drop-shadow(0 2px 4px color.scale(map-get($colors, "shadow"), $alpha: -50%)) brightness(0.95);
+				}
 			}
 		}
 
@@ -43,8 +63,6 @@
 			align-items: center;
 			justify-content: space-between;
 			flex: 1;
-
-
 
 			&-action {
 				display: inline-flex;

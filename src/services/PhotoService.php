@@ -23,7 +23,7 @@ class PhotoService {
             if ($user) {
                 $photo->userFullName = $user->getFirstname() . ' ' . $user->getLastname();
             } else {
-                $photo->userFullName = "Unknown User";
+                $photo->userFullName = "Utilisateur Inconnu";
             }
         }
 

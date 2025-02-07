@@ -1,10 +1,10 @@
 <div class="data-table">
-    <h1 class="data-table__title">Search Groups</h1>
+    <h1 class="data-table__title">Rechercher un groupe</h1>
 
     <form class="data-table__search-form" method="POST" action="/group/search/result">
         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
-        <input type="text" name="searchGroupName" placeholder="Search for groups..." required>
-        <button type="submit">Search</button>
+        <input type="text" name="searchGroupName" placeholder="Rechercher un groupe..." required>
+        <button type="submit">Rechercher</button>
     </form>
 
     <?php if (!empty($errors)): ?>
@@ -20,11 +20,11 @@
         <table class="data-table__table">
             <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>Nom</th>
                     <th>Description</th>
-                    <th>Created At</th>
-                    <th>Access Type</th>
-                    <th>Total Members</th>
+                    <th>Crée le</th>
+                    <th>Accèss</th>
+                    <th>Membres Totale</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -38,22 +38,23 @@
                     <td data-label="Total Members"><?= htmlspecialchars($group->total_members) ?></td>
                     <td data-label="Action">
                         <?php if ($group->is_member): ?>
-                        <button class="data-table__button" disabled>You are a member</button>
+                        <button class="data-table__button" disabled>Déjà Membre</button>
                         <?php else: ?>
                         <?php if ($group->getAccessType() === 'open'): ?>
                         <form method="POST" action="/group/join">
                             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
                             <input type="hidden" name="groupId" value="<?= htmlspecialchars($group->getId()) ?>">
-                            <button class="data-table__button data-table__button--primary" type="submit">Join</button>
+                            <button class="data-table__button data-table__button--primary"
+                                type="submit">Rejoindre</button>
                         </form>
                         <?php elseif ($group->getAccessType() === 'closed'): ?>
-                        <button class="data-table__button data-table__button--danger" disabled>Closed</button>
+                        <button class="data-table__button data-table__button--danger" disabled>Fermé</button>
                         <?php elseif ($group->getAccessType() === 'on_invitation'): ?>
                         <form method="POST" action="/group/join">
                             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
                             <input type="hidden" name="groupId" value="<?= htmlspecialchars($group->getId()) ?>">
-                            <button class="data-table__button data-table__button--warning" type="submit">Request to
-                                Join</button>
+                            <button class="data-table__button data-table__button--warning" type="submit">Demander Pour
+                                Rejoindre</button>
                         </form>
                         <?php endif; ?>
                         <?php endif; ?>
@@ -64,8 +65,8 @@
         </table>
     </div>
     <?php else: ?>
-    <p class="data-table__empty">No groups found.</p>
+    <p class="data-table__empty">Aucun groupe trouvé.</p>
     <?php endif; ?>
 
-    <a href="/" class="data-table__back-link">Back</a>
+    <a href="/" class="data-table__back-link">Retour</a>
 </div>

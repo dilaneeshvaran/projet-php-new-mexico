@@ -25,12 +25,12 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
                     <th>Email</th>
-                    <th>Joined At</th>
-                    <th>Group Access</th>
-                    <th>Role</th>
+                    <th>Rejoint le</th>
+                    <th>Droits dans le groupe</th>
+                    <th>Rôle</th>
                     <?php if ($userRole === 'admin'): ?>
                     <th>Actions</th>
                     <?php endif; ?>
@@ -54,7 +54,7 @@
                             <input type="hidden" name="memberId" value="<?= htmlspecialchars($member['id']) ?>">
                             <input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">
                             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
-                            <button type="submit" class="data-table__button data-table__button--primary">Manage</button>
+                            <button type="submit" class="data-table__button data-table__button--primary">Gérer</button>
                         </form>
                     </td>
                     <?php endif; ?>
@@ -63,7 +63,7 @@
                 <?php else: ?>
                 <tr>
                     <td colspan="<?= $userRole === 'admin' ? 8 : 7 ?>" class="data-table__empty">
-                        No members found in this group.
+                        Aucun membre trouvé dans ce groupe.
                     </td>
                 </tr>
                 <?php endif; ?>
@@ -75,10 +75,11 @@
         <form method="POST" action="/group/<?= htmlspecialchars($groupId) ?>/join-requests">
             <input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
-            <button type="submit" class="data-table__button data-table__button--primary">Voir les demandes
-                reçues</button>
+            <button type="submit" class="data-table__button data-table__button--primary">Voir les demandes reçues pour
+                rejoindre
+            </button>
         </form>
     </div>
     <?php endif; ?>
-    <a href="/group/<?= htmlspecialchars($groupId) ?>" class="data-table__back-link">back</a>
+    <a href="/group/<?= htmlspecialchars($groupId) ?>" class="data-table__back-link">Retour</a>
 </div>

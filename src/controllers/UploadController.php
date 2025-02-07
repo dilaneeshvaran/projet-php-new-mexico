@@ -64,21 +64,21 @@ class UploadController {
             $groupAccess = $this->userGroupRepository->getGroupAccess($groupId,$_SESSION['user_id']);
 
             if ($userRole === null) {
-                $errors[] = 'You are not a member of this group.';
+                $errors[] = "Vous n'êtes pas membre de ce groupe.";
             }
             if ($groupAccess !== 'write') {
-                $errors[] = 'You do not have permission to upload photos to this group.';
+                $errors[] = "Vous n'avez pas la permission.";
             }
 
             if ($fileData) {
                 $errors = $this->uploadService->uploadPhoto($fileData, $groupId, $_SESSION['user_id'],$title, $description);
             } else {
-                $errors[] = 'No file uploaded.';
+                $errors[] = "Photo n'a pas été postée.";
             }
 
         
             if (empty($errors)) {
-                //redirect to group page : TODO
+                //redirect to group page ??
                 header("Location: /group/$groupId/upload/success");
                 exit();
             }
@@ -95,8 +95,8 @@ class UploadController {
         $pageData = $this->pageRepository->findOneById($pageId);
 
         //alternative values if $pageData is null
-        $title = $pageData ? $pageData->getTitle() : "Upload Photo";
-        $description = $pageData ? $pageData->getDescription() : "Upload your photos";
+        $title = $pageData ? $pageData->getTitle() : "Poster une photo";
+        $description = $pageData ? $pageData->getDescription() : "Poster une photo";
         $content = $pageData ? $pageData->getContent() : "";
 
         $csrfToken = $_SESSION['csrf_token'] ?? bin2hex(random_bytes(32));
