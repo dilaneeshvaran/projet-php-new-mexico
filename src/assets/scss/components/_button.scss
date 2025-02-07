@@ -21,10 +21,10 @@
 
 		// classes modificatrices de couleur
 		&--primary {
-			background-color: var(--blue-500);
+			background-color: var(--primary);
 
 			&:hover {
-				background-color: var(--blue-400);
+				background-color: var(--primary-500);
 			}
 		}
 
@@ -44,15 +44,42 @@
 			}
 		}
 
+		&__delete {
+			float: right;
+			margin-bottom: 0.5rem;
+			width: 5rem;
+			padding: 0.75rem;
+			border: none;
+			border-radius: 8px;
+			background-color: var(--black);
+			color: var(--surface);
+			font-weight: 500;
+			cursor: pointer;
+			transition: all 0.2s ease;
+
+			&:hover {
+				background-color: var(--accent-500);
+				color: var(--surface);
+			}
+		}
+
 		// classes modificatrices de taille
 		&--lg {
 			padding: f.rem(16) f.rem(24);
+			width: 100%;
 		}
 
 		&--sm {
 			padding: f.rem(8) f.rem(12);
 			font-size: f.rem(14);
 			line-height: f.rem(16);
+		}
+
+		&__top {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-top: 3rem;
 		}
 	}
 }

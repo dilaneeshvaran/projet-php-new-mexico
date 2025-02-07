@@ -1,0 +1,70 @@
+@use "../partials/variables" as *;
+@use "sass:color";
+@use "../partials/functions" as f;
+@use "../partials/mixins" as m;
+
+@layer components {
+    .group-view {
+        padding: 1rem;
+        background-color: map-get($colors, "background");
+        min-height: 100vh;
+
+        @media (min-width: map-get($breakpoints, "md")) {
+            padding: 2rem;
+        }
+
+        &__container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: map-get($colors, "surface");
+            border-radius: 12px;
+            box-shadow: 0 4px 6px map-get($colors, "shadow");
+            padding: 1.5rem;
+
+            @media (min-width: map-get($breakpoints, "md")) {
+                padding: 2rem;
+            }
+        }
+
+        &__header {
+            margin-bottom: 2rem;
+
+            h1 {
+                color: map-get($colors, "text-primary");
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+
+                @media (min-width: map-get($breakpoints, "md")) {
+                    font-size: 2rem;
+                }
+            }
+
+            p {
+                color: map-get($colors, "text-secondary");
+                font-size: 0.875rem;
+                line-height: 1.5;
+            }
+        }
+
+        &__meta {
+            font-size: 0.875rem;
+            color: map-get($colors, "text-secondary");
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid map-get($colors, "border");
+        }
+
+        &__actions {
+            display: grid;
+            gap: 1rem;
+            margin-top: 2rem;
+
+            @media (min-width: map-get($breakpoints, "md")) {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+    }
+
+}

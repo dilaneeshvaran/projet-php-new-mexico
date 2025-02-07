@@ -1,41 +1,30 @@
-<?php
-
-use App\Controllers\MainController;
-use App\Controllers\PageController;
-
-$mainController = new MainController();
-?>
-
-<div class="main">
-    <div class="main__welcome">
+<div class="home">
+    <div class="home__container">
         <?php if (isset($_SESSION["firstname"])): ?>
-            <p>Welcome back <?= htmlspecialchars($mainController->getPseudo()); ?></p>
-            <a href="/logout" class="main__logout">Se déconnecter</a>
-    </div>
 
-    <div class="main__groups">
-        <h1>Vos Groupes:</h1>
-        <?php foreach ($groups as $groupData): 
-            $group = $groupData['group']; ?>
-            <a href="group/<?= htmlspecialchars($group->getId()) ?>">
-                <?= htmlspecialchars($group->getName()) ?>
+        <div class="home__groups">
+            <h2>Vos Groupes</h2>
+            <div class="home__groups-grid">
+                <?php foreach ($groups as $groupData): 
+                        $group = $groupData['group']; ?>
+                <a href="group/<?= htmlspecialchars($group->getId()) ?>" class="home__groups-item">
+                    <?= htmlspecialchars($group->getName()) ?>
+                </a>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <div class="home__actions">
+            <a href="/group/create" class="home__actions-button">Créer un groupe</a>
+            <a href="/group/search/result" class="home__actions-button">Rejoindre un groupe</a>
+            <a href="/invitations" class="home__actions-button home__actions-button--secondary">
+                Voir les invitations reçues
             </a>
-        <?php endforeach; ?>
-    </div>
+        </div>
 
-    <div class="main__actions">
-        <a href="/group/create">Créer un groupe</a>
-        <a href="/group/search/result">Rejoindre un groupe</a>
-        <a href="/invitations">Voir les invitations reçues</a>
-    </div>
-</div>
-
-
-
-    <?php else:
-            //$pageController = new PageController();
-    //$pageController->show();
+        <?php else:
             header('Location: /login');
             exit();
-        
-    endif; ?>
+        endif; ?>
+    </div>
+</div>

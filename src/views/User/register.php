@@ -8,14 +8,14 @@ $formData = $formData ?? [];
         <h1 class="form__title"><?php echo htmlspecialchars($title); ?></h1>
 
         <?php if (!empty($errors)): ?>
-            <div class="errors">
-                <ul>
-                    <?php foreach ($errors as $error): ?>
-                        <li><?php echo htmlspecialchars($error); ?></li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        <?php endif; ?>
+    <div class="errors">
+        <div class="errors__list">
+            <?php foreach ($errors as $error): ?>
+                <div class="errors__item"><?= htmlspecialchars($error) ?></div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+<?php endif; ?>
 
         <form class="form__area" method="POST" action="/register/submit">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">

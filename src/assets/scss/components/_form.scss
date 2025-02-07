@@ -13,6 +13,28 @@
         background-color: map-get($colors, "neutral");
         padding: 2rem;
 
+        &--large {
+            .form__container {
+                max-width: 600px;
+                padding: 1.5rem;
+                text-align: left;
+
+                @media (min-width: map-get($breakpoints, "md")) {
+                    padding: 2rem;
+                }
+            }
+
+            .form__title {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+            }
+
+            .form__area {
+                gap: 1.5rem;
+            }
+        }
+
         &__container {
             background: #fff;
             padding: 2rem;
@@ -21,6 +43,14 @@
             text-align: center;
             max-width: 400px;
             width: 100%;
+
+            @media (min-width: map-get($breakpoints, "md")) {
+                padding: 2rem;
+            }
+        }
+
+        &__header {
+            margin-bottom: 2rem;
         }
 
         &__title {
@@ -35,6 +65,18 @@
             gap: 1rem;
         }
 
+        &__field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        &__label {
+            color: map-get($colors, "text-secondary");
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
         &__input {
             width: 100%;
             padding: 0.8rem;
@@ -46,6 +88,36 @@
 
             &:focus {
                 border-color: map-get($colors, "primary");
+                box-shadow: 0 0 0 2px color.scale(map-get($colors, "primary"), $alpha: -85%);
+            }
+        }
+
+        &__textarea {
+            @extend .form__input;
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        &__select {
+            @extend .form__input;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1em;
+            padding-right: 2.5rem;
+        }
+
+        &__actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+
+            @media (min-width: map-get($breakpoints, "sm")) {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
             }
         }
 
@@ -79,6 +151,46 @@
 
                 &:hover {
                     color: color.scale(map-get($colors, "primary"), $lightness: -10%);
+                }
+            }
+        }
+
+        &__back {
+            color: map-get($colors, "text-secondary");
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+
+            &:hover {
+                color: map-get($colors, "text-primary");
+            }
+        }
+
+        &__delete {
+            color: map-get($colors, "accent");
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+
+            &:hover {
+                color: color.scale(map-get($colors, "accent"), $lightness: -10%);
+            }
+        }
+
+        &__errors {
+            background-color: color.scale(map-get($colors, "accent"), $lightness: 95%);
+            border-left: 4px solid map-get($colors, "accent");
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 6px 6px 0;
+
+            p {
+                color: map-get($colors, "accent");
+                margin: 0;
+                font-size: 0.875rem;
+
+                &:not(:last-child) {
+                    margin-bottom: 0.5rem;
                 }
             }
         }

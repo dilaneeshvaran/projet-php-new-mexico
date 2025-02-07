@@ -50,18 +50,11 @@ make database
 
 > Run the queries from db/migrations to create the necessary tables
 
-Build scss+js (into 'public/assets' folder) & watch changes scss+js
+Build scss+js (into 'public/assets' folder) & watch mode scss+js
 
 ```bash
 npm build-style
-npm watch-style (doesnt work > use watch-css)
-```
-
-Build scss only (into 'public/assets' folder) & watch scss only
-
-```bash
-npm build-css
-npm watch-css
+npm watch-style
 ```
 
 ## Other helpful commands

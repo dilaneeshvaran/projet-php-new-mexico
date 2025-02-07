@@ -1,63 +1,68 @@
 @use "../partials/mixins" as m;
 @use "../partials/functions" as f;
+@use "../partials/variables" as *;
+@use "sass:color";
+@use "sass:map";
 
 @layer components {
 	.navbar {
-		background-color: var(--neutral-50);
-		color: var(--neutral-700);
-		padding: f.rem(16) 0;
+		display: flex;
+		align-items: center;
+		background: map-get($colors, "surface");
+		border-radius: 12px;
+		box-shadow: 0 4px 6px map-get($colors, "shadow");
+		padding: 0.75rem 1rem;
+		width: 100%;
 
-		.container {
-			@include m.flexbox($direction: column, $align: flex-start);
-			position: relative;
 
-			@media (width >=f.screen(md)) {
-				@include m.flexbox($direction: row, $gap: f.rem(30), $align: center);
+		&__label {
+
+			color: map-get($colors, "text-primary");
+			font-size: 1.25rem;
+			font-weight: 500;
+			margin: 0;
+			text-decoration: none;
+		}
+
+		&__logo {
+			display: flex;
+			align-items: center;
+			height: 100%;
+			margin-right: 1rem;
+
+			.logo {
+				height: auto;
+				max-height: 64px;
+				width: auto;
+				object-fit: contain;
 			}
 		}
 
-		a {
-			@include m.resetA;
-		}
+		&__header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex: 1;
 
-		ul {
-			@include m.resetList;
-			@include m.flexbox($direction: column, $gap: f.rem(8));
-			height: 0;
-			overflow: hidden;
-			transition: all 0.3s;
 
-			&.active {
-				margin-top: 1rem;
-			}
 
-			@media (width >=f.screen(md)) {
-				@include m.flexbox($direction: row, $gap: f.rem(18));
-				flex-grow: 1;
-				height: auto !important; // pour ne pas être supplanté par le style ajouté par js
+			&-action {
+				display: inline-flex;
+				align-items: center;
+				padding: 0.5rem 1rem;
+				background-color: transparent;
+				border: 2px solid var(--primary);
+				color: map-get($colors, "primary");
+				font-weight: 600;
+				border-radius: 8px;
+				text-decoration: none;
+				transition: all 0.2s ease;
 
-				&.active {
-					margin-top: 0;
+				&:hover {
+					background-color: map-get($colors, "primary");
+					color: white;
+					transform: translateY(-2px);
 				}
-			}
-		}
-
-		form {
-			display: none;
-
-			@media (width >=f.screen(lg)) {
-				@include m.flexbox($gap: f.rem(10));
-			}
-		}
-
-		&__button {
-			@include m.resetButton;
-			position: absolute;
-			top: 0;
-			right: 0;
-
-			@media (width >=f.screen(md)) {
-				display: none;
 			}
 		}
 	}

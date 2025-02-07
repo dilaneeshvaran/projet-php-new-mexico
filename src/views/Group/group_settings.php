@@ -1,41 +1,53 @@
 <?php $group = $this->data['group'] ?? null;?>
-
 <?php $groupId = $this->data['groupId'] ?? null; ?>
+<div class="form form--large">
+    <div class="form__container">
+        <div class="form__header">
+            <h1 class="form__title">Paramètres du groupe</h1>
+        </div>
+        <?php if (!empty($errors)): ?>
+        <div class="form__errors">
+            <?php foreach ($errors as $error): ?>
+            <p><?= htmlspecialchars($error) ?></p>
+            <?php endforeach; ?>
+        </div>
+        <?php endif; ?>
+        <form class="form__area" action="/group/<?= htmlspecialchars($groupId) ?>/settings/save" method="POST">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
+            <input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">
 
-<?php if (!empty($errors)): ?>
-    <div style="color: red; margin-bottom: 20px;">
-        <?php foreach ($errors as $error): ?>
-        <p><?= htmlspecialchars($error) ?></p>
-        <?php endforeach; ?>
+            <div class="form__field">
+                <label class="form__label" for="group_name">Nom du Groupe</label>
+                <input class="form__input" type="text" id="group_name" name="group_name"
+                    value="<?php echo htmlspecialchars($group->getName()); ?>" required>
+            </div>
+
+            <div class="form__field">
+                <label class="form__label" for="description">Description</label>
+                <textarea class="form__textarea" id="description" name="description"
+                    required><?php echo htmlspecialchars($group->getDescription()); ?></textarea>
+            </div>
+
+            <div class="form__field">
+                <label class="form__label" for="access_type">Type d'accès</label>
+                <select class="form__select" id="access_type" name="access_type">
+                    <option value="open" <?php echo ($group->getAccessType() == 'open') ? 'selected' : ''; ?>>Ouvert
+                    </option>
+                    <option value="on_invitation"
+                        <?php echo ($group->getAccessType() == 'on_invitation') ? 'selected' : ''; ?>>Sur Invitation
+                    </option>
+                    <option value="closed" <?php echo ($group->getAccessType() == 'closed') ? 'selected' : ''; ?>>Fermé
+                    </option>
+                </select>
+            </div>
+
+            <div class="form__actions">
+                <div>
+                    <a href="/group/<?=$groupId?>" class="form__back">Retour</a>
+                    <a href="/group/<?=$groupId?>/delete" class="form__delete">Supprimer</a>
+                </div>
+                <button type="submit" class="form__submit">Enregistrer</button>
+            </div>
+        </form>
     </div>
-    <?php endif; ?>
-    
-<form action="/group/<?= htmlspecialchars($groupId) ?>/settings/save" method="POST">
-<input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
-<input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">
-
-        <label for="group_name">Nom du Groupe:</label>
-        <input type="text" id="group_name" name="group_name" value="<?php echo htmlspecialchars($group->getName()); ?>" required>
-        <br><br>
-
-        
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" required><?php echo htmlspecialchars($group->getDescription()); ?></textarea>
-        <br><br>
-
-        <label for="access_type">Access Type:</label>
-        <select id="access_type" name="access_type">
-            <option value="open" <?php echo ($group->getAccessType() == 'open') ? 'selected' : ''; ?>>Ouvert</option>
-            <option value="on_invitation" <?php echo ($group->getAccessType() == 'on_invitation') ? 'selected' : ''; ?>>Sur Invitation</option>
-            <option value="closed" <?php echo ($group->getAccessType() == 'closed') ? 'selected' : ''; ?>>Fermé</option>
-        </select>
-        <br><br>
-
-        <button type="submit">Enregistrer</button>
-    </form>
-
-    <?php $groupId = $this->data['groupId'] ?? null; ?>
-
-    <a href="/group/<?=$groupId?>">back</a>
-
-    <a href="/group/<?=$groupId?>/delete">delete</a>
+</div>

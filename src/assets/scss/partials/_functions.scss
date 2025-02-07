@@ -6,5 +6,5 @@
 }
 
 @function screen($val) {
-	@return map.get(v.$breakpoints, $val);
+	@return map-get(v.$breakpoints, $val);
 }
