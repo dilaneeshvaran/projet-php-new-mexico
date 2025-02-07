@@ -4,6 +4,7 @@
 	.container {
 		margin: 0 2rem;
 
+
 		@each $name, $value in v.$breakpoints {
 			@media screen and (min-width: $value) {
 				@if ($name =="sm") {

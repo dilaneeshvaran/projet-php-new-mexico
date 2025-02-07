@@ -23,7 +23,6 @@
             </div>
         </div>
 
-
         <?php else:
             header('Location: /login');
             exit();
