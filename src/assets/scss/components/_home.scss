@@ -1,0 +1,94 @@
+@use "../partials/variables" as *;
+@use "sass:color";
+
+@layer components {
+    .home {
+        min-height: 100vh;
+        background-color: map-get($colors, "background");
+        padding: 1rem;
+
+        @media (min-width: map-get($breakpoints, "md")) {
+            padding: 2rem;
+        }
+
+        &__container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        &__groups {
+            background: map-get($colors, "surface");
+            border-radius: 12px;
+            box-shadow: 0 4px 6px map-get($colors, "shadow");
+            padding: 1.5rem;
+
+
+            h2 {
+                color: map-get($colors, "text-primary");
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+                font-weight: 600;
+            }
+
+            &-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                //width: 20rem;
+            }
+
+            &-item {
+                background: color.scale(map-get($colors, "background"), $lightness: 2%);
+                padding: 1.25rem;
+                border-radius: 8px;
+                color: map-get($colors, "text-primary");
+                text-decoration: none;
+                transition: all 0.2s ease;
+                border: 1px solid map-get($colors, "border");
+
+                &:hover {
+                    transform: translateY(-4px);
+                    box-shadow: 0 8px 16px map-get($colors, "shadow");
+                    border-color: map-get($colors, "primary");
+                }
+            }
+        }
+
+        &__actions {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            margin-top: 1rem;
+
+            &-button {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 1rem;
+                background-color: map-get($colors, "primary");
+                color: white;
+                text-decoration: none;
+                border-radius: 8px;
+                font-weight: 500;
+                transition: all 0.2s ease;
+                text-align: center;
+
+                &:hover {
+                    background-color: color.scale(map-get($colors, "primary"), $lightness: -10%);
+                    transform: translateY(-2px);
+                }
+
+                &--secondary {
+                    background-color: map-get($colors, "secondary");
+
+                    &:hover {
+                        background-color: color.scale(map-get($colors, "secondary"), $lightness: -10%);
+                    }
+                }
+            }
+        }
+    }
+}

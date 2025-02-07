@@ -56,8 +56,8 @@ class PhotoController {
         $pageData = $this->pageRepository->findOneById($pageId);
 
         //alternative values if $pageData is null
-        $title = $pageData ? $pageData->getTitle() : "Upload Photo";
-        $description = $pageData ? $pageData->getDescription() : "Upload your photos";
+        $title = $pageData ? $pageData->getTitle() : "Photos";
+        $description = $pageData ? $pageData->getDescription() : "Voir les photos";
         $content = $pageData ? $pageData->getContent() : "";
 
         $csrfToken = $_SESSION['csrf_token'] ?? bin2hex(random_bytes(32));

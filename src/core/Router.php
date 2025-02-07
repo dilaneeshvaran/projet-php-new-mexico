@@ -28,7 +28,7 @@ class Router
                 // Check if the controller and action exist
                 if (!class_exists($controllerName) || !method_exists($controllerName, $action)) {
                     http_response_code(500);
-                    echo "Controller or action not found.";
+                    echo "Controller ou Action non trouvé.";
                     
                     return;
                 }
@@ -39,7 +39,7 @@ class Router
             }
         }
         http_response_code(404);
-        echo "404 Not Found";
+        echo "404";
     }
 
     private function match(string $method, string $path, array $route): bool

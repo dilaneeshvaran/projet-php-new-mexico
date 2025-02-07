@@ -3,26 +3,32 @@ $errors = $errors ?? [];
 $formData = $formData ?? [];
 ?>
 
-<h1><?php echo htmlspecialchars($title); ?></h1>
+<div class="form">
+    <div class="form__container">
+        <h1 class="form__title"><?php echo htmlspecialchars($title); ?></h1>
 
-<?php if (!empty($errors)): ?>
-    <div style="background-color: red">
-        <ul>
+        <?php if (!empty($errors)): ?>
+    <div class="errors">
+        <div class="errors__list">
             <?php foreach ($errors as $error): ?>
-                <li><?php echo htmlspecialchars($error); ?></li>
+                <div class="errors__item"><?= htmlspecialchars($error) ?></div>
             <?php endforeach; ?>
-        </ul>
+        </div>
     </div>
 <?php endif; ?>
 
-<form method="post" action="/register/submit">
-    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($csrfToken); ?>">
-    <input type="text" name="firstname" required placeholder="Votre nom" value="<?php echo htmlspecialchars($formData['firstname'] ?? ''); ?>"><br>
-    <input type="text" name="lastname" required placeholder="Votre prénom" value="<?php echo htmlspecialchars($formData['lastname'] ?? ''); ?>"><br>
-    <input type="email" name="email" required placeholder="Votre email" value="<?php echo htmlspecialchars($formData['email'] ?? ''); ?>"><br>
-    <input type="password" name="password" required placeholder="Votre mot de passe"><br>
-    <input type="password" name="passwordConfirm" required placeholder="Confirmation"><br>
-    <input type="submit" value="S'inscrire"><br>
-</form>
+        <form class="form__area" method="POST" action="/register/submit">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
+            <input class="form__input" type="text" required name="firstname" placeholder="Votre nom" value="<?= htmlspecialchars($formData['firstname'] ?? '') ?>">
+            <input class="form__input" type="text" required name="lastname" placeholder="Votre prénom" value="<?= htmlspecialchars($formData['lastname'] ?? '') ?>">
+            <input class="form__input" type="email" required name="email" placeholder="Votre email" value="<?= htmlspecialchars($formData['email'] ?? '') ?>">
+            <input class="form__input" type="password" required name="password" placeholder="Votre mot de passe">
+            <input class="form__input" type="password" required name="passwordConfirm" placeholder="Confirmation du mot de passe">
+            <input class="form__submit" type="submit" value="S'inscrire">
+        </form>
 
-<a href="/login">Déjà inscrit ? Connectez-vous</a>
+        <div class="form__links">
+            <a href="/login">Déjà inscrit ? Connectez-vous</a>
+        </div>
+    </div>
+</div>

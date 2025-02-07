@@ -1,0 +1,68 @@
+@use "sass:color";
+
+$colors: (
+	"red": #ff5a5f,
+	//vibrant red for attention grabbing elements
+	"grey": #adb5bd,
+	//soft grey for subdue elements
+	"blue": #4a90e2,
+	//calming blue for primary actions
+	"white": #ffffff,
+	//clean white
+	"black": #121212,
+	//dark, rich black for contrast
+	"purple": #a855f7,
+	//bright purple for accents
+	"yellow": #ffce00,
+	//warm yellow for highlights
+	"green": #22c55e,
+	//fresh green for success indicators
+	//"primary": #4a90e2,
+	//updated primary color for consistency
+	//"secondary": #adb5bd,
+	//neutral secondary color
+	//"accent": #ff5a5f,
+	//to highlight accent color
+	"text-color": #333333,
+	//for darker text for better readability
+	"shadow-color": rgba(0, 0, 0, 0.15),
+	//for subtle shadow for depth
+	"neutral": #f2f4f7,
+	//for backgrounds
+
+	"primary": #6366f1,
+	"secondary": #94a3b8,
+	"accent": #f43f5e,
+	"success": #10b981,
+	"warning": #f59e0b,
+	"text-primary": #1e293b,
+	"text-secondary": #64748b,
+	"background": #f8fafc,
+	"surface": #ffffff,
+	"border": #e2e8f0,
+	"shadow": rgba(0, 0, 0, 0.1),
+);
+
+$shades: (
+	950: 5%,
+	//very dark
+	900: 10%,
+	800: 20%,
+	700: 30%,
+	600: 40%,
+	500: 50%,
+	400: 60%,
+	300: 70%,
+	200: 85%,
+	100: 92%,
+	50: 97%,
+	//very light
+);
+
+$breakpoints: (
+	"sm": 576px,
+	"md": 768px,
+	"lg": 992px,
+	"xl": 1200px,
+	"xxl": 1400px,
+);

@@ -1,35 +1,31 @@
-<?php
+<div class="home">
+    <div class="home__container">
+        <?php if (isset($_SESSION["firstname"])): ?>
 
-use App\Controllers\MainController;
-use App\Controllers\PageController;
 
-$mainController = new MainController();
+        <div class="home__actions">
+            <a href="/group/create" class="home__actions-button">Créer un groupe</a>
+            <a href="/group/search/result" class="home__actions-button">Rejoindre un groupe</a>
+            <a href="/invitations" class="home__actions-button home__actions-button--secondary">
+                Voir les invitations reçues
+            </a>
+        </div>
 
-if (isset($_SESSION["firstname"])) {
-    if ($mainController->getPseudo() == $_SESSION["firstname"]) {
-        echo "Welcome back " . htmlspecialchars($mainController->getPseudo());
-        echo '<br><a href="/logout">Se déconnecter</a>';
-    }
-?>
-<h1>Vos Groupes:</h1>
-<br>
-<?php foreach ($groups as $groupData):
-    $group = $groupData['group']; ?>
-    <a href="group/<?= htmlspecialchars($group->getId()) ?>">
-        <?= htmlspecialchars($group->getName()) ?>
-    </a><br>
-<?php endforeach; ?>
+        <div class="home__groups">
+            <h2>Vos Groupes</h2>
+            <div class="home__groups-grid">
+                <?php foreach ($groups as $groupData): 
+                        $group = $groupData['group']; ?>
+                <a href="group/<?= htmlspecialchars($group->getId()) ?>" class="home__groups-item">
+                    <?= htmlspecialchars($group->getName()) ?>
+                </a>
+                <?php endforeach; ?>
+            </div>
+        </div>
 
-<br>
-<br>
-<a href="/group/create">Créer un groupe</a>
-<a href="/group/search/result">Rejoindre un groupe</a>
-<br>
-<a href="/invitations">Voir les invitations reçues</a>
-<?php
-    //$pageController = new PageController();
-    //$pageController->show();
-} else {
-    header('Location: /login');
-    exit();
-}
+        <?php else:
+            header('Location: /login');
+            exit();
+        endif; ?>
+    </div>
+</div>

@@ -40,7 +40,7 @@ class DeletePhotoController
 
         try {
             if (!$photoId || !$groupId) {
-                throw new \Exception('Missing required data.');
+                throw new \Exception('Données incorrectes.');
             }
 
             $userId = $session->getUserId();

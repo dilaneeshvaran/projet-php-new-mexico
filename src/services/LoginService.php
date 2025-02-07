@@ -20,7 +20,7 @@ class LoginService
         $loginRequest = new LoginRequest($data);
 
         if (!$loginRequest->isValid()) {
-            throw new \InvalidArgumentException("Email or password is invalid.");
+            throw new \InvalidArgumentException("Email ou Mot de Passe invalide.");
         }
 
         $email = $loginRequest->email;

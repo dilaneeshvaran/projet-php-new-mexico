@@ -1,0 +1,18 @@
+@use "../partials/variables" as *;
+@use "sass:color";
+@use "sass:map";
+
+@layer components {
+
+
+    .footer {
+        background: map-get($colors, "surface");
+        color: map-get($colors, "text-secondary");
+        text-align: center;
+        padding: 1rem 0;
+        width: 100%;
+        position: relative;
+        bottom: 0;
+        left: 0;
+    }
+}

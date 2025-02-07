@@ -1,0 +1,181 @@
+@use "../partials/variables" as *;
+@use "sass:color";
+@use "../partials/functions" as f;
+@use "../partials/mixins" as m;
+
+@layer components {
+    .data-table {
+        padding: 1rem;
+        background-color: map-get($colors, "background");
+        min-height: 100vh;
+
+        @media (min-width: map-get($breakpoints, "md")) {
+            padding: 2rem;
+        }
+
+        &__title {
+            color: map-get($colors, "text-primary");
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+
+            @media (min-width: map-get($breakpoints, "md")) {
+                font-size: 2rem;
+            }
+        }
+
+        &__container {
+            background: map-get($colors, "surface");
+            border-radius: 8px;
+            box-shadow: 0 2px 8px map-get($colors, "shadow");
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        &__table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+
+            th,
+            td {
+                padding: 1rem;
+                text-align: left;
+                border-bottom: 1px solid map-get($colors, "border");
+                white-space: nowrap;
+
+                @media (min-width: map-get($breakpoints, "md")) {
+                    white-space: normal;
+                }
+            }
+
+            th {
+                background-color: map-get($colors, "neutral");
+                color: map-get($colors, "text-secondary");
+                font-weight: 600;
+            }
+
+            tr:last-child td {
+                border-bottom: none;
+            }
+        }
+
+        &__actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        &__button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            &--primary {
+                background-color: map-get($colors, "primary");
+                color: map-get($colors, "white");
+
+                &:hover {
+                    background-color: color.scale(map-get($colors, "primary"), $lightness: -10%);
+                }
+            }
+
+            &--success {
+                background-color: map-get($colors, "success");
+                color: map-get($colors, "white");
+
+                &:hover {
+                    background-color: color.scale(map-get($colors, "success"), $lightness: -10%);
+                }
+            }
+
+            &--danger {
+                background-color: map-get($colors, "red");
+                color: map-get($colors, "white");
+
+                &:hover {
+                    background-color: color.scale(map-get($colors, "red"), $lightness: -10%);
+                }
+            }
+
+            &--warning {
+                background-color: map-get($colors, "warning");
+                color: map-get($colors, "white");
+
+                &:hover {
+                    background-color: color.scale(map-get($colors, "warning"), $lightness: -10%);
+                }
+            }
+
+            &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+        }
+
+        &__status {
+            font-weight: 500;
+
+            &--success {
+                color: map-get($colors, "success");
+            }
+
+            &--danger {
+                color: map-get($colors, "red");
+            }
+
+            &--warning {
+                color: map-get($colors, "warning");
+            }
+
+            &--info {
+                color: map-get($colors, "primary");
+            }
+        }
+
+        &__empty {
+            text-align: center;
+            padding: 2rem;
+            color: map-get($colors, "text-secondary");
+            font-size: 0.875rem;
+        }
+
+        &__back-link {
+            display: inline-block;
+            color: map-get($colors, "text-secondary");
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s;
+
+            &:hover {
+                color: map-get($colors, "text-primary");
+            }
+
+            &::before {
+                content: "←";
+                margin-right: 0.5rem;
+            }
+        }
+
+        &__search-form {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+
+            input {
+                flex-grow: 1;
+                padding: 0.5rem;
+                border: 1px solid map-get($colors, "border");
+                border-radius: 4px;
+            }
+
+            button {
+                @extend .data-table__button;
+                @extend .data-table__button--primary;
+            }
+        }
+    }
+}

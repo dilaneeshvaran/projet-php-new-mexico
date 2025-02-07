@@ -72,14 +72,14 @@ class InviteMemberService
         $invitation = $this->inviteMemberRepository->findById($invitationId);
 
         if (!$invitation) {
-            $errors[] = "Invitation not found.";
+            $errors[] = "Invitation non trouvée.";
             return $errors;
         }
         
         $groupId = $invitation['group_id'];
 
         if (!$invitation || (int)$invitation['member_id'] !== (int)$userId) {
-            $errors[] = "Invalid invitation.";
+            $errors[] = "Invitation Invalide.";
             var_dump($invitation['member_id']);
             var_dump($userId);
             return $errors;
@@ -94,13 +94,13 @@ class InviteMemberService
             $userGroup->setJoinedAt((new \DateTime())->format('Y-m-d H:i:s'));
 
             if (!$this->userGroupRepository->adminCreateGroup($userGroup)) {
-                $errors[] = "Failed to add user to the group.";
+                $errors[] = "Erreur : échec lors de l'ajout de l'utilisateur.";
                 return $errors;
             }
         }
 
         if (!$this->inviteMemberRepository->updateStatus($invitationId, $action === 'accept' ? 'accepted' : 'declined')) {
-            $errors[] = "Failed to update invitation status.";
+            $errors[] = "Erreur lors du traitement de l'invitation.";
         }
 
         return $errors;
@@ -117,8 +117,8 @@ class InviteMemberService
             $invitation['group_name'] = $group->getName();
             $invitation['description'] = $group->getDescription();
         } else {
-            $invitation['group_name'] = 'Unknown Group';
-            $invitation['description'] = 'No description available';
+            $invitation['group_name'] = 'Groupe inconnu';
+            $invitation['description'] = 'Description vide';
         }
     }
 

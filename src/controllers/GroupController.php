@@ -54,7 +54,7 @@ class GroupController {
             $this->renderGroupPage([], $groupId, $group);
         } else {
             //TODO : group not found
-            $this->renderGroupPage(['Group not found'], $groupId);
+            $this->renderGroupPage(['Groupe invalide'], $groupId);
         }
     }
 
@@ -64,8 +64,8 @@ class GroupController {
         $pageData = $this->pageRepository->findOneById($pageId);
 
         //alternative values if $pageData is null
-        $title = $pageData ? $pageData->getTitle() : "Upload Photo";
-        $description = $pageData ? $pageData->getDescription() : "Upload your photos";
+        $title = $pageData ? $pageData->getTitle() : "Groupes";
+        $description = $pageData ? $pageData->getDescription() : "Postez vos photos";
         $content = $pageData ? $pageData->getContent() : "";
 
         $csrfToken = $_SESSION['csrf_token'] ?? bin2hex(random_bytes(32));
@@ -98,8 +98,8 @@ class GroupController {
         $pageData = $this->pageRepository->findOneById($pageId);
 
         //alternative values if $pageData is null
-        $title = $pageData ? $pageData->getTitle() : "Upload Photo";
-        $description = $pageData ? $pageData->getDescription() : "Upload your photos";
+        $title = $pageData ? $pageData->getTitle() : "Créer un groupe";
+        $description = $pageData ? $pageData->getDescription() : "Créez votre groupe";
         $content = $pageData ? $pageData->getContent() : "";
 
         $csrfToken = $_SESSION['csrf_token'] ?? bin2hex(random_bytes(32));
@@ -176,7 +176,7 @@ class GroupController {
             $this->renderGroupSettingsPage([], $groupId, $group);
         } else {
             //TODO : group not found
-            $this->renderGroupSettingsPage(['Group not found'], $groupId);
+            $this->renderGroupSettingsPage(['Groupe invalide'], $groupId);
         }
     }
 
@@ -186,8 +186,8 @@ class GroupController {
         $pageData = $this->pageRepository->findOneById($pageId);
 
         //alternative values if $pageData is null
-        $title = $pageData ? $pageData->getTitle() : "Upload Photo";
-        $description = $pageData ? $pageData->getDescription() : "Upload your photos";
+        $title = $pageData ? $pageData->getTitle() : "Parametres du groupe";
+        $description = $pageData ? $pageData->getDescription() : "Modifiez les parametres de votre groupe";
         $content = $pageData ? $pageData->getContent() : "";
 
         $csrfToken = $_SESSION['csrf_token'] ?? bin2hex(random_bytes(32));
@@ -284,8 +284,8 @@ class GroupController {
                 $pageData = $this->pageRepository->findOneById($pageId);
         
                 //alternative values if $pageData is null
-                $title = $pageData ? $pageData->getTitle() : "Upload Photo";
-                $description = $pageData ? $pageData->getDescription() : "Upload your photos";
+                $title = $pageData ? $pageData->getTitle() : "Rechercher un groupe";
+                $description = $pageData ? $pageData->getDescription() : "Recherchez un groupe";
                 $content = $pageData ? $pageData->getContent() : "";
         
                 $csrfToken = $_SESSION['csrf_token'] ?? bin2hex(random_bytes(32));

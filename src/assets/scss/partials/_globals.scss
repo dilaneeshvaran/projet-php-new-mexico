@@ -1,0 +1,51 @@
+@use "fonts";
+@use "variables" as *;
+@use "sass:color";
+@use "functions" as f;
+
+@layer base {
+    :root {
+        @each $name, $color in $colors {
+            @if ($name =="black" or $name =="white") {
+                --#{$name}: #{$color};
+            }
+
+            @else {
+                // Base color
+                --#{$name}: #{$color};
+
+                // Generate shade variations
+                $baseHue: color.hue($color);
+                $baseSaturation: color.saturation($color);
+                $baseLightness: color.lightness($color);
+
+                @each $shade, $percent in $shades {
+                    $shadeLightness: $percent;
+
+                    // Adjust lightness based on base color's lightness
+                    @if ($percent <=$baseLightness and ($percent + 8%) >=$baseLightness) {
+                        $shadeLightness: $baseLightness;
+                    }
+
+                    $shadeColor: color.change($color,
+                            $lightness: $shadeLightness );
+
+                    --#{$name}-#{$shade}: #{$shadeColor};
+                }
+            }
+        }
+    }
+
+    body {
+        font-family: fonts.$font1;
+        background-color: var(--white);
+        color: var(--black);
+    }
+
+    input {
+        border-radius: f.rem(6);
+        padding: f.rem(10) f.rem(16);
+        border: solid thin currentColor;
+        //background-color: var(--input-bg-color);
+    }
+}
