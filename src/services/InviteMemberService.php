@@ -24,9 +24,12 @@ class InviteMemberService
         $this->groupRepository = $groupRepository;
     }
 
+    //send invitation
     public function processInvitation(?int $groupId, ?int $memberId): array
     {
         $errors = [];
+
+        
 
         //validate group_id
         $groupId = filter_var($groupId, FILTER_VALIDATE_INT);
@@ -40,6 +43,13 @@ class InviteMemberService
             $errors[] = 'Utilisateur invalide';
             return $errors;
         }
+
+        $userRole= $this->userGroupRepository->getUserRole($groupId,$_SESSION['user_id']);
+
+            if ($userRole !== 'admin') {
+                $errors[] = "Vous n'avez pas les droits.";
+                return $errors;
+            }
 
         if ($this->inviteMemberRepository->hasPendingInvitation($groupId, $memberId)) {
             $errors[] = "Votre demande est deja en attente.";
@@ -69,6 +79,8 @@ class InviteMemberService
     {
         $errors = [];
 
+        
+
         $invitation = $this->inviteMemberRepository->findById($invitationId);
 
         if (!$invitation) {
@@ -84,6 +96,9 @@ class InviteMemberService
             var_dump($userId);
             return $errors;
         }
+
+        $userRole= $this->userGroupRepository->getUserRole($groupId,$_SESSION['user_id']);
+
 
         if ($action === 'accept') {
             $userGroup = new UserGroup();
@@ -108,6 +123,7 @@ class InviteMemberService
 
     public function getPendingInvitationsAndGroupDetails(int $userId): array
 {
+    
     $invitations = $this->inviteMemberRepository->getPendingInvitationsByUserId($userId);
 
     foreach ($invitations as &$invitation) {

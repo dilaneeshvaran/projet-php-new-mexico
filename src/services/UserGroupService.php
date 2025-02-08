@@ -108,7 +108,7 @@ public function joinGroup(int $groupId, int $userId): array
             if (!$this->userGroupRepository->addJoinRequest($groupId, $userId)) {
                 $errors[] = "Erreur lors de la demande d adhésion.";
             } else {
-                $errors[] = "Votre demande a ete envoyée.";
+                $errors[] = "Votre demande a ete envoyee.";
             }
         }
     } else {

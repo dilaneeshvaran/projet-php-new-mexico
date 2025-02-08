@@ -7,6 +7,7 @@ use App\Repositories\UserRepository;
 use App\Repositories\PageRepository;
 use App\Core\SQL;
 use App\Core\View;
+use App\Core\Session;
 
 class RegisterController
 {
@@ -22,7 +23,13 @@ class RegisterController
 
     public function index(): void
     {
+        $session = new Session();
+        if ($session->isLogged()) {
+            header('Location: /');
+            exit();
+        }
         $this->renderRegisterPage();
+        
     }
 
     public function post(): void

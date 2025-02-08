@@ -19,7 +19,7 @@
 			background-color: var(--black-hover);
 		}
 
-		// classes modificatrices de couleur
+		//classes modificatrices de couleur
 		&--primary {
 			background-color: var(--primary);
 
@@ -47,7 +47,7 @@
 		&__delete {
 			float: right;
 			margin-bottom: 0.5rem;
-			width: 5rem;
+			width: 6rem;
 			padding: 0.75rem;
 			border: none;
 			border-radius: 8px;
@@ -63,7 +63,7 @@
 			}
 		}
 
-		// classes modificatrices de taille
+		//classes modificatrices de taille
 		&--lg {
 			padding: f.rem(16) f.rem(24);
 			width: 100%;

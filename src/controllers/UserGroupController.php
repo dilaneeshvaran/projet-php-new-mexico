@@ -22,13 +22,16 @@ class UserGroupController {
     private GroupService $groupService;
 
     private UserGroupService $userGroupService;
+
+    private UserGroupRepository $userGroupRepository;
     
     public function __construct() {
         $db = new SQL();
         $this->pageRepository = new PageRepository($db);
         $this->groupRepository = new GroupRepository($db);
         $this->groupService = new GroupService($this->groupRepository);
-        $this->userGroupService = new UserGroupService(new UserGroupRepository($db));
+        $this->userGroupRepository = new UserGroupRepository($db);
+        $this->userGroupService = new UserGroupService($this->userGroupRepository);
     }
 
     public function index(array $errors = [], array $formData = []): void
@@ -38,6 +41,14 @@ class UserGroupController {
             exit();
         }
         $groupId = $this->retrieveGroupId();
+
+        $userId = (new Session())->getUserId();
+
+        if (!$this->userGroupRepository->isMember((int)$groupId, (int)$userId)) {
+            header('Location: /');
+            exit();
+        }
+
         if ($groupId) {
             $this->renderGroupMembersPage([], $groupId);
         } else {
@@ -82,7 +93,17 @@ class UserGroupController {
             header('Location: /login');
             exit();
         }
+        $userId = (new Session())->getUserId();
         $groupId = $this->retrieveGroupId();
+        if (!$this->userGroupRepository->isMember((int)$groupId, (int)$userId)) {
+            header('Location: /');
+            exit();
+        }
+        $userRole = $this->userGroupRepository->getUserRole((int)$groupId, (int)$userId);
+        if ($userRole !== 'admin') {
+            header('Location: /');
+            exit();
+        }
         $memberId = $this->retrieveMemberId();
         if ($groupId && $memberId) {
             $memberDetails = $this->userGroupService->getGroupMemberDetails($groupId, $memberId);
@@ -130,10 +151,24 @@ class UserGroupController {
             exit();
         }
 
+        
+
         $errors = [];
         $currentUserId =  $_SESSION['user_id'];
         $groupId = $this->retrieveGroupId();
         $memberId = $this->retrieveMemberId();
+
+        $userId = (new Session())->getUserId();
+
+        if (!$this->userGroupRepository->isMember((int)$groupId, (int)$userId)) {
+            header('Location: /');
+            exit();
+        }
+        $userRole = $this->userGroupRepository->getUserRole((int)$groupId, (int)$userId);
+        if ($userRole !== 'admin') {
+            header('Location: /');
+            exit();
+        }
 
         // CSRF validation
         if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || 
@@ -162,7 +197,7 @@ class UserGroupController {
                 header("Location: /group/$groupId/member/$memberId/manage");
                 exit();
             } else {
-                $errors['Mise à jour de l\'accès échouée'];
+                $errors[] = "Mise à jour de l\'accès échouée";
             }
             }
 
@@ -191,31 +226,37 @@ class UserGroupController {
     $memberId = $this->retrieveMemberId();
             $errors = [];
 
+            $userId = (new Session())->getUserId();
+
+        if (!$this->userGroupRepository->isMember((int)$groupId, (int)$userId)) {
+            header('Location: /');
+            exit();
+        }
+        $userRole = $this->userGroupRepository->getUserRole((int)$groupId, (int)$userId);
+        if ($userRole !== 'admin') {
+            header('Location: /');
+            exit();
+        }
+
         // CSRF validation
         if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || 
         $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-        header("Location: /group/$groupId/member/$memberId/manage");
+        header("Location: /group/$groupId/members");
         exit();
         }
 
             $userRole = $this->userGroupService->getUserRole($groupId, $currentUserId);
             if ($userRole !== 'admin') {
-                header("Location: /group/$groupId/member/$memberId/manage");
+                header("Location: /group/$groupId/members");
                 exit();
             }
 
         try {
             if ($this->userGroupService->removeMemberFromGroup($groupId, $memberId)) {
-                header("Location: /group/$groupId/member/$memberId/manage");
+                header("Location: /group/$groupId/members");
                 exit();
             } else {
-                $errors['Failed to remove member'];
-            }
-
-            if (empty($errors)) {
-                //redirect to group page : TODO
-                header("Location: /group/$groupId/member/$memberId/manage");
-                exit();
+                $errors[] = 'Failed to remove member';
             }
 
         } catch (\Exception $e) {
@@ -229,6 +270,11 @@ class UserGroupController {
 
     public function renderJoinRequest(array $errors = [],  ?array $groups = []): void
     {
+        $session = new Session();
+        if (!$session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
         $pageId = 1;
         $pageData = $this->pageRepository->findOneById($pageId);
 
@@ -294,6 +340,11 @@ class UserGroupController {
 
     //LEAVE GROUP
     public function renderMemberSettings(?array $errors = []):void{
+        $session = new Session();
+        if (!$session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
         $pageId = 1;
         $pageData = $this->pageRepository->findOneById($pageId);
 
@@ -330,6 +381,12 @@ class UserGroupController {
         $groupId = $this->retrieveGroupId();
         $errors = [];
 
+        $userId = (new Session())->getUserId();
+
+        if (!$this->userGroupRepository->isMember((int)$groupId, (int)$userId)) {
+            header('Location: /');
+            exit();
+        }
         // CSRF valida0tion
         if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || 
         $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
@@ -344,16 +401,10 @@ class UserGroupController {
             else {
                 if (!$this->userGroupService->leaveGroup($groupId, $currentUserId)) {
                     $errors[] = "Erreur lors de la sortie du groupe.";
-                    header("Location: /group/member/settings");
-                    exit();
                 } else {
-                    $errors['Erreur lors de la sortie du groupe'];
+                    header("Location: /");
+                    exit();
                 }
-            }
-
-            if (empty($errors)) {
-                header("Location: /");
-                exit();
             }
 
         } catch (\Exception $e) {

@@ -41,6 +41,11 @@ class InvitationController {
 
     public function respondInvitation(): void
     {
+        $session = new Session();
+        if (!$session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
         $errors = [];
         $userId = (new Session())->getUserId();
         $invitationId = $this->retrieveInvitationId();

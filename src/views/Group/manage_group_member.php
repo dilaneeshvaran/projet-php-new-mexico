@@ -55,17 +55,26 @@
                 groupe</button>
             <?php endif; ?>
         </form>
-        <form method="POST" action="/group/<?= $groupId ?>/member/<?= $memberId ?>/remove"
-            onsubmit="return confirm('Êtes vous sûr?');">
-            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
-            <input type="hidden" name="memberId" value="<?= $memberId ?>">
-            <input type="hidden" name="groupId" value="<?= $groupId ?>">
-            <button type="submit" class="data-table__button data-table__button--danger">Virer le membre du
-                groupe</button>
-        </form>
+        <form id="removeMemberForm" method="POST" action="/group/<?= $groupId ?>/member/<?= $memberId ?>/remove">
+    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
+    <input type="hidden" name="memberId" value="<?= $memberId ?>">
+    <input type="hidden" name="groupId" value="<?= $groupId ?>">
+    <button type="button" id="removeMemberButton" class="data-table__button data-table__button--danger">
+        Virer le membre du groupe
+    </button>
+</form>
     </div>
     <br>
     <br>
 
     <a href="/group/<?= htmlspecialchars($groupId) ?>/members" class="data-table__back-link">Retour</a>
+</div>
+
+<!-- confirmation pour virer -->
+<div id="removeMemberModal" class="modal">
+    <div class="modal__content">
+        <p>Êtes-vous sûr de vouloir virer ce membre du groupe ?</p>
+        <button class="button button--danger" id="confirmRemove">Oui, Virer</button>
+        <button class="button button--secondary" id="cancelRemove">Annuler</button>
+    </div>
 </div>

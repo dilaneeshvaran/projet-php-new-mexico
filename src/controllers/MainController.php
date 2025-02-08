@@ -7,7 +7,7 @@ use App\Repositories\MainRepository;
 use App\Repositories\PageRepository;
 use App\Repositories\UserGroupRepository;
 use App\Core\SQL;
-
+use App\Core\Session;
 class MainController
 {
     private ?string $_pseudo;
@@ -29,6 +29,11 @@ class MainController
 
     public function home(): void
     {
+        $session = new Session();
+        if (!$session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
         $pageId = 3;
         $userId = $_SESSION['user_id'] ?? null;
         $pageData = $this->pageRepository->findOneById($pageId);

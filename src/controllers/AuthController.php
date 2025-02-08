@@ -24,6 +24,11 @@ class AuthController
 
     public function index(): void
     {
+        $session = new Session();
+        if ($session->isLogged()) {
+            header('Location: /');
+            exit();
+        }
         $this->renderLoginPage();
     }
 

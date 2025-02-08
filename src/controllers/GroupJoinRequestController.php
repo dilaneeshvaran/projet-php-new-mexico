@@ -35,13 +35,13 @@ class GroupJoinRequestController {
         $userId = (new Session())->getUserId();
 
         if (!$this->userGroupRepository->isMember((int)$groupId, (int)$userId)) {
-            $this->renderView(["Vous n'êtes pas membre de ce groupe !"],[]);
-            return;
+            header('Location: /');
+            exit();
         }
         $userRole = $this->userGroupRepository->getUserRole((int)$groupId, (int)$userId);
         if ($userRole !== 'admin') {
-            $this->renderView(["Vous n'avez pas accès à ce groupe !"],[]);
-            return;
+            header('Location: /');
+            exit();
         }
         $requests = $this->groupJoinRequestService->getJoinRequestsByGroupId($groupId);
         $this->renderView([], $requests, $groupId);
@@ -49,6 +49,11 @@ class GroupJoinRequestController {
 
     public function processRequest(): void
     {
+        $session = new Session();
+        if (!$session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: /');
             exit();
@@ -72,7 +77,7 @@ class GroupJoinRequestController {
         exit();
     }
 
-    private function renderView(array $errors = [], ?array $requests, ?int $groupId): void {
+    private function renderView(array $errors = [], ?array $requests =[], ?int $groupId): void {
         $csrfToken = $_SESSION['csrf_token'] ?? bin2hex(random_bytes(32));
         $_SESSION['csrf_token'] = $csrfToken;
 

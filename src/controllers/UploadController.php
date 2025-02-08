@@ -36,14 +36,19 @@ class UploadController {
         $userId = (new Session())->getUserId();
 
         if (!$this->userGroupRepository->isMember((int)$groupId, (int)$userId)) {
-            $this->renderUploadPage(["Vous n'êtes pas membre de ce groupe !"],[], $groupId);
-            return;
+            header('Location: /');
+            exit();
         }
         $this->renderUploadPage([],[],$groupId);
     }
 
     public function post(): void
     {
+        $session = new Session();
+        if (!$session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
         $errors = [];
         $formData = $_POST;
         $fileData = $_FILES['photo'] ?? null;
@@ -66,17 +71,20 @@ class UploadController {
             if ($userRole === null) {
                 $errors[] = "Vous n'êtes pas membre de ce groupe.";
             }
-            if ($groupAccess !== 'write') {
+            if ($groupAccess !== 'writer') {
                 $errors[] = "Vous n'avez pas la permission.";
             }
 
+            if (empty($errors)) {
+                //redirect to group page ??
+               
+            
             if ($fileData) {
                 $errors = $this->uploadService->uploadPhoto($fileData, $groupId, $_SESSION['user_id'],$title, $description);
             } else {
                 $errors[] = "Photo n'a pas été postée.";
             }
-
-        
+            }
             if (empty($errors)) {
                 //redirect to group page ??
                 header("Location: /group/$groupId/upload/success");
@@ -120,6 +128,11 @@ class UploadController {
 
     public function success(): void
     {
+        $session = new Session();
+        if (!$session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
         $view = new View('photo/upload_success.php', 'front.php');
         $groupId = $this->retrieveGroupId();
         $view->addData('groupId', $groupId);

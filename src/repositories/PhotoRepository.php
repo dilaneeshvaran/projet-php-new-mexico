@@ -67,8 +67,8 @@ public function findById(int $photoId): ?Photo {
     $photo->setId($row['id'] ?? null);
     $photo->setFilename($row['filename'] ?? null);
     $photo->setOriginalName($row['original_name'] ?? null);
-    $photo->setDescription($row['description'] ?? null);
-    $photo->setTitle($row['title'] ?? null);
+    $photo->setDescription($row['description'] ?? '');
+    $photo->setTitle($row['title'] ?? '');
     $photo->setMimeType($row['mime_type'] ?? null);
     $photo->setSize($row['size'] ?? null);
     $photo->setGroupId($row['group_id'] ?? null);

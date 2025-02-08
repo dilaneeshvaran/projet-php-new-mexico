@@ -7,8 +7,7 @@ use App\Repositories\ResetPasswordTokenRepository;
 use App\Services\ForgotPasswordService;
 use App\Core\View;
 use App\Core\SQL;
-
-
+use App\Core\Session;
 class ForgotPasswordController
 {
     private ForgotPasswordService $forgotPasswordService;
@@ -23,17 +22,33 @@ class ForgotPasswordController
 
     public function index(): void
     {
+        $session = new Session();
+        if ($session->isLogged()) {
+            header('Location: /');
+            exit();
+        }
         $this->renderView();
+        
     }
 
     public function success(): void
     {
+        $session = new Session();
+        if ($session->isLogged()) {
+            header('Location: /');
+            exit();
+        }
         $view = new View('User/forgot_password_success.php', 'front.php');
         $view->render();
     }
 
     public function submit(): void
     {
+        $session = new Session();
+        if ($session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
         $errors = [];
         if (!isset($_POST['csrf_token']) || !isset($_SESSION['csrf_token']) || 
                 $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
