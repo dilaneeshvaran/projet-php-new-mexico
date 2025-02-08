@@ -26,7 +26,7 @@ class DeletePhotoController
             header('Location: /login');
             exit();
         }
-
+        
         $errors = [];
         $groupId = $this->retrieveGroupId();
         $photoId = $this->retrievePhotoId();
@@ -61,6 +61,11 @@ class DeletePhotoController
 
     private function renderSuccessView(array $errors = [], int $groupId): void
     {
+        $session = new Session();
+        if (!$session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
         $view = new View("photo/delete_success.php", "front.php");
         $view->addData("errors", $errors);
         $view->addData("groupId", $groupId);

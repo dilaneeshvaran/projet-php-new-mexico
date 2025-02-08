@@ -38,13 +38,13 @@ class InviteMemberController {
         $userId = (new Session())->getUserId();
 
         if (!$this->userGroupRepository->isMember((int)$groupId, (int)$userId)) {
-            $this->renderView(["Vous n'êtes pas membre de ce groupe !"],[]);
-            return;
+            header('Location: /');
+            exit();
         }
         $userRole = $this->userGroupRepository->getUserRole((int)$groupId, (int)$userId);
         if ($userRole !== 'admin') {
-            $this->renderView(["Vous n'avez pas accès à ce groupe !"],[]);
-            return;
+            header('Location: /');
+            exit();
         }
         $allUsers = $this->userRepository->findAllUsers();
         $this->renderView([], [], $groupId);
@@ -55,6 +55,11 @@ class InviteMemberController {
         $errors = [];
         $groupId = $this->retrieveGroupId();
         $memberId = $this->retrieveMemberId();
+        $session = new Session();
+        if (!$session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
 
         try {
             // CSRF validation
@@ -72,14 +77,18 @@ class InviteMemberController {
                 $errors[] = "Vous n'avez pas le permission.";
             }
         
-            //process here
-            $errors = $this->inviteMemberService->processInvitation($groupId, $memberId);
 
             if (empty($errors)) {
+                //process here
+                $errors = $this->inviteMemberService->processInvitation($groupId, $memberId);
                 //redirect to group page : TODO
+            }
+
+            if (empty($errors)) {
                 $this->renderView(["Invitation envoyée"], [], $groupId);
                 exit();
             }
+            
         } catch (\Exception $e) {
             $errors[] = $e->getMessage();
         }

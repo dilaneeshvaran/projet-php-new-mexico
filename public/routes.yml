@@ -2,10 +2,6 @@
   controller: MainController
   action: home
 
-/articles/{slug}:
-  controller: ArticleController
-  action: index
-
 #login
 
 /login:

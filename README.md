@@ -53,8 +53,7 @@ make database
 Build scss+js (into 'public/assets' folder) & watch mode scss+js
 
 ```bash
-npm build-style
-npm watch-style
+npm run watch
 ```
 
 ## Other helpful commands

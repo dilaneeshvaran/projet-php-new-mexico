@@ -7,7 +7,7 @@ use App\Repositories\ResetPasswordTokenRepository;
 use App\Services\ResetPasswordService;
 use App\Core\View;
 use App\Core\SQL;
-
+use App\Core\Session;
 class ResetPasswordController
 {
     private ResetPasswordService $resetPasswordService;
@@ -22,6 +22,11 @@ class ResetPasswordController
 
     public function index(): void
     {
+        $session = new Session();
+        if ($session->isLogged()) {
+            header('Location: /');
+            exit();
+        }
         $token = $this->retrieveToken();
         //validate token
         if (strlen($token) !== 64 || !ctype_xdigit($token)) {
@@ -32,12 +37,18 @@ class ResetPasswordController
     }
     public function success(): void
     {
+        $session = new Session();
+        if ($session->isLogged()) {
+            header('Location: /');
+            exit();
+        }
         $view = new View('User/reset_password_success.php', 'front.php');
         $view->render();
     }
 
     public function submit(): void
     {
+        
         $errors = [];
         $token = $this->retrieveToken();
 

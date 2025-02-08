@@ -40,18 +40,22 @@
                 <p><strong>Posté le:</strong> <?= htmlspecialchars($photo->getCreatedAt()) ?></p>
             </div>
             <?php if ($deleteAccess): ?>
-            <div class="group-photos__actions">
-                <form
-                    action="/group/<?= htmlspecialchars($group->getId()) ?>/photo/<?= htmlspecialchars($photo->getId()) ?>/delete"
-                    method="POST" onsubmit="return confirm('Êtes vous sûr de supprimer la photo?');">
-                    <input type="hidden" name="photoId" value="<?= htmlspecialchars($photo->getId()) ?>">
-                    <input type="hidden" name="groupId" value="<?= htmlspecialchars($group->getId()) ?>">
-                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
-                    <button class="button__delete" type="submit">Supprimer</button>
-                </form>
-            </div>
+                <div class="group-photos__actions">
+    <form
+        action="/group/<?= htmlspecialchars($group->getId()) ?>/photo/<?= htmlspecialchars($photo->getId()) ?>/delete"
+        method="POST">
+        <input type="hidden" name="photoId" value="<?= htmlspecialchars($photo->getId()) ?>">
+        <input type="hidden" name="groupId" value="<?= htmlspecialchars($group->getId()) ?>">
+        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
+        <button class="button button__delete deletePhotoButton" type="button">Supprimer</button>
+    </form>
+</div>
+
+
+
             <?php endif; ?>
         </li>
+
         <?php endforeach; ?>
     </ul>
     <?php else: ?>
@@ -59,4 +63,13 @@
         <p>Aucune photo dans ce groupe.</p>
     </div>
     <?php endif; ?>
+</div>
+
+        <!--delete photo confirmation -->
+        <div id="deletePhotoModal" class="modal">
+    <div class="modal__content">
+        <p>Êtes-vous sûr de vouloir supprimer cette photo ?</p>
+        <button class="button button--danger" id="confirmDelete">Oui, Supprimer</button>
+        <button class="button button--secondary" id="cancelDelete">Annuler</button>
+    </div>
 </div>

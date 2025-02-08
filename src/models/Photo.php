@@ -6,8 +6,8 @@ class Photo {
     private int $id;
     private string $filename;
     private string $originalName;
-    private string $title;
-    private string $description;
+    private string $title = '';
+    private string $description = '';
     private string $mimeType;
     private int $size;
     private int $groupId;
@@ -28,8 +28,8 @@ class Photo {
     public function setId(int $id): void { $this->id = $id; }
     public function setFilename(string $filename): void { $this->filename = $filename; }
     public function setOriginalName(string $originalName): void { $this->originalName = $originalName; }
-    public function setTitle(string $title): void { $this->title = $title; }
-    public function setDescription(string $description): void { $this->description = $description; }
+    public function setTitle(?string $title): void { $this->title = $title ?? ''; }
+    public function setDescription(?string $description): void { $this->description = $description ?? ''; }
     public function setMimeType(string $mimeType): void { $this->mimeType = $mimeType; }
     public function setSize(int $size): void { $this->size = $size; }
     public function setGroupId(int $groupId): void { $this->groupId = $groupId; }

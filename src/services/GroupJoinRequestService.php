@@ -19,6 +19,12 @@ class GroupJoinRequestService {
     }
 
     public function getJoinRequestsByGroupId(int $groupId): array {
+        $userRole= $this->userGroupRepository->getUserRole($groupId,$_SESSION['user_id']);
+
+        if ($userRole !== 'admin') {
+            $errors[] = "Vous n'avez pas les droits.";
+            return $errors;
+        }
         $requests = $this->groupJoinRequestRepository->findByGroupId($groupId);
         foreach ($requests as &$request) {
             $user = $this->userRepository->findUserById($request['user_id']);
@@ -33,7 +39,11 @@ class GroupJoinRequestService {
     }
 
     public function processRequest(int $requestId, string $status, int $groupId): bool {
+        $userRole= $this->userGroupRepository->getUserRole($groupId,$_SESSION['user_id']);
 
+        if ($userRole !== 'admin') {
+            return false;
+        }
         
         $request = $this->groupJoinRequestRepository->findById($requestId);
         if (!$request) {

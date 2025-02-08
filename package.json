@@ -7,9 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-css": "sass src/assets/scss/main.scss public/assets/main.css",
     "watch-css": "sass --watch src/assets/scss/main.scss public/assets/main.css",
-    "build-style": "node esbuild.config.js",
     "watch-js": "node esbuild.config.js",
-    "watch-style": "npm-run-all --parallel watch-js watch-css"
+    "watch": "npm-run-all --parallel watch-js watch-css"
   },
   "keywords": [],
   "author": "",

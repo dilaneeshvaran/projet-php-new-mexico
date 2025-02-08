@@ -44,10 +44,20 @@
             <div class="form__actions">
                 <div>
                     <a href="/group/<?=$groupId?>" class="form__back">Retour</a>
-                    <a href="/group/<?=$groupId?>/delete" class="form__delete">Supprimer</a>
-                </div>
+                    <a href="#" class="form__delete" data-group-id="<?= htmlspecialchars($groupId) ?>" onclick="openDeleteModal(event)">Supprimer</a>
+                    </div>
                 <button type="submit" class="form__submit">Enregistrer</button>
             </div>
         </form>
+        
+        <div id="deleteModal" class="modal">
+  <div class="modal__content">
+    <p>Êtes-vous sûr de vouloir supprimer ce groupe ?</p>
+    <p>Attention : Toutes les photos vont être supprimées !</p>
+      <button class="button button--danger" id="confirmDelete">Oui, Supprimer</button>
+      <button class="button button--secondary" id="cancelDelete">Annuler</button>
+  </div>
+</div>
+
     </div>
 </div>

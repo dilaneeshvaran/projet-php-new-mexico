@@ -94,6 +94,11 @@ class GroupController {
     // CREATE GROUP
     public function renderCreateGroupPage(array $errors = [],array $formData = []): void
     {
+        $session = new Session();
+        if (!$session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
         $pageId = 1;
         $pageData = $this->pageRepository->findOneById($pageId);
 
@@ -117,6 +122,11 @@ class GroupController {
 
     public function create(): void
 {
+    $session = new Session();
+        if (!$session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
     $errors = [];
     try {
         // CSRF validation
@@ -157,6 +167,11 @@ class GroupController {
 
     public function createSuccess(): void
     {
+        $session = new Session();
+        if (!$session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
         $view = new View('Group/create_group_success.php', 'front.php');
         echo $view->render();
     }
@@ -171,6 +186,17 @@ class GroupController {
             exit();
         }
         $groupId = $this->retrieveGroupId();
+        $userId = (new Session())->getUserId();
+
+        if (!$this->userGroupRepository->isMember((int)$groupId, (int)$userId)) {
+            header('Location: /');
+            exit();
+        }
+        $userRole = $this->userGroupRepository->getUserRole((int)$groupId, (int)$userId);
+        if ($userRole !== 'admin') {
+            header('Location: /');
+            exit();
+        }
         $group = $this->groupService->getGroupById((int)$groupId);
         if ($group) {
             $this->renderGroupSettingsPage([], $groupId, $group);
@@ -206,6 +232,11 @@ class GroupController {
 
     public function settingsSave(): void
     {
+        $session = new Session();
+        if (!$session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
         $groupId = $this->retrieveGroupId();
         $errors = [];
         $formData = $_POST;
@@ -238,6 +269,11 @@ class GroupController {
 
     public function settingsSuccess(): void
     {
+        $session = new Session();
+        if (!$session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
         $view = new View('Group/group_settings_success.php', 'front.php');
         $groupId = $this->retrieveGroupId();
         $view->addData('groupId', $groupId);
@@ -249,6 +285,23 @@ class GroupController {
 
     public function delete(): void
     {
+        $groupId = $this->retrieveGroupId();
+        $userId = (new Session())->getUserId();
+
+        if (!$this->userGroupRepository->isMember((int)$groupId, (int)$userId)) {
+            header('Location: /');
+            exit();
+        }
+        $userRole = $this->userGroupRepository->getUserRole((int)$groupId, (int)$userId);
+        if ($userRole !== 'admin') {
+            header('Location: /');
+            exit();
+        }
+        $session = new Session();
+        if (!$session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
         $groupId = $this->retrieveGroupId();
         $errors = [];
         try {
@@ -273,6 +326,11 @@ class GroupController {
 
     public function deleteSuccess(): void
     {
+        $session = new Session();
+        if (!$session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
         $view = new View('Group/delete_group_success.php', 'front.php');
         echo $view->render();
     }
@@ -280,6 +338,11 @@ class GroupController {
     # SEARCH GROUP
             public function renderSearchGroupPage(array $errors = [], ?array $groups = []): void
             {
+                $session = new Session();
+        if (!$session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
                 $pageId = 1;
                 $pageData = $this->pageRepository->findOneById($pageId);
         

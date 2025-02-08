@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Repositories\GroupRepository;
 use App\Models\Group;
 use App\Models\GroupValidator;
+use App\Core\Session;
 
 class GroupService {
     private GroupRepository $groupRepository;
@@ -51,6 +52,18 @@ class GroupService {
     public function updateGroup(int $groupId, array $data): array {
         $errors = [];
 
+        $userId = (new Session())->getUserId();
+
+        if (!$this->userGroupRepository->isMember((int)$groupId, (int)$userId)) {
+            $errors[] = "ERREUR - vous n'etes pas membre.";
+            return $errors;
+        }
+        $userRole = $this->userGroupRepository->getUserRole((int)$groupId, (int)$userId);
+        if ($userRole !== 'admin') {
+            $errors[] = "ERREUR - vous n'avez pas les droits.";
+            return $errors;
+        }
+
         $group = $this->groupRepository->findById($groupId);
         if (!$group) {
             return ['Groupe non trouvé.'];
@@ -76,6 +89,18 @@ class GroupService {
 
     public function deleteGroup(int $groupId): array {
         $errors = [];
+
+        $userId = (new Session())->getUserId();
+
+        if (!$this->userGroupRepository->isMember((int)$groupId, (int)$userId)) {
+            $errors[] = "ERREUR - vous n'etes pas membre.";
+            return $errors;
+        }
+        $userRole = $this->userGroupRepository->getUserRole((int)$groupId, (int)$userId);
+        if ($userRole !== 'admin') {
+            $errors[] = "ERREUR - vous n'avez pas les droits.";
+            return $errors;
+        }
 
         $group = $this->groupRepository->findById($groupId);
         if (!$group) {

@@ -47,6 +47,13 @@ class PhotoController {
             header('Location: /login');
             exit();
         }
+        $groupId = $this->retrieveGroupId();
+        $userId = (new Session())->getUserId();
+
+        if (!$this->userGroupRepository->isMember((int)$groupId, (int)$userId)) {
+            header('Location: /');
+            exit();
+        }
         $this->renderView();
     }
 
