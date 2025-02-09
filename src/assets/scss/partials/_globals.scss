@@ -2,6 +2,7 @@
 @use "variables" as *;
 @use "sass:color";
 @use "functions" as f;
+@use "mixins" as *;
 
 @layer base {
     :root {
@@ -77,6 +78,6 @@ body {
 input {
     padding: f.rem(10) f.rem(16);
     //background-color: var(--surface, var(--white));
-    color: var(--text-primary, currentColor);
+    //color: var(--text-primary, currentColor);
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }

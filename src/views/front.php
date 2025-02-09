@@ -28,9 +28,15 @@ $currentUrl = $_SERVER['REQUEST_URI'];
             <div class="navbar__header">
                 <a class="navbar__label" href="/">New Mexico</a>
                 <?php if (isset($_SESSION["firstname"])): ?>
-                    <button id="darkModeToggle" class="navbar__button">Dark Mode</button>
-                    <a href="/logout" class="navbar__header-action">Se déconnecter</a>
-                <?php else: ?>
+    <div class="navbar__actions">
+    <img src="/assets/darkmode.png" alt="Dark Mode" class="theme-icon" width="25" height="25">
+
+        <button id="darkModeToggle" class="theme__button">
+            Dark Mode
+        </button>
+        <a href="/logout" class="navbar__header-action">Se déconnecter</a>
+    </div>
+<?php else: ?>
                 <?php if ($currentUrl == '/login'): ?>
                 <a href="/register" class="navbar__header-action">S'inscrire</a>
                 <?php else: ?>
