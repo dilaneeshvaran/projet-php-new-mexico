@@ -44,7 +44,7 @@
             <div class="form__actions">
                 <div>
                     <a href="/group/<?=$groupId?>" class="form__back">Retour</a>
-                    <a href="#" class="form__delete" data-group-id="<?= htmlspecialchars($groupId) ?>" onclick="openDeleteModal(event)">Supprimer</a>
+                    <a href="#" class="form__delete" data-group-id="<?= htmlspecialchars($groupId) ?>" onclick="openDeleteModal(event)">Supprimer le groupe</a>
                     </div>
                 <button type="submit" class="form__submit">Enregistrer</button>
             </div>

@@ -5,3 +5,4 @@ import "./modalDeleteGroup.js";
 import "./modalLeaveGroup.js";
 import "./modalDeletePhoto.js";
 import "./modalRemoveMember.js";
+import "./darkMode.js";

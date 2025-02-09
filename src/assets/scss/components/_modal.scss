@@ -1,5 +1,5 @@
 @use "../partials/functions" as f;
-@use "../partials/mixins" as m;
+@use "../partials/mixins" as *;
 @use "sass:color";
 @use "../partials/variables" as *;
 
@@ -16,10 +16,11 @@
         align-items: center;
 
         &__content {
-            background: white;
+            background: var(--link-secondary);
             padding: 20px;
             border-radius: 8px;
             text-align: center;
+            color: var(--text-color);
         }
     }
 }

@@ -1,7 +1,7 @@
 @use "../partials/variables" as *;
 @use "sass:color";
 @use "../partials/functions" as f;
-@use "../partials/mixins" as m;
+@use "../partials/mixins" as *;
 
 @layer components {
     .form {
@@ -10,7 +10,7 @@
         align-items: center;
         justify-content: center;
         min-height: 100vh;
-        background-color: map-get($colors, "neutral");
+        background-color: var(--neutral);
         padding: 2rem;
 
 
@@ -37,10 +37,10 @@
         }
 
         &__container {
-            background: #fff;
+            background: var(--surface);
             padding: 2rem;
             border-radius: 8px;
-            box-shadow: 0 4px 10px map-get($colors, "shadow-color");
+            box-shadow: 0 4px 10px var(--shadow-color);
             text-align: center;
             max-width: 400px;
             width: 100%;
@@ -55,7 +55,7 @@
         }
 
         &__title {
-            color: map-get($colors, "text-color");
+            color: var(--text-color);
             font-size: 1.8rem;
             margin-bottom: 1rem;
         }
@@ -73,7 +73,7 @@
         }
 
         &__label {
-            color: map-get($colors, "text-secondary");
+            color: var(--text-secondary);
             font-size: 0.875rem;
             font-weight: 500;
             margin-bottom: 0.5rem;
@@ -82,26 +82,31 @@
         &__input {
             width: 100%;
             padding: 0.8rem;
-            border: 1px solid map-get($colors, "grey");
+            border: 1px solid var(--grey);
             border-radius: 6px;
             font-size: 1rem;
             outline: none;
             transition: border-color 0.3s;
+            background-color: var(--background);
+            color: var(--text-primary);
 
             &:focus {
-                border-color: map-get($colors, "primary");
+                border-color: var(--primary);
                 box-shadow: 0 0 0 2px color.scale(map-get($colors, "primary"), $alpha: -85%);
             }
         }
 
         &__textarea {
             @extend .form__input;
+            background-color: var(--background);
             min-height: 120px;
             resize: vertical;
+
         }
 
         &__select {
             @extend .form__input;
+            //background-color: var(--surface);
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
             background-repeat: no-repeat;
@@ -124,8 +129,8 @@
         }
 
         &__submit {
-            background-color: map-get($colors, "primary");
-            color: #fff;
+            background-color: var(--primary);
+            color: var(--white);
             border: none;
             padding: 0.8rem;
             border-radius: 6px;
@@ -134,7 +139,7 @@
             transition: background-color 0.3s;
 
             &:hover {
-                background-color: color.scale(map-get($colors, "primary"), $lightness: -10%);
+                background-color: var(--link-hover);
             }
         }
 
@@ -147,7 +152,7 @@
             gap: 0.8rem;
 
             a {
-                color: map-get($colors, "primary");
+                color: var(--primary);
                 text-decoration: none;
                 transition: color 0.3s;
 
@@ -158,18 +163,18 @@
         }
 
         &__back {
-            color: map-get($colors, "text-secondary");
+            color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.2s ease;
 
             &:hover {
-                color: map-get($colors, "text-primary");
+                color: var(--text-primary);
             }
         }
 
         &__delete {
-            color: map-get($colors, "accent");
+            color: var(--accent);
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.2s ease;
@@ -181,13 +186,13 @@
 
         &__errors {
             background-color: color.scale(map-get($colors, "accent"), $lightness: 95%);
-            border-left: 4px solid map-get($colors, "accent");
+            border-left: 4px solid var(--accent);
             padding: 1rem;
             margin-bottom: 1.5rem;
             border-radius: 0 6px 6px 0;
 
             p {
-                color: map-get($colors, "accent");
+                color: var(--accent);
                 margin: 0;
                 font-size: 0.875rem;
 

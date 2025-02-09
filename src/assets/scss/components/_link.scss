@@ -27,40 +27,40 @@
 
 
         &__back {
-            background-color: color.scale(map-get($colors, "secondary"), $lightness: 90%);
-            color: map-get($colors, "text-primary");
-            border: 1px solid map-get($colors, "border");
+            background-color: var(--link-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
 
             &:hover {
-                background-color: color.scale(map-get($colors, "secondary"), $lightness: 85%);
+                background-color: var(--link-sec-hover);
             }
         }
 
         &__main {
-            background-color: map-get($colors, "primary");
-            color: white;
+            background-color: var(--primary);
+            color: var(--white);
 
             &:hover {
-                background-color: color.scale(map-get($colors, "primary"), $lightness: -10%);
+                background-color: var(--link-hover);
             }
         }
 
         &--primary {
-            background-color: map-get($colors, "primary");
-            color: white;
+            background-color: var(--primary);
+            color: var(--white);
 
             &:hover {
-                background-color: color.scale(map-get($colors, "primary"), $lightness: -10%);
+                background-color: var(--link-hover);
             }
         }
 
         &--secondary {
-            background-color: color.scale(map-get($colors, "secondary"), $lightness: 90%);
-            color: map-get($colors, "text-primary");
-            border: 1px solid map-get($colors, "border");
+            background-color: var(--link-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
 
             &:hover {
-                background-color: color.scale(map-get($colors, "secondary"), $lightness: 85%);
+                background-color: var(--link-sec-hover);
             }
         }
     }

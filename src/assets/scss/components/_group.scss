@@ -6,7 +6,7 @@
 @layer components {
     .group-view {
         padding: 1rem;
-        background-color: map-get($colors, "background");
+        background-color: var(--background);
         min-height: 100vh;
 
         @media (min-width: map-get($breakpoints, "md")) {
@@ -16,9 +16,9 @@
         &__container {
             max-width: 800px;
             margin: 0 auto;
-            background: map-get($colors, "surface");
+            background: var(--surface);
             border-radius: 12px;
-            box-shadow: 0 4px 6px map-get($colors, "shadow");
+            box-shadow: 0 4px 6px var(--shadow);
             padding: 1.5rem;
 
             @media (min-width: map-get($breakpoints, "md")) {
@@ -30,7 +30,7 @@
             margin-bottom: 2rem;
 
             h1 {
-                color: map-get($colors, "text-primary");
+                color: var(--text-primary);
                 font-size: 1.5rem;
                 font-weight: 600;
                 margin-bottom: 0.5rem;
@@ -41,7 +41,7 @@
             }
 
             p {
-                color: map-get($colors, "text-secondary");
+                color: var(--text-secondary);
                 font-size: 0.875rem;
                 line-height: 1.5;
             }
@@ -68,10 +68,10 @@
 
         &__meta {
             font-size: 0.875rem;
-            color: map-get($colors, "text-secondary");
+            color: var(--text-secondary);
             margin-bottom: 1.5rem;
             padding-bottom: 1rem;
-            border-bottom: 1px solid map-get($colors, "border");
+            border-bottom: 1px solid var(--border);
         }
 
         &__actions {

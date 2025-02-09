@@ -5,13 +5,13 @@
 
 @layer components {
     .errors {
-        background-color: map-get($colors, "accent");
-        color: map-get($colors, "white");
+        background-color: var(--accent);
+        color: var(--white);
         padding: 1rem;
         border-radius: 6px;
         margin-bottom: 1rem;
         text-align: left;
-        box-shadow: 0 4px 6px map-get($colors, "shadow-color");
+        box-shadow: 0 4px 6px var(--shadow-color);
 
         ul {
             padding: 0;
@@ -19,9 +19,9 @@
             list-style: none;
 
             li {
-                color: map-get($colors, "text-color");
+                color: var(--text-color);
                 padding: 0.5rem 0;
-                border-bottom: 1px solid color.scale(map-get($colors, "neutral"), $lightness: -10%); //separate errors with border
+                border-bottom: 1px solid var(--neutral-600); //separate errors with border
             }
 
             li:last-child {

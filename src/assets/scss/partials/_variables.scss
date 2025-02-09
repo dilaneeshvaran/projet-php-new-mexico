@@ -2,45 +2,83 @@
 
 $colors: (
 	"red": #ff5a5f,
-	//vibrant red for attention grabbing elements
 	"grey": #adb5bd,
-	//soft grey for subdue elements
 	"blue": #4a90e2,
-	//calming blue for primary actions
 	"white": #ffffff,
-	//clean white
 	"black": #121212,
-	//dark, rich black for contrast
 	"purple": #a855f7,
-	//bright purple for accents
 	"yellow": #ffce00,
-	//warm yellow for highlights
 	"green": #22c55e,
-	//fresh green for success indicators
-	//"primary": #4a90e2,
-	//updated primary color for consistency
-	//"secondary": #adb5bd,
-	//neutral secondary color
-	//"accent": #ff5a5f,
-	//to highlight accent color
+
 	"text-color": #333333,
-	//for darker text for better readability
 	"shadow-color": rgba(0, 0, 0, 0.15),
-	//for subtle shadow for depth
 	"neutral": #f2f4f7,
-	//for backgrounds
 
 	"primary": #6366f1,
 	"secondary": #94a3b8,
 	"accent": #f43f5e,
-	"success": #10b981,
 	"warning": #f59e0b,
 	"text-primary": #1e293b,
 	"text-secondary": #64748b,
 	"background": #f8fafc,
 	"surface": #ffffff,
+	"input": #ffffff,
 	"border": #e2e8f0,
 	"shadow": rgba(0, 0, 0, 0.1),
+	"link": #1e293b,
+	"link-hover": #4245e8,
+	"link-secondary":#f6f7f9,
+	"link-sec-hover":#cfcfcf,
+	"form-label":#333333,
+
+	"success": #10b981,
+	"success-light": #d1fae5,
+	"success-dark": #065f46,
+	"error": #ef4444,
+	"error-light": #fee2e2,
+	"error-dark": #991b1b,
+);
+
+
+
+$dark-theme: (
+	"red": #f87171,
+	"grey": #6b7280,
+	"blue": #60a5fa,
+	"white": rgba(255, 255, 255, 0.87),
+	"black": #121212,
+	"purple": #c084fc,
+	"yellow": #fcd34d,
+	"green": #34d399,
+
+	"text-color": #f3f4f6,
+	"shadow-color": rgba(0, 0, 0, 0.3),
+	"neutral": #374151,
+
+	"primary": #8556f9,
+	"secondary": #64748b,
+	"accent": #fb7185,
+	"warning": #c7930f,
+	"text-primary": #ffffff,
+	"text-secondary": #a0a0a0,
+	"background": #121212,
+	"surface": #1e1e1e,
+	"input": #ffffff,
+	"border": #2e2e2e,
+	"shadow": rgba(255, 255, 255, 0.05),
+	"link": #1e293b,
+	"link-hover": #a381f8,
+	"link-secondary":#2f2f2f,
+	"link-sec-hover":#6e6e6e,
+	"form-label":#e9e9e9,
+
+
+	"success": #10b981,
+	"success-light": #434343,
+	"success-dark": #00b682,
+	"error": #ef4444,
+	"error-light": #fee2e2,
+	"error-dark": #991b1b,
 );
 
 $shades: (
@@ -54,7 +92,7 @@ $shades: (
 	400: 60%,
 	300: 70%,
 	200: 85%,
-	100: 92%,
+	100: 90%,
 	50: 97%,
 	//very light
 );

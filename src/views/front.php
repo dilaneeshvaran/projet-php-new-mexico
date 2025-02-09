@@ -28,7 +28,8 @@ $currentUrl = $_SERVER['REQUEST_URI'];
             <div class="navbar__header">
                 <a class="navbar__label" href="/">New Mexico</a>
                 <?php if (isset($_SESSION["firstname"])): ?>
-                <a href="/logout" class="navbar__header-action">Se déconnecter</a>
+                    <button id="darkModeToggle" class="navbar__button">Dark Mode</button>
+                    <a href="/logout" class="navbar__header-action">Se déconnecter</a>
                 <?php else: ?>
                 <?php if ($currentUrl == '/login'): ?>
                 <a href="/register" class="navbar__header-action">S'inscrire</a>
