@@ -30,9 +30,10 @@ class GroupController {
         $db = new SQL();
         $this->pageRepository = new PageRepository($db);
         $this->GroupRepository = new GroupRepository($db);
-        $this->groupService = new GroupService($this->GroupRepository);
         $this->userGroupService = new UserGroupService(new UserGroupRepository($db));
         $this->userGroupRepository = new UserGroupRepository($db);
+        $this->groupService = new GroupService($this->GroupRepository, $this->userGroupRepository);
+        
     }
 
     public function index(array $errors = [], array $formData = []): void

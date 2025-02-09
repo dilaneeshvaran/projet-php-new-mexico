@@ -38,7 +38,7 @@ class PhotoController {
         $this->photoService = new PhotoService($this->photoRepository,$this->userRepository);
         $this->pageRepository = new PageRepository($db);
         $this->groupRepository = new GroupRepository($db);
-        $this->groupService = new GroupService($this->groupRepository);
+        $this->groupService = new GroupService($this->groupRepository, $this->userGroupRepository);
     }
 
     public function index(array $errors = [], array $formData = []): void

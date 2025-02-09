@@ -39,7 +39,19 @@ class MainController
         $pageData = $this->pageRepository->findOneById($pageId);
         $view = new View("User/main.php", "front.php");
 
-        $groups = $userId ? $this->userGroupRepository->getGroupsByUserId($userId) : [];
+        $groups = [];
+        if ($userId) {
+            $userGroups = $this->userGroupRepository->getGroupsByUserId($userId);
+            foreach ($userGroups as $groupData) {
+                $group = $groupData['group'];
+                $role = $this->userGroupRepository->getUserRole($group->getId(), $userId);
+                $groups[] = [
+                    'group' => $group,
+                    'userGroup' => $groupData['userGroup'],
+                    'isAdmin' => $role === 'admin'
+                ];
+            }
+        }
         $view->addData("title", $pageData["title"] ?? "Accueil");
         $view->addData("description", $pageData["description"] ?? "Home");
         $view->addData("groups", $groups);

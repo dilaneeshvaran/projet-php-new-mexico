@@ -6,12 +6,16 @@ use App\Repositories\GroupRepository;
 use App\Models\Group;
 use App\Models\GroupValidator;
 use App\Core\Session;
+use App\Repositories\UserGroupRepository;
 
 class GroupService {
     private GroupRepository $groupRepository;
 
-    public function __construct(GroupRepository $groupRepository) {
+    private UserGroupRepository $userGroupRepository;
+
+    public function __construct(GroupRepository $groupRepository, UserGroupRepository $userGroupRepository) {
         $this->groupRepository = $groupRepository;
+        $this->userGroupRepository = $userGroupRepository;
     }
 
     public function getGroupById(int $id): ?Group {

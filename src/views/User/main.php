@@ -12,20 +12,25 @@
         </div>
 
         <div class="home__groups">
-            <h2>Vos Groupes</h2>
-            <div class="home__groups-grid">
-                <?php foreach ($groups as $groupData): 
-                        $group = $groupData['group']; ?>
-                <a href="group/<?= htmlspecialchars($group->getId()) ?>" class="home__groups-item">
-                    <?= htmlspecialchars($group->getName()) ?>
-                </a>
-                <?php endforeach; ?>
-            </div>
-        </div>
-
+    <h2>Vos Groupes</h2>
+    <div class="home__groups-grid">
+        <?php foreach ($groups as $groupData): 
+            $group = $groupData['group'];
+            $isAdmin = $groupData['isAdmin'];
+        ?>
+        <a href="group/<?= htmlspecialchars($group->getId()) ?>" class="home__groups-item">
+            <?= htmlspecialchars($group->getName()) ?>
+            <?php if ($isAdmin): ?>
+                <img src="/assets/crown.svg" alt="Description of the image" class="crown-icon" width="16" height="16">
+            <?php endif; ?>
+        </a>
+        <?php endforeach; ?>
+    </div>
+</div>
         <?php else:
             header('Location: /login');
             exit();
         endif; ?>
     </div>
 </div>
+
