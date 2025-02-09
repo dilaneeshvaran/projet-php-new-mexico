@@ -1,10 +1,15 @@
 <div class="group-view">
     <div class="group-view__container">
         <?php if ($group): ?>
-        <div class="group-view__header">
-            <h1><?= htmlspecialchars($group->getName()) ?></h1>
-            <p><?= htmlspecialchars($group->getDescription()) ?></p>
-        </div>
+            <div class="group-view__header">
+    <div class="group-view__title">
+        <h1><?= htmlspecialchars($group->getName()) ?></h1>
+        <?php if ($groupRole === 'admin'): ?>
+            <img src="/assets/crown.svg" alt="Description of the image" class="crown-icon" width="20" height="20">
+        <?php endif; ?>
+    </div>
+    <p><?= htmlspecialchars($group->getDescription()) ?></p>
+</div>
 
         <div class="group-view__meta">
             Crée le: <?= htmlspecialchars($group->getCreatedAt()) ?>

@@ -37,36 +37,37 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if (!empty($members)): ?>
-                <?php foreach ($members as $index => $member): ?>
-                <tr>
-                    <td data-label="#"><?= $index + 1 ?></td>
-                    <td data-label="First Name"><?= htmlspecialchars($member['firstname']) ?></td>
-                    <td data-label="Last Name"><?= htmlspecialchars($member['lastname']) ?></td>
-                    <td data-label="Email"><?= htmlspecialchars($member['email']) ?></td>
-                    <td data-label="Joined At"><?= htmlspecialchars($member['joined_at']) ?></td>
-                    <td data-label="Group Access"><?= htmlspecialchars($member['group_access']) ?></td>
-                    <td data-label="Role"><?= htmlspecialchars($member['role']) ?></td>
-                    <?php if ($userRole === 'admin'): ?>
-                    <td data-label="Actions" class="data-table__actions">
-                        <form method="POST"
-                            action="/group/<?= htmlspecialchars($groupId) ?>/member/<?= htmlspecialchars($member['id']) ?>/manage">
-                            <input type="hidden" name="memberId" value="<?= htmlspecialchars($member['id']) ?>">
-                            <input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">
-                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
-                            <button type="submit" class="data-table__button data-table__button--primary">Gérer</button>
-                        </form>
-                    </td>
-                    <?php endif; ?>
-                </tr>
-                <?php endforeach; ?>
-                <?php else: ?>
-                <tr>
-                    <td colspan="<?= $userRole === 'admin' ? 8 : 7 ?>" class="data-table__empty">
-                        Aucun membre trouvé dans ce groupe.
-                    </td>
-                </tr>
-                <?php endif; ?>
+            <?php if (!empty($members)): ?>
+<?php foreach ($members as $index => $member): ?>
+<tr>
+    <td data-label="#"><?= $index + 1 ?></td>
+    <td data-label="First Name"><?= htmlspecialchars($member['firstname']) ?></td>
+    <td data-label="Last Name"><?= htmlspecialchars($member['lastname']) ?></td>
+    <td data-label="Email"><?= htmlspecialchars($member['email']) ?></td>
+    <td data-label="Joined At"><?= htmlspecialchars($member['joined_at']) ?></td>
+    <td data-label="Group Access"><?= htmlspecialchars($member['group_access']) ?></td>
+    <td data-label="Role"><?= htmlspecialchars($member['role']) ?></td>
+    <?php if ($userRole === 'admin'): ?>
+    <td data-label="Actions" class="data-table__actions">
+        <?php if ($member['id'] !== $_SESSION['user_id']): ?>
+        <form method="POST" action="/group/<?= htmlspecialchars($groupId) ?>/member/<?= htmlspecialchars($member['id']) ?>/manage">
+            <input type="hidden" name="memberId" value="<?= htmlspecialchars($member['id']) ?>">
+            <input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
+            <button type="submit" class="data-table__button data-table__button--primary">Gérer</button>
+        </form>
+        <?php endif; ?>
+    </td>
+    <?php endif; ?>
+</tr>
+<?php endforeach; ?>
+<?php else: ?>
+<tr>
+    <td colspan="<?= $userRole === 'admin' ? 8 : 7 ?>" class="data-table__empty">
+        Aucun membre trouvé dans ce groupe.
+    </td>
+</tr>
+<?php endif; ?>
             </tbody>
         </table>
     </div>
