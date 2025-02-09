@@ -37,7 +37,7 @@
         }
 
         &__main {
-            background-color: map-get($colors, "primary");
+            background-color: var(--primary);
             color: white;
 
             &:hover {
@@ -46,7 +46,7 @@
         }
 
         &--primary {
-            background-color: map-get($colors, "primary");
+            background-color: var(--primary);
             color: white;
 
             &:hover {
@@ -56,8 +56,8 @@
 
         &--secondary {
             background-color: color.scale(map-get($colors, "secondary"), $lightness: 90%);
-            color: map-get($colors, "text-primary");
-            border: 1px solid map-get($colors, "border");
+            color: var(--text-primary);
+            border: 1px solid var(--border);
 
             &:hover {
                 background-color: color.scale(map-get($colors, "secondary"), $lightness: 85%);

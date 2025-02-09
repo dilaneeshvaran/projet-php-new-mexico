@@ -4,7 +4,7 @@
 @layer components {
     .home {
         min-height: 100vh;
-        background-color: map-get($colors, "background");
+        background-color: var(--background);
         padding: 1rem;
 
         @media (min-width: map-get($breakpoints, "md")) {
@@ -20,14 +20,14 @@
         }
 
         &__groups {
-            background: map-get($colors, "surface");
+            background: var(--surface);
             border-radius: 12px;
-            box-shadow: 0 4px 6px map-get($colors, "shadow");
+            box-shadow: 0 4px 6px var(--shadow);
             padding: 1.5rem;
 
 
             h2 {
-                color: map-get($colors, "text-primary");
+                color: var(--text-primary);
                 font-size: 1.5rem;
                 margin-bottom: 1.5rem;
                 font-weight: 600;
@@ -44,15 +44,15 @@
                 background: color.scale(map-get($colors, "background"), $lightness: 2%);
                 padding: 1.25rem;
                 border-radius: 8px;
-                color: map-get($colors, "text-primary");
+                color: var(--text-primary);
                 text-decoration: none;
                 transition: all 0.2s ease;
-                border: 1px solid map-get($colors, "border");
+                border: 1px solid var(--border);
 
                 &:hover {
                     transform: translateY(-4px);
-                    box-shadow: 0 8px 16px map-get($colors, "shadow");
-                    border-color: map-get($colors, "primary");
+                    box-shadow: 0 8px 16px var(--shadow);
+                    border-color: var(--primary);
                 }
             }
         }
@@ -68,7 +68,7 @@
                 align-items: center;
                 justify-content: center;
                 padding: 1rem;
-                background-color: map-get($colors, "primary");
+                background-color: var(--primary);
                 color: white;
                 text-decoration: none;
                 border-radius: 8px;
@@ -82,7 +82,7 @@
                 }
 
                 &--secondary {
-                    background-color: map-get($colors, "secondary");
+                    background-color: var(--secondary);
 
                     &:hover {
                         background-color: color.scale(map-get($colors, "secondary"), $lightness: -10%);

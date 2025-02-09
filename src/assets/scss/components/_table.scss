@@ -6,7 +6,7 @@
 @layer components {
     .data-table {
         padding: 1rem;
-        background-color: map-get($colors, "background");
+        background-color: var(--background);
         min-height: 100vh;
 
         @media (min-width: map-get($breakpoints, "md")) {
@@ -14,7 +14,7 @@
         }
 
         &__title {
-            color: map-get($colors, "text-primary");
+            color: var(--text-primary);
             font-size: 1.5rem;
             margin-bottom: 1.5rem;
             font-weight: 600;
@@ -25,9 +25,9 @@
         }
 
         &__container {
-            background: map-get($colors, "surface");
+            background: var(--surface);
             border-radius: 8px;
-            box-shadow: 0 2px 8px map-get($colors, "shadow");
+            box-shadow: 0 2px 8px var(--shadow);
             overflow-x: auto;
             margin-bottom: 1.5rem;
         }
@@ -41,7 +41,7 @@
             td {
                 padding: 1rem;
                 text-align: left;
-                border-bottom: 1px solid map-get($colors, "border");
+                border-bottom: 1px solid var(--border);
                 white-space: nowrap;
 
                 @media (min-width: map-get($breakpoints, "md")) {
@@ -50,8 +50,8 @@
             }
 
             th {
-                background-color: map-get($colors, "neutral");
-                color: map-get($colors, "text-secondary");
+                background-color: var(--neutral);
+                color: var(--text-secondary);
                 font-weight: 600;
             }
 
@@ -75,38 +75,38 @@
             transition: background-color 0.3s;
 
             &--primary {
-                background-color: map-get($colors, "primary");
-                color: map-get($colors, "white");
+                background-color: var(--primary);
+                color: var(--white);
 
                 &:hover {
-                    background-color: color.scale(map-get($colors, "primary"), $lightness: -10%);
+                    background-color: var(--primary-600);
                 }
             }
 
             &--success {
-                background-color: map-get($colors, "success");
-                color: map-get($colors, "white");
+                background-color: var(--success);
+                color: var(--white);
 
                 &:hover {
-                    background-color: color.scale(map-get($colors, "success"), $lightness: -10%);
+                    background-color: var(--success-600);
                 }
             }
 
             &--danger {
-                background-color: map-get($colors, "red");
-                color: map-get($colors, "white");
+                background-color: var(--red);
+                color: var(--white);
 
                 &:hover {
-                    background-color: color.scale(map-get($colors, "red"), $lightness: -10%);
+                    background-color: var(--red-600);
                 }
             }
 
             &--warning {
-                background-color: map-get($colors, "warning");
-                color: map-get($colors, "white");
+                background-color: var(--warning);
+                color: var(--white);
 
                 &:hover {
-                    background-color: color.scale(map-get($colors, "warning"), $lightness: -10%);
+                    background-color: var(--warning-600);
                 }
             }
 
@@ -120,38 +120,38 @@
             font-weight: 500;
 
             &--success {
-                color: map-get($colors, "success");
+                color: var(--success);
             }
 
             &--danger {
-                color: map-get($colors, "red");
+                color: var(--red);
             }
 
             &--warning {
-                color: map-get($colors, "warning");
+                color: var(--warning);
             }
 
             &--info {
-                color: map-get($colors, "primary");
+                color: var(--primary);
             }
         }
 
         &__empty {
             text-align: center;
             padding: 2rem;
-            color: map-get($colors, "text-secondary");
+            color: var(--text-secondary);
             font-size: 0.875rem;
         }
 
         &__back-link {
             display: inline-block;
-            color: map-get($colors, "text-secondary");
+            color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.3s;
 
             &:hover {
-                color: map-get($colors, "text-primary");
+                color: var(--text-primary);
             }
 
             &::before {
@@ -168,7 +168,7 @@
             input {
                 flex-grow: 1;
                 padding: 0.5rem;
-                border: 1px solid map-get($colors, "border");
+                border: 1px solid var(--border);
                 border-radius: 4px;
             }
 

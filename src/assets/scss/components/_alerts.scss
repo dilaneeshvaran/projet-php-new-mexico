@@ -17,7 +17,7 @@ $notification-colors: (
         border-radius: 12px;
         padding: 1rem;
         margin-bottom: 1rem;
-        box-shadow: 0 4px 6px map-get($colors, "shadow"
+        box-shadow: 0 4px 6px var(--shadow
         );
 }
 
@@ -28,7 +28,7 @@ $notification-colors: (
     justify-content: center;
     min-height: 50vh;
     padding: 1.5rem;
-    background-color: map-get($colors, "background");
+    background-color: var(--background);
 
     &__container {
         @extend %notification-base;

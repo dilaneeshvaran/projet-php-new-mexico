@@ -1,5 +1,5 @@
 @use "../partials/functions" as f;
-@use "../partials/mixins" as m;
+@use "../partials/mixins" as *;
 @use "sass:color";
 @use "../partials/variables" as *;
 
