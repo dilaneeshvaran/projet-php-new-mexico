@@ -24,7 +24,7 @@
 			background-color: var(--primary);
 
 			&:hover {
-				background-color: var(--primary-500);
+				background-color: var(--link-hover);
 			}
 		}
 
@@ -51,8 +51,8 @@
 			padding: 0.75rem;
 			border: none;
 			border-radius: 8px;
-			background-color: var(--black);
-			color: var(--surface);
+			background-color: var(--link-secondary);
+			color: var(--text-primary);
 			font-weight: 500;
 			cursor: pointer;
 			transition: all 0.2s ease;

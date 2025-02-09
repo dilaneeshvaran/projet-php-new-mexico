@@ -73,13 +73,14 @@
             font-size: 0.875rem;
             cursor: pointer;
             transition: background-color 0.3s;
+            color: var(--form-label);
 
             &--primary {
                 background-color: var(--primary);
                 color: var(--white);
 
                 &:hover {
-                    background-color: var(--primary-600);
+                    background-color: var(--link-hover);
                 }
             }
 

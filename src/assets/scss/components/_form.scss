@@ -37,7 +37,7 @@
         }
 
         &__container {
-            background: #fff;
+            background: var(--surface);
             padding: 2rem;
             border-radius: 8px;
             box-shadow: 0 4px 10px var(--shadow-color);
@@ -87,6 +87,8 @@
             font-size: 1rem;
             outline: none;
             transition: border-color 0.3s;
+            background-color: var(--background);
+            color: var(--text-primary);
 
             &:focus {
                 border-color: var(--primary);
@@ -96,12 +98,15 @@
 
         &__textarea {
             @extend .form__input;
+            background-color: var(--background);
             min-height: 120px;
             resize: vertical;
+
         }
 
         &__select {
             @extend .form__input;
+            //background-color: var(--surface);
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
             background-repeat: no-repeat;
@@ -125,7 +130,7 @@
 
         &__submit {
             background-color: var(--primary);
-            color: #fff;
+            color: var(--white);
             border: none;
             padding: 0.8rem;
             border-radius: 6px;
@@ -134,7 +139,7 @@
             transition: background-color 0.3s;
 
             &:hover {
-                background-color: color.scale(map-get($colors, "primary"), $lightness: -10%);
+                background-color: var(--link-hover);
             }
         }
 

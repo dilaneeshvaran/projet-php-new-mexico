@@ -3,87 +3,80 @@
 @use "sass:color";
 @use "functions" as f;
 
-$dark-theme: (
-    "background": #121212,
-    "surface": #1e1e1e,
-    "text-primary": #ffffff,
-    "text-secondary": #a0a0a0,
-    "border": #2e2e2e,
-);
-
 @layer base {
     :root {
         @each $name, $color in $colors {
             @if ($name =="dark") {
                 //skip dark map in main default processing
-                @continue;
             }
 
-            @if ($name =="black" or $name =="white") {
+            @else if ($name =="black" or $name =="white") {
                 --#{$name}: #{$color};
             }
 
             @else {
-                //default base color
                 --#{$name}: #{$color};
-                //generate the shades variations
+
                 $baseHue: color.hue($color);
                 $baseSaturation: color.saturation($color);
                 $baseLightness: color.lightness($color);
 
                 @each $shade, $percent in $shades {
-                    $shadeLightness: $percent;
-
-                    //adjust lightness based on base color's lightness
-                    @if ($percent <=$baseLightness and ($percent + 8%) >=$baseLightness) {
-                        $shadeLightness: $baseLightness;
-                    }
-
-                    $shadeColor: color.change($color, $lightness: $shadeLightness);
-                    --#{$name}-#{$shade}: #{$shadeColor};
+                    $shadeLightness: if($percent <=$baseLightness and ($percent + 8%) >=$baseLightness,
+                            $baseLightness,
+                            $percent);
+                    --#{$name}-#{$shade}: #{color.change($color, $lightness: $shadeLightness)};
                 }
             }
         }
 
-        //darkmode colors define
+        //darkmodes
         &[data-theme="dark"] {
-            --background: #{map-get($dark-theme, "background")};
-            --surface: #{map-get($dark-theme, "surface")};
-            --text-primary: #{map-get($dark-theme, "text-primary")};
-            --text-secondary: #{map-get($dark-theme, "text-secondary")};
-            --border: #{map-get($dark-theme, "border")};
 
-            //adjust colors for dark mode
+            @each $name, $color in $dark-theme {
+                --#{$name}: #{$color};
+            }
+
             @each $name, $color in $colors {
                 @if ($name !="dark" and $name !="black" and $name !="white" and type-of($color)=="color") {
-                    //darken colors
-                    --#{$name}: #{color.adjust($color, $lightness: -10%)};
 
-                    //adjust all shades for dark mode
-                    @each $shade, $percent in $shades {
-                        $darkShadeColor: color.adjust($color,
-                                $lightness: -1 * (100% - $percent) * 0.7);
-                        --#{$name}-#{$shade}: #{$darkShadeColor};
+                    @if not map-has-key($dark-theme, $name) {
+                        $darkColor: $color;
+
+                        $darkColor: color.adjust($darkColor,
+                                $saturation: 10%,
+                                $lightness: if(color.lightness($color) > 50%,
+                                    -40%,
+                                    20%));
+
+                        --#{$name}: #{$darkColor};
+
+                        @each $shade, $percent in $shades {
+                            $darkShade: if($percent >=50%,
+                                    color.adjust($darkColor, $lightness: (
+                                        $percent - 50%) * -0.8),
+                                color.adjust($darkColor, $lightness: (
+                                    50% - $percent) * 0.8)
+                            );
+                        --#{$name}-#{$shade}: #{$darkShade};
                     }
                 }
             }
         }
     }
 }
+}
 
-//base style
 body {
     font-family: fonts.$font1;
     background-color: var(--background, var(--white));
     color: var(--text-primary, var(--black));
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0s ease, color 0s ease;
 }
 
 input {
-    border-radius: f.rem(6);
     padding: f.rem(10) f.rem(16);
-    border: solid thin currentColor;
-    background-color: var(--surface, var(--white));
+    //background-color: var(--surface, var(--white));
     color: var(--text-primary, currentColor);
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }

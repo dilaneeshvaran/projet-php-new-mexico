@@ -41,7 +41,8 @@
             }
 
             &-item {
-                background: color.scale(map-get($colors, "background"), $lightness: 2%);
+                background: var(--background);
+                filter: brightness(1.02); //2% lightness
                 padding: 1.25rem;
                 border-radius: 8px;
                 color: var(--text-primary);
@@ -69,7 +70,7 @@
                 justify-content: center;
                 padding: 1rem;
                 background-color: var(--primary);
-                color: white;
+                color: var(--white);
                 text-decoration: none;
                 border-radius: 8px;
                 font-weight: 500;
@@ -77,7 +78,7 @@
                 text-align: center;
 
                 &:hover {
-                    background-color: color.scale(map-get($colors, "primary"), $lightness: -10%);
+                    background-color: var(--link-hover);
                     transform: translateY(-2px);
                 }
 
