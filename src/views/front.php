@@ -50,7 +50,7 @@ $currentUrl = $_SERVER['REQUEST_URI'];
     <?php echo $content; ?>
     </div>
     <footer class="footer">
-            <p class="footer__copyright">© 2025 New Mexico - EESHVARAN Dilan</p>
+            <p class="footer__copyright">© 2025 New Mexico - EESHVARAN Dilan & TO Vincent & BAI Aissame</p>
 </footer>
 
     </div>
