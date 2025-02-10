@@ -137,13 +137,18 @@ class PhotoController {
         $token = bin2hex(random_bytes(32));
         
         try {
-            
             $success = $this->photoRepository->savePublicToken($photoId, $token);
             
             if ($success) {
-                $shareLink = sprintf('%s://%s/photo/shared/%s', 
-                    isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
-                    $_SERVER['SERVER_NAME'],
+                //get protocol
+                $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http';
+                
+                //get domain and port if exist
+                $domain = $_SERVER['HTTP_HOST'] ?: 'localhost:8000';
+                
+                $shareLink = sprintf('%s://%s/photo/shared/%s',
+                    $protocol,
+                    $domain,
                     $token
                 );
                 echo json_encode(['success' => true, 'link' => $shareLink]);

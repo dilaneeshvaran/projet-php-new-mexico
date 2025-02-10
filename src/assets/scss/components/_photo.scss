@@ -137,5 +137,47 @@
             border-radius: 12px;
             border: 2px dashed var(--border);
         }
+
+        &--shared {
+            max-width: 1200px;
+            padding: 20px;
+
+            .group-photos__container {
+                background: var(--background-secondary);
+                border-radius: 8px;
+                padding: 20px;
+                box-shadow: 0 2px 4px var(--shadow);
+            }
+
+            .group-photos__image {
+                margin-bottom: 20px;
+
+                img {
+                    max-width: 100%;
+                    height: auto;
+                    border-radius: 4px;
+                    display: block;
+                }
+            }
+
+            .group-photos__details {
+                h1 {
+                    margin-bottom: 10px;
+                    color: var(--text-primary);
+                    font-size: 1.5rem;
+                    font-weight: 600;
+
+                    @media (min-width: map-get($breakpoints, "md")) {
+                        font-size: 2rem;
+                    }
+                }
+            }
+
+            .group-photos__description {
+                color: var(--text-secondary);
+                line-height: 1.5;
+                font-size: 0.875rem;
+            }
+        }
     }
 }
