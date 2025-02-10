@@ -49,9 +49,14 @@
         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
         <button class="button button__delete deletePhotoButton" type="button">Supprimer</button>
     </form>
+
+    <button class="button button--secondary sharePhotoButton" 
+            data-photo-id="<?= htmlspecialchars($photo->getId()) ?>"
+            data-csrf-token="<?= htmlspecialchars($csrfToken) ?>"
+            type="button">
+        Partager
+    </button>
 </div>
-
-
 
             <?php endif; ?>
         </li>
@@ -71,5 +76,18 @@
         <p>Êtes-vous sûr de vouloir supprimer cette photo ?</p>
         <button class="button button--danger" id="confirmDelete">Oui, Supprimer</button>
         <button class="button button--secondary" id="cancelDelete">Annuler</button>
+    </div>
+</div>
+
+        <!--share photo -->
+
+<div id="sharePhotoModal" class="modal">
+    <div class="modal__content">
+        <h3>Lien de partage</h3>
+        <div class="modal__content">
+            <input type="text" id="shareLink" readonly>
+            <button class="button button--secondary" id="copyShareLink">Copier</button>
+        </div>
+        <button class="button button--secondary" id="closeShareModal">Fermer</button>
     </div>
 </div>

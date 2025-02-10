@@ -78,6 +78,16 @@
   controller: PhotoController
   action: index
 
+#view public shared photo
+/photo/shared/{token}:
+  controller: PhotoController
+  action: viewSharedPhoto
+
+#generate public share link photo
+/photo/generate-share-link:
+  controller: PhotoController
+  action: generateShareLink
+
 #create & delete group
 /group/create:
   controller: GroupController

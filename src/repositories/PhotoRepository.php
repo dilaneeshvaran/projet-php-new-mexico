@@ -83,4 +83,41 @@ public function delete(int $photoId): bool {
     return $this->db->executePrepared($sql, ['id' => $photoId]);
 }
 
+
+//public token
+public function savePublicToken(int $photoId, string $token): bool {
+    $sql = "INSERT INTO public_photo_token (photo_id, token) VALUES (:photo_id, :token)";
+    return $this->db->executePrepared($sql, [
+        'photo_id' => $photoId,
+        'token' => $token
+    ]);
+}
+
+public function findByPublicToken(string $token): ?Photo {
+    $sql = "SELECT p.* FROM photos p 
+            INNER JOIN public_photo_token t ON p.id = t.photo_id 
+            WHERE t.token = :token";
+    
+    $rows = $this->db->queryPrepared($sql, ['token' => $token]);
+    
+    if (empty($rows)) {
+        return null;
+    }
+
+    $row = $rows[0];
+    $photo = new Photo();
+    $photo->setId($row['id']);
+    $photo->setFilename($row['filename']);
+    $photo->setOriginalName($row['original_name']);
+    $photo->setDescription($row['description'] ?? '');
+    $photo->setTitle($row['title'] ?? '');
+    $photo->setMimeType($row['mime_type']);
+    $photo->setSize($row['size']);
+    $photo->setGroupId($row['group_id']);
+    $photo->setUserId($row['user_id']);
+    $photo->setCreatedAt($row['created_at']);
+    
+    return $photo;
+}
+
 }

@@ -6,3 +6,4 @@ import "./modalLeaveGroup.js";
 import "./modalDeletePhoto.js";
 import "./modalRemoveMember.js";
 import "./darkMode.js";
+import "./sharePublicPhoto.js";

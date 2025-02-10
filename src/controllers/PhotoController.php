@@ -103,4 +103,97 @@ class PhotoController {
         $groupIndex = array_search('group', $urlParts);
         return ($groupIndex !== false && isset($urlParts[$groupIndex + 1])) ? (int)$urlParts[$groupIndex + 1] : 0;
     }
+
+
+    //SHARE PUBLIC PHOTO
+    public function generateShareLink(): void {
+        header('Content-Type: application/json');
+        
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            echo json_encode(['error' => 'request methode Invalide']);
+            exit;
+        }
+    
+        $jsonData = json_decode(file_get_contents('php://input'), true);
+        
+        if (!isset($jsonData['photoId']) || !isset($jsonData['csrf_token'])) {
+            echo json_encode(['error' => 'Erreurs avec les données envoyées']);
+            exit;
+        }
+    
+        if (!isset($_SESSION['csrf_token']) || $jsonData['csrf_token'] !== $_SESSION['csrf_token']) {
+            echo json_encode(['error' => 'Session Invalide']);
+            exit;
+        }
+    
+        $photoId = (int)$jsonData['photoId'];
+        
+        $photo = $this->photoRepository->findById($photoId);
+        if (!$photo) {
+            echo json_encode(['error' => 'Erruer: Photo Invalide']);
+            exit;
+        }
+    
+        $token = bin2hex(random_bytes(32));
+        
+        try {
+            $success = $this->photoRepository->savePublicToken($photoId, $token);
+            
+            if ($success) {
+                //get protocol
+                $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http';
+                
+                //get domain and port if exist
+                $domain = $_SERVER['HTTP_HOST'] ?: 'localhost:8000';
+                
+                $shareLink = sprintf('%s://%s/photo/shared/%s',
+                    $protocol,
+                    $domain,
+                    $token
+                );
+                echo json_encode(['success' => true, 'link' => $shareLink]);
+            } else {
+                echo json_encode(['error' => 'Erreur lors de la génération du lien de partage']);
+            }
+        } catch (Exception $e) {
+            echo json_encode(['error' => 'Erreur: ' . $e->getMessage()]);
+        }
+        exit;
+    }
+    
+    public function viewSharedPhoto(): void {
+        $token = $this->retrieveToken();
+        try {
+            $photo = $this->photoRepository->findByPublicToken($token);
+            
+            if (!$photo) {
+                header('Location: /404');
+                exit;
+            }
+    
+            $view = new View("photo/shared_photo.php", "front.php");
+            $view->addData("photo", $photo);
+            $view->addData("title", "Photo Partagée");
+            $view->addData("description", "Photo Partagée");
+            echo $view->render();
+        } catch (Exception $e) {
+            header('Location: /404');
+            exit;
+        }
+    }
+
+    private function retrieveToken(): string
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            return $_POST['token'] ?? '';
+        } 
+        $urlParts = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+
+        $tokenIndex = array_search('shared', $urlParts);
+        if ($tokenIndex !== false && isset($urlParts[$tokenIndex + 1])) {
+            return $urlParts[$tokenIndex + 1];
+        }
+
+        return '';
+    }
 }
