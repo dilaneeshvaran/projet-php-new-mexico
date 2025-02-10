@@ -51,6 +51,14 @@
     </form>
 </div>
 
+<div class="group-photos__actions">
+    <button class="button button__share sharePhotoButton" 
+            data-photo-id="<?= htmlspecialchars($photo->getId()) ?>"
+            data-csrf-token="<?= htmlspecialchars($csrfToken) ?>"
+            type="button">
+        Partager
+    </button>
+</div>
 
 
             <?php endif; ?>
@@ -71,5 +79,18 @@
         <p>Êtes-vous sûr de vouloir supprimer cette photo ?</p>
         <button class="button button--danger" id="confirmDelete">Oui, Supprimer</button>
         <button class="button button--secondary" id="cancelDelete">Annuler</button>
+    </div>
+</div>
+
+        <!--share photo -->
+
+<div id="sharePhotoModal" class="modal">
+    <div class="modal__content">
+        <h3>Lien de partage</h3>
+        <div class="share-link-container">
+            <input type="text" id="shareLink" readonly class="share-link-input">
+            <button class="button button--secondary" id="copyShareLink">Copier</button>
+        </div>
+        <button class="button button--secondary" id="closeShareModal">Fermer</button>
     </div>
 </div>

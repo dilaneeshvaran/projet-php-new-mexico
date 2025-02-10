@@ -1,0 +1,7 @@
+CREATE TABLE public_photo_token (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    photo_id INT NOT NULL,
+    token VARCHAR(255) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (photo_id) REFERENCES photos(id) ON DELETE CASCADE
+);

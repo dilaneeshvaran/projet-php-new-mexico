@@ -29,4 +29,12 @@ class PhotoService {
 
         return $photos;
     }
+
+    public function getOrCreatePublicToken(int $photoId): ?string {
+        $token = $this->photoRepository->getPublicToken($photoId);
+        if (!$token) {
+            $token = $this->photoRepository->createPublicToken($photoId);
+        }
+        return $token;
+    }
 }
