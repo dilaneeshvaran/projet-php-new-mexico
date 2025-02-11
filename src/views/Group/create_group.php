@@ -36,7 +36,7 @@
 
             <div class="form__actions">
                 <button type="submit" class="form__submit">Créer le Groupe</button>
-                <a href="/" class="form__back">Retour</a>
+                <a href="/" class="data-table__back-link">Retour</a>
             </div>
         </form>
     </div>

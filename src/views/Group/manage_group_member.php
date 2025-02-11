@@ -23,13 +23,17 @@
             </thead>
             <tbody>
                 <?php if (!empty($memberDetails)): ?>
+                    <?php
+    $joined_at = new DateTime($memberDetails['joined_at']);
+    $formattedDate = $joined_at->format('d/m/Y à H:i');
+?>
                 <tr>
                     <td><?= htmlspecialchars($memberDetails['firstname']) ?></td>
                     <td><?= htmlspecialchars($memberDetails['lastname']) ?></td>
                     <td><?= htmlspecialchars($memberDetails['email']) ?></td>
                     <td><?= htmlspecialchars($memberDetails['role']) ?></td>
                     <td><?= htmlspecialchars($memberDetails['group_access']) ?></td>
-                    <td><?= htmlspecialchars($memberDetails['joined_at']) ?></td>
+                    <td><?= htmlspecialchars($formattedDate) ?></td>
                 </tr>
                 <?php else: ?>
                 <tr>

@@ -1,3 +1,5 @@
+<a href="/group/<?= htmlspecialchars($groupId) ?>" class="data-table__back-link">Retour</a>
+
 <div class="data-table">
     <?php if (!empty($errors)): ?>
     <div class="errors">
@@ -17,6 +19,14 @@
             <input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
             <button type="submit" class="data-table__button data-table__button--primary">Ajouter un membre</button>
+        </form>
+
+        <form method="POST" action="/group/<?= htmlspecialchars($groupId) ?>/join-requests">
+            <input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
+            <button type="submit" class="data-table__button data-table__button--primary">Voir les demandes reçues pour
+                rejoindre
+            </button>
         </form>
     </div>
     <?php endif; ?>
@@ -39,12 +49,16 @@
             <tbody>
             <?php if (!empty($members)): ?>
 <?php foreach ($members as $index => $member): ?>
+    <?php
+    $joined_at = new DateTime($member['joined_at']);
+    $formattedDate = $joined_at->format('d/m/Y à H:i');
+?>
 <tr>
     <td data-label="#"><?= $index + 1 ?></td>
     <td data-label="First Name"><?= htmlspecialchars($member['firstname']) ?></td>
     <td data-label="Last Name"><?= htmlspecialchars($member['lastname']) ?></td>
     <td data-label="Email"><?= htmlspecialchars($member['email']) ?></td>
-    <td data-label="Joined At"><?= htmlspecialchars($member['joined_at']) ?></td>
+    <td data-label="Joined At"><?= htmlspecialchars($formattedDate) ?></td>
     <td data-label="Group Access"><?= htmlspecialchars($member['group_access']) ?></td>
     <td data-label="Role"><?= htmlspecialchars($member['role']) ?></td>
     <?php if ($userRole === 'admin'): ?>
@@ -71,16 +85,5 @@
             </tbody>
         </table>
     </div>
-    <?php if ($userRole === 'admin'): ?>
-    <div class="data-table__actions">
-        <form method="POST" action="/group/<?= htmlspecialchars($groupId) ?>/join-requests">
-            <input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">
-            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
-            <button type="submit" class="data-table__button data-table__button--primary">Voir les demandes reçues pour
-                rejoindre
-            </button>
-        </form>
-    </div>
-    <?php endif; ?>
-    <a href="/group/<?= htmlspecialchars($groupId) ?>" class="data-table__back-link">Retour</a>
+
 </div>

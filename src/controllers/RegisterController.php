@@ -47,7 +47,7 @@ class RegisterController
             $errors = $this->registerService->registerUser($_POST);
 
             if (empty($errors)) {
-                header('Location: /login');
+                header('Location: /register/success');
                 exit();
             }
         } catch (\Exception $e) {
@@ -82,5 +82,16 @@ class RegisterController
         $view->addData("formData", $formData);
 
         echo $view->render();
+    }
+
+    public function success(): void
+    {
+        $session = new Session();
+        if ($session->isLogged()) {
+            header('Location: /');
+            exit();
+        }
+        $view = new View('User/register_success.php', 'front.php');
+        $view->render();
     }
 }

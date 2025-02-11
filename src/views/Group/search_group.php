@@ -1,3 +1,5 @@
+<a href="/" class="data-table__back-link">Retour</a>
+
 <div class="data-table">
     <h1 class="data-table__title">Rechercher un groupe</h1>
 
@@ -30,10 +32,14 @@
             </thead>
             <tbody>
                 <?php foreach ($groups as $group): ?>
+<?php
+    $createdAt = new DateTime($group->getCreatedAt());
+    $formattedDate = $createdAt->format('d/m/Y à H:i');
+?>
                 <tr>
                     <td data-label="Name"><?= htmlspecialchars($group->getName()) ?></td>
                     <td data-label="Description"><?= htmlspecialchars($group->getDescription()) ?></td>
-                    <td data-label="Created At"><?= htmlspecialchars($group->getCreatedAt()) ?></td>
+                    <td data-label="Created At"><?= htmlspecialchars($formattedDate) ?></td>
                     <td data-label="Access Type"><?= htmlspecialchars($group->getAccessType()) ?></td>
                     <td data-label="Total Members"><?= htmlspecialchars($group->total_members) ?></td>
                     <td data-label="Action">
@@ -68,5 +74,4 @@
     <p class="data-table__empty">Aucun groupe trouvé.</p>
     <?php endif; ?>
 
-    <a href="/" class="data-table__back-link">Retour</a>
 </div>

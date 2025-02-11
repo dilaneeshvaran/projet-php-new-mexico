@@ -1,4 +1,8 @@
+
+<a href="/group/<?= htmlspecialchars($groupId) ?>/members" class="data-table__back-link">Retour</a>
+
 <div class="data-table">
+    
     <h1 class="data-table__title">Demandes pour rejoindre</h1>
 
     <div class="data-table__container">
@@ -17,11 +21,17 @@
                 <?php if (!empty($requests)): ?>
                 <?php foreach ($requests as $request): ?>
                 <tr>
+                <?php
+    $createdAt = new DateTime($request['created_at']);
+    $registered_on = new DateTime($request['registered_on']);
+    $formattedCreatedDate = $createdAt->format('d/m/Y à H:i');
+    $formattedRegisteredDate = $registered_on->format('d/m/Y à H:i');
+?>
                     <td><?= htmlspecialchars($request['firstname']) ?></td>
                     <td><?= htmlspecialchars($request['lastname']) ?></td>
                     <td><?= htmlspecialchars($request['email']) ?></td>
-                    <td><?= htmlspecialchars($request['registered_on']) ?></td>
-                    <td><?= htmlspecialchars($request['created_at']) ?></td>
+                    <td><?= htmlspecialchars($formattedRegisteredDate) ?></td>
+                    <td><?= htmlspecialchars($formattedCreatedDate) ?></td>
                     <td>
                         <?php if ($request['status'] === 'pending'): ?>
                         <form method="POST"
@@ -55,5 +65,4 @@
             </tbody>
         </table>
     </div>
-    <a href="/group/<?= htmlspecialchars($groupId) ?>/members" class="data-table__back-link">Retour</a>
 </div>

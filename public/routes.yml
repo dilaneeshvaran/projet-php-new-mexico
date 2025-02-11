@@ -26,6 +26,10 @@
   controller: RegisterController
   action: post
 
+/register/success:
+  controller: RegisterController
+  action: success
+
 #forgot password
 
 /forgot-password:
