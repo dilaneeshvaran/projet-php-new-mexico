@@ -3,7 +3,7 @@
 @layer components {
 	.container {
 		margin: 0 2rem;
-
+		//flex: 1 0 auto;
 
 		@each $name, $value in v.$breakpoints {
 			@media screen and (min-width: $value) {

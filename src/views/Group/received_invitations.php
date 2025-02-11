@@ -1,3 +1,5 @@
+<a href="/" class="data-table__back-link">Retour</a>
+
 <div class="data-table">
     <h1 class="data-table__title">Invitations reçues</h1>
     <?php if (empty($invitations)): ?>
@@ -15,10 +17,14 @@
             </thead>
             <tbody>
                 <?php foreach ($invitations as $invitation): ?>
+                    <?php
+    $sent_on = new DateTime($invitation['sent_on']);
+    $formattedDate = $sent_on->format('d/m/Y à H:i');
+?>
                 <tr>
                     <td data-label="Group Name"><?= htmlspecialchars($invitation['group_name']) ?></td>
                     <td data-label="Description"><?= htmlspecialchars($invitation['description']) ?></td>
-                    <td data-label="Sent Date"><?= htmlspecialchars($invitation['sent_on']) ?></td>
+                    <td data-label="Sent Date"><?= htmlspecialchars($formattedDate) ?></td>
                     <td data-label="Action">
                         <form method="POST" action="/invitations/<?= htmlspecialchars($invitation['id']) ?>/respond">
                             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
@@ -37,5 +43,4 @@
         </table>
     </div>
     <?php endif; ?>
-    <a href="/" class="data-table__back-link">Retour</a>
 </div>

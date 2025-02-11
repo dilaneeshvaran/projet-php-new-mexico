@@ -19,8 +19,7 @@ $currentUrl = $_SERVER['REQUEST_URI'];
 </head>
 
 <body>
-    <div class="container">
-        <div class="navbar">
+<div class="navbar">
             <a href="/" class="navbar__logo">
                 <img src="/assets/logo.png" alt="New Mexico" class="logo">
             </a>
@@ -29,6 +28,8 @@ $currentUrl = $_SERVER['REQUEST_URI'];
                 <a class="navbar__label" href="/">New Mexico</a>
                 <?php if (isset($_SESSION["firstname"])): ?>
     <div class="navbar__actions">
+
+    
     <img src="/assets/darkmode.png" alt="Dark Mode" class="theme-icon" width="25" height="25">
 
         <button id="darkModeToggle" class="theme__button">
@@ -46,14 +47,14 @@ $currentUrl = $_SERVER['REQUEST_URI'];
             </div>
         </div>
 
-    </div>
+    <div class="container">
     <?php echo $content; ?>
     </div>
+
+
     <footer class="footer">
             <p class="footer__copyright">© 2025 New Mexico - EESHVARAN Dilan & TO Vincent & BAI Aissame</p>
 </footer>
-
-    </div>
 
 </body>
 

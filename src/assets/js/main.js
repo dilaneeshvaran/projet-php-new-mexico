@@ -7,3 +7,4 @@ import "./modalDeletePhoto.js";
 import "./modalRemoveMember.js";
 import "./darkMode.js";
 import "./sharePublicPhoto.js";
+import "./uploadPhoto.js";

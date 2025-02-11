@@ -4,7 +4,7 @@ $formData = $formData ?? [];
 ?>
 
 <div class="form">
-    <div class="form__container">
+    <div class="form__container form__container__login">
         <h1 class="form__title"><?php echo htmlspecialchars($title); ?></h1>
 
         <?php if (!empty($errors)): ?>

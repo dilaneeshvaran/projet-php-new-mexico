@@ -17,7 +17,7 @@
         <button id="leaveGroupButton" class="button button--danger button--lg" type="button">Quitter le Groupe</button>
     </form>
     <br>
-    <a class="button button--secondary button__top" href="/group/<?= htmlspecialchars($groupId) ?>">Retour</a>
+    <a class="data-table__back-link" href="/group/<?= htmlspecialchars($groupId) ?>">Retour</a>
 </div>
 
 <!--modal de confirmation -->

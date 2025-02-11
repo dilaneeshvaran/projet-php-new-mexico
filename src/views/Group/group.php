@@ -10,9 +10,12 @@
     </div>
     <p><?= htmlspecialchars($group->getDescription()) ?></p>
 </div>
-
+<?php
+    $createdAt = new DateTime($group->getCreatedAt());
+    $formattedDate = $createdAt->format('d/m/Y à H:i');
+?>
         <div class="group-view__meta">
-            Crée le: <?= htmlspecialchars($group->getCreatedAt()) ?>
+        Crée le: <?= htmlspecialchars($formattedDate) ?>
         </div>
         <?php else: ?>
         <div class="group-view__header">
@@ -53,7 +56,7 @@
                 <button class="button button--primary" type="submit">Paramètres</button>
             </form>
             <?php endif; ?>
-            <a href="/" class="link link--secondary">Retour</a>
+            <a href="/" class="data-table__back-link">Retour</a>
         </div>
     </div>
 </div>

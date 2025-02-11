@@ -14,19 +14,24 @@
         <div class="home__groups">
     <h2>Vos Groupes</h2>
     <div class="home__groups-grid">
-        <?php foreach ($groups as $groupData): 
-            $group = $groupData['group'];
-            $isAdmin = $groupData['isAdmin'];
-        ?>
-        <a href="group/<?= htmlspecialchars($group->getId()) ?>" class="home__groups-item">
-            <?= htmlspecialchars($group->getName()) ?>
-            <?php if ($isAdmin): ?>
-                <img src="/assets/crown.svg" alt="Description of the image" class="crown-icon" width="16" height="16">
-            <?php endif; ?>
-        </a>
-        <?php endforeach; ?>
+        <?php if (empty($groups)): ?>
+            <p>Vous n'avez pas encore de groupe !</p>
+        <?php else: ?>
+            <?php foreach ($groups as $groupData): 
+                $group = $groupData['group'];
+                $isAdmin = $groupData['isAdmin'];
+            ?>
+            <a href="group/<?= htmlspecialchars($group->getId()) ?>" class="home__groups-item">
+                <?= htmlspecialchars($group->getName()) ?>
+                <?php if ($isAdmin): ?>
+                    <img src="/assets/crown.svg" alt="Description of the image" class="crown-icon" width="16" height="16">
+                <?php endif; ?>
+            </a>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </div>
 </div>
+
         <?php else:
             header('Location: /login');
             exit();

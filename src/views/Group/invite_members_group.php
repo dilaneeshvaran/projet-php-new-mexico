@@ -1,3 +1,5 @@
+<a href="/group/<?= htmlspecialchars($groupId) ?>/members" class="data-table__back-link">Retour</a>
+
 <div class="data-table">
     <h1 class="data-table__title">Rechercher un utilisateur</h1>
 
@@ -31,11 +33,15 @@
             </thead>
             <tbody>
                 <?php foreach ($this->data['users'] as $user): ?>
+<?php
+    $createdAt = new DateTime($user->getCreatedAt());
+    $formattedDate = $createdAt->format('d/m/Y à H:i');
+?>
                 <tr>
                     <td><?= htmlspecialchars($user->getFirstname()) ?></td>
                     <td><?= htmlspecialchars($user->getLastname()) ?></td>
                     <td><?= htmlspecialchars($user->getEmail()) ?></td>
-                    <td><?= htmlspecialchars($user->getCreatedAt()) ?></td>
+                    <td><?= htmlspecialchars($formattedDate) ?></td>
                     <td>
                         <?php if ($user->invitationStatus === 'member'): ?>
                         <span class="data-table__status data-table__status--success">Membre</span>
@@ -63,5 +69,4 @@
     <?php else: ?>
     <p class="data-table__empty">Aucun Utilisateur trouvé.</p>
     <?php endif; ?>
-    <a href="/group/<?= htmlspecialchars($groupId) ?>/members" class="data-table__back-link">Retour</a>
 </div>

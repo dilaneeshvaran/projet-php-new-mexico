@@ -4,7 +4,7 @@
 <div class="group-photos">
 
     <div class="group-photos__navigation">
-        <a class="link__back" href="/group/<?= $group->getId() ?>">Retour</a>
+        <a class="data-table__back-link" href="/group/<?= $group->getId() ?>">Retour</a>
         <?php if ($groupAccess === 'writer'): ?>
         <a class="link__main" href="/group/<?= $group->getId() ?>/upload">Ajouter une Photo</a>
         <?php endif; ?>
@@ -33,11 +33,16 @@
                 <img src="/uploads/<?= htmlspecialchars($photo->getFilename()) ?>"
                     alt="<?= htmlspecialchars($photo->getOriginalName()) ?>">
             </div>
+
+            <?php
+    $createdAt = new DateTime($photo->getCreatedAt());
+    $formattedDate = $createdAt->format('d/m/Y à H:i');
+?>
             <div class="group-photos__content">
                 <p><strong>Titre:</strong> <?= htmlspecialchars($photo->getTitle()) ?></p>
                 <p><strong>Description:</strong> <?= htmlspecialchars($photo->getDescription()) ?></p>
                 <p><strong>Posté par:</strong> <?= htmlspecialchars($photo->userFullName) ?></p>
-                <p><strong>Posté le:</strong> <?= htmlspecialchars($photo->getCreatedAt()) ?></p>
+                <p><strong>Posté le:</strong> <?= htmlspecialchars($formattedDate) ?></p>
             </div>
             <?php if ($deleteAccess): ?>
                 <div class="group-photos__actions">
