@@ -58,6 +58,8 @@ services:
         PHP_USER_IDENTIFIER: $PHP_USER_IDENTIFIER
         PHP_USER_SHELL: $PHP_USER_SHELL
         PHP_USER_HOME_DIRECTORY: $PHP_USER_HOME_DIRECTORY
+    tty: true
+    stdin_open: true
     env_file: .env
     working_dir: $PHP_USER_HOME_DIRECTORY
     user: php
