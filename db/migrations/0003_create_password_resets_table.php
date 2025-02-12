@@ -1,3 +1,6 @@
+<?php
+
+return "
 CREATE TABLE password_resets (
     id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL,
@@ -5,3 +8,4 @@ CREATE TABLE password_resets (
     expires_at DATETIME NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+";

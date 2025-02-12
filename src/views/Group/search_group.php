@@ -10,12 +10,12 @@
     </form>
 
     <?php if (!empty($errors)): ?>
-    <div class="data-table__empty">
+    <div class="data-table__empty data-table__color">
         <?php foreach ($errors as $error): ?>
-        <p><?= htmlspecialchars(is_array($error) ? json_encode($error) : $error) ?></p>
+        <p><?= htmlspecialchars(is_array($error) ? implode(', ', $error) : $error) ?></p>
         <?php endforeach; ?>
     </div>
-    <?php endif; ?>
+<?php endif; ?>
 
     <?php if (!empty($groups)): ?>
     <div class="data-table__container">

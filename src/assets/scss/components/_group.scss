@@ -7,7 +7,7 @@
     .group-view {
         padding: 1rem;
         background-color: var(--background);
-        min-height: 100vh;
+        //min-height: 100vh;
 
         @media (min-width: map-get($breakpoints, "md")) {
             padding: 2rem;

@@ -47,7 +47,7 @@ services:
 
   migration:
     container_name: migration
-    restart: unless-stopped
+    restart: no
     depends_on:
       - mariadb
     build:
@@ -65,6 +65,7 @@ services:
     user: php
     volumes:
       - ./db:$PHP_USER_HOME_DIRECTORY
+    command: php migrations/run.php
 
   mariadb:
     container_name: mariadb

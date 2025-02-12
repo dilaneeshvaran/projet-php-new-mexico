@@ -144,6 +144,10 @@
             font-size: 0.875rem;
         }
 
+        &__color {
+            color: var(--error-dark);
+        }
+
         &__back-link {
             display: inline-block;
             color: var(--text-secondary);

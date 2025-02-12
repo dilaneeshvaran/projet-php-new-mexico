@@ -1,3 +1,6 @@
+<?php
+
+return "
 CREATE TABLE page (
     id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
@@ -5,3 +8,4 @@ CREATE TABLE page (
     content TEXT NOT NULL,
     date_created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+";

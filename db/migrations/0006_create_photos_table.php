@@ -1,3 +1,6 @@
+<?php
+
+return "
 CREATE TABLE photos (
     id INT PRIMARY KEY AUTO_INCREMENT,
     filename VARCHAR(255) NOT NULL,
@@ -12,3 +15,4 @@ CREATE TABLE photos (
     FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+";
