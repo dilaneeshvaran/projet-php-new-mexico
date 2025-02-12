@@ -21,7 +21,7 @@ $currentUrl = $_SERVER['REQUEST_URI'];
 <body>
 <div class="navbar">
             <a href="/" class="navbar__logo">
-                <img src="/assets/logo.png" alt="New Mexico" class="logo">
+                <img src="/assets/images/logo.png" alt="New Mexico" class="logo">
             </a>
 
             <div class="navbar__header">
@@ -30,7 +30,7 @@ $currentUrl = $_SERVER['REQUEST_URI'];
     <div class="navbar__actions">
 
     
-    <img src="/assets/darkmode.png" alt="Dark Mode" class="theme-icon" width="25" height="25">
+    <img src="/assets/images/darkmode.png" alt="Dark Mode" class="theme-icon" width="25" height="25">
 
         <button id="darkModeToggle" class="theme__button">
             Dark Mode

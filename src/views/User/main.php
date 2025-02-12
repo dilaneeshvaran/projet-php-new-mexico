@@ -24,7 +24,7 @@
             <a href="group/<?= htmlspecialchars($group->getId()) ?>" class="home__groups-item">
                 <?= htmlspecialchars($group->getName()) ?>
                 <?php if ($isAdmin): ?>
-                    <img src="/assets/crown.svg" alt="Description of the image" class="crown-icon" width="16" height="16">
+                    <img src="/assets/images/crown.svg" alt="Description of the image" class="crown-icon" width="16" height="16">
                 <?php endif; ?>
             </a>
             <?php endforeach; ?>

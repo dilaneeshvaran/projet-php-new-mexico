@@ -5,7 +5,7 @@
     <div class="group-view__title">
         <h1><?= htmlspecialchars($group->getName()) ?></h1>
         <?php if ($groupRole === 'admin'): ?>
-            <img src="/assets/crown.svg" alt="Description of the image" class="crown-icon" width="20" height="20">
+            <img src="/assets/images/crown.svg" alt="Description of the image" class="crown-icon" width="20" height="20">
         <?php endif; ?>
     </div>
     <p><?= htmlspecialchars($group->getDescription()) ?></p>
