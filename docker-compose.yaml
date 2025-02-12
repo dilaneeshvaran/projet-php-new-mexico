@@ -65,7 +65,7 @@ services:
     user: php
     volumes:
       - ./db:$PHP_USER_HOME_DIRECTORY
-    command: php migrations/run.php
+    command: php migrations/run_migrations.php
 
   mariadb:
     container_name: mariadb
