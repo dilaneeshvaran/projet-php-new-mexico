@@ -9,7 +9,7 @@ start: build
 	@make migrate
 
 migrate:
-	docker compose up migration
+	docker compose --profile migration up migration --abort-on-container-exit --exit-code-from migration
 
 stop:
 	docker-compose down --remove-orphans --volumes --timeout 0
