@@ -1,14 +1,12 @@
-
 <?php
 
 //use PDO;
 //use PDOException;
 
+sleep(10);
 
-sleep(20);//wait for database
-//get all migration files
 $migrationFiles = glob(__DIR__ . '/*.php');
-sort($migrationFiles);//sort in order
+sort($migrationFiles);
 
 $dsn = sprintf(
     'mysql:host=mariadb;dbname=%s',
@@ -23,7 +21,6 @@ try {
     );
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    //create migrations table if it doesn't exist
     $pdo->exec("
         CREATE TABLE IF NOT EXISTS migrations (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -32,30 +29,36 @@ try {
         )
     ");
 
-    foreach ($migrationFiles as $file) {
-        if (basename($file) === 'run.php') continue;
+    $migrationsRun = false;
 
-        //check if migration is already executed
+    foreach ($migrationFiles as $file) {
+        if (basename($file) === 'run_migrations.php') continue;
+
         $stmt = $pdo->prepare("SELECT id FROM migrations WHERE migration = ?");
         $stmt->execute([basename($file)]);
         
         if (!$stmt->fetch()) {
-            //run migration
             $sql = require $file;
             if (is_string($sql)) {
                 $pdo->exec($sql);
                 
-                //save executed migration
                 $stmt = $pdo->prepare("INSERT INTO migrations (migration) VALUES (?)");
                 $stmt->execute([basename($file)]);
                 
                 echo "Executed migration: " . basename($file) . "\n";
+                $migrationsRun = true;
             }
         }
     }
 
-    echo "All migrations completed successfully\n";
+    if (!$migrationsRun) {
+        echo "No new migrations to execute.\n";
+    }
+
+    echo "Migration process completed successfully.\n";
+    exit(0);
 
 } catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage() . "\n");
+    echo "Error during migration: " . $e->getMessage() . "\n";
+    exit(1);
 }
