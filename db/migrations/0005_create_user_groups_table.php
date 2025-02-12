@@ -1,7 +1,7 @@
 <?php
 
 return "
-CREATE TABLE user_groups (
+CREATE TABLE IF NOT EXISTS user_groups (
     user_id INT NOT NULL,
     group_id INT NOT NULL,
     role VARCHAR(50) NOT NULL DEFAULT 'member',

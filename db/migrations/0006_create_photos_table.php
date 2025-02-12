@@ -1,7 +1,7 @@
 <?php
 
 return "
-CREATE TABLE photos (
+CREATE TABLE IF NOT EXISTS photos (
     id INT PRIMARY KEY AUTO_INCREMENT,
     filename VARCHAR(255) NOT NULL,
     original_name VARCHAR(255) NOT NULL,

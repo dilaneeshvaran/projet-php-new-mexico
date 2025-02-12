@@ -2,7 +2,7 @@
 
 return "
 
-CREATE TABLE member_invitations (
+CREATE TABLE IF NOT EXISTS member_invitations (
     id INT PRIMARY KEY AUTO_INCREMENT,
     member_id INT NOT NULL,
     group_id INT NOT NULL,

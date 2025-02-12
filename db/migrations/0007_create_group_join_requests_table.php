@@ -1,7 +1,7 @@
 <?php
 
 return "
-CREATE TABLE group_join_requests (
+CREATE TABLE IF NOT EXISTS group_join_requests (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     group_id INT NOT NULL,
