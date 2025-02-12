@@ -86,6 +86,8 @@ class GroupJoinRequestController {
         $view->addData("errors", $errors);
         $view->addData("requests", $requests);
         $view->addData("groupId", $groupId);
+        $view->addData("title", "Gérer les demandes d'adhésion");
+        $view->addData("description", "Gérer les demandes d'adhésion au groupe");
         echo $view->render();
     }
 

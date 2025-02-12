@@ -12,6 +12,7 @@
         <input type="text" name="searchUser" placeholder="Rechercher par le nom-prénom ou l'email..." required>
         <button type="submit">Rechercher</button>
     </form>
+
     <?php if (!empty($errors)): ?>
     <div class="data-table__empty">
         <?php foreach ($errors as $error): ?>
@@ -19,6 +20,7 @@
         <?php endforeach; ?>
     </div>
     <?php endif; ?>
+    
     <?php if (!empty($this->data['users'])): ?>
     <div class="data-table__container">
         <table class="data-table__table">

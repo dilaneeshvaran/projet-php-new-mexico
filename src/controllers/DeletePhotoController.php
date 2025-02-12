@@ -69,6 +69,8 @@ class DeletePhotoController
         $view = new View("photo/delete_success.php", "front.php");
         $view->addData("errors", $errors);
         $view->addData("groupId", $groupId);
+        $view->addData("title", "Photo supprimée");
+        $view->addData("description", "Photo supprimée avec succès");
         echo $view->render();
     }
 

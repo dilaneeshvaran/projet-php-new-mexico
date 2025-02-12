@@ -155,6 +155,8 @@ class InviteMemberController {
         $view->addData("errors", $errors);
         $view->addData("users", $allUsers);
         $view->addData("groupId", $groupId);
+        $view->addData("title", "Inviter des membres");
+        $view->addData("description", "Inviter des membres à rejoindre le groupe");
         echo $view->render();
     }
 

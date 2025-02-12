@@ -1,3 +1,7 @@
+<?php
+
+return "
+
 CREATE TABLE member_invitations (
     id INT PRIMARY KEY AUTO_INCREMENT,
     member_id INT NOT NULL,
@@ -9,3 +13,4 @@ CREATE TABLE member_invitations (
     CONSTRAINT fk_group FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE,
     CONSTRAINT fk_member FOREIGN KEY (member_id) REFERENCES users(id) ON DELETE CASCADE
 );
+";

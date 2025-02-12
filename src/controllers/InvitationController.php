@@ -87,6 +87,8 @@ class InvitationController {
         $view->addData("errors", $errors);
         $view->addData("userId", $userId);
         $view->addData("invitations", $invitations);
+        $view->addData("title", "Invitations reçues");
+        $view->addData("description", "Liste des invitations reçues pour rejoindre un groupe");
         echo $view->render();
     }
 

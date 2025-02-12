@@ -174,6 +174,8 @@ class GroupController {
             exit();
         }
         $view = new View('Group/create_group_success.php', 'front.php');
+        $view->addData("title", "Groupe créé avec succès");
+        $view->addData("description", "Votre groupe a été créé avec succès");
         echo $view->render();
     }
 
@@ -278,6 +280,8 @@ class GroupController {
         $view = new View('Group/group_settings_success.php', 'front.php');
         $groupId = $this->retrieveGroupId();
         $view->addData('groupId', $groupId);
+        $view->addData("title", "Parametres du groupe modifiés avec succès");
+        $view->addData("description", "Les parametres de votre groupe ont été modifiés avec succès");
         echo $view->render();
     }
 
@@ -333,6 +337,8 @@ class GroupController {
             exit();
         }
         $view = new View('Group/delete_group_success.php', 'front.php');
+        $view->addData("title", "Groupe supprimé avec succès");
+        $view->addData("description", "Votre groupe a été supprimé avec succès");
         echo $view->render();
     }
 

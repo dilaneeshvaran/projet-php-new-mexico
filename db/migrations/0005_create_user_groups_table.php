@@ -1,3 +1,6 @@
+<?php
+
+return "
 CREATE TABLE user_groups (
     user_id INT NOT NULL,
     group_id INT NOT NULL,
@@ -8,3 +11,4 @@ CREATE TABLE user_groups (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE
 );
+";
