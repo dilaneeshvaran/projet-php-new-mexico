@@ -51,9 +51,7 @@ Access the db (this will login to your database using credentials from .env.)
 make database
 ```
 
-> Run the queries from db/migrations to create the necessary tables
-
-Build scss+js (into 'public/assets' folder) & watch mode scss+js
+Watch mode scss+js
 
 ```bash
 npm run watch
