@@ -1,8 +1,8 @@
 
 <?php
 
-use PDO;
-use PDOException;
+//use PDO;
+//use PDOException;
 
 
 sleep(20);//wait for database

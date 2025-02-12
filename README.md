@@ -6,6 +6,9 @@ Roadtrips & Adventures with your friends !
 
 - [GNU/Bash](https://www.gnu.org/software/bash/)
 - [GNU/Make]()
+- Composer
+- Node.js
+- Docker
 
 ## Setup
 
