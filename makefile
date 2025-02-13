@@ -5,13 +5,13 @@ build:
 
 start: build
 	docker compose up --detach
-	@echo "Waiting for services to start..."
-	@make migrate
 	npm run build-css
 	npm run build-js
+	@echo "Waiting for services to start..."
+	@make migrate
 
 migrate:
-	docker compose --profile migration up migration --abort-on-container-exit --exit-code-from migration
+	docker compose up migration
 
 stop:
 	docker-compose down --remove-orphans --volumes --timeout 0

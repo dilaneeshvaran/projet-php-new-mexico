@@ -45,12 +45,6 @@ make start
 
 visit : localhost:8000 (you can change the port by editing `SERVER_PORT` in the `.env` file.)
 
-Access the db (this will login to your database using credentials from .env.)
-
-```bash
-make database
-```
-
 Watch mode scss+js
 
 ```bash
@@ -58,6 +52,18 @@ npm run watch
 ```
 
 ## Other helpful commands
+
+run migrations
+
+```bash
+make migrate
+```
+
+access the db (this will login to your database using credentials from .env.)
+
+```bash
+make database
+```
 
 stops containers
 

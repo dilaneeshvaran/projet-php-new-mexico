@@ -3,6 +3,8 @@
 @use "partials/globals";
 @use "partials/utilities";
 
+@use "components/darkmode";
+
 @use "components/container";
 @use "components/button";
 @use "components/navbar";
@@ -22,5 +24,3 @@
 @use "components/footer";
 
 @use "components/modal";
-
-@use "components/darkmode";

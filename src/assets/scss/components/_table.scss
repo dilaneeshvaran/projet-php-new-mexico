@@ -37,26 +37,78 @@
             border-collapse: collapse;
             font-size: 0.875rem;
 
-            th,
-            td {
-                padding: 1rem;
-                text-align: left;
-                border-bottom: 1px solid var(--border);
-                white-space: nowrap;
+            @media (max-width: map-get($breakpoints, "md")) {
+                thead {
+                    display: none;
+                }
 
-                @media (min-width: map-get($breakpoints, "md")) {
-                    white-space: normal;
+                tbody {
+                    tr {
+                        display: block;
+                        margin-bottom: 1rem;
+                        border: 1px solid var(--border);
+                        border-radius: 8px;
+                        background: var(--surface);
+                        padding: 0.75rem;
+                    }
+
+                    td {
+                        display: flex;
+                        align-items: center;
+                        padding: 0.5rem 0;
+                        border: none;
+                        white-space: normal;
+
+                        &::before {
+                            content: attr(data-label);
+                            font-weight: 600;
+                            width: 35%;
+                            min-width: 120px;
+                            color: var(--text-secondary);
+                            margin-right: 1rem;
+                            flex-shrink: 0;
+                        }
+
+                        &:last-child {
+                            margin-top: 0.5rem;
+                        }
+                    }
                 }
             }
 
-            th {
-                background-color: var(--neutral);
-                color: var(--text-secondary);
-                font-weight: 600;
-            }
 
-            tr:last-child td {
-                border-bottom: none;
+            //desktop
+            @media (min-width: map-get($breakpoints, "md")) {
+
+                th,
+                td {
+                    padding: 1rem;
+                    text-align: left;
+                    border-bottom: 1px solid var(--border);
+                    white-space: normal;
+                }
+
+                th {
+                    background-color: var(--neutral);
+                    color: var(--text-secondary);
+                    font-weight: 600;
+                }
+
+                tr:last-child td {
+                    border-bottom: none;
+                }
+            }
+        }
+
+
+        @media (max-width: map-get($breakpoints, "md")) {
+            &__button {
+                width: 100%;
+                justify-content: center;
+
+                form {
+                    width: 100%;
+                }
             }
         }
 
@@ -175,11 +227,23 @@
                 padding: 0.5rem;
                 border: 1px solid var(--border);
                 border-radius: 4px;
+                font-size: 1rem;
             }
 
             button {
                 @extend .data-table__button;
                 @extend .data-table__button--primary;
+                font-size: 1rem;
+                padding: 0.5rem 1rem;
+            }
+
+            @media (max-width: map-get($breakpoints, "sm")) {
+                flex-direction: column;
+
+                input,
+                button {
+                    width: 100%;
+                }
             }
         }
     }

@@ -1,10 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
   const darkModeToggle = document.getElementById("darkModeToggle");
+  const themeIcon = darkModeToggle.querySelector(".theme-icon");
+  const themeText = darkModeToggle.querySelector(".theme-text");
 
   const setTheme = (theme) => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
-    darkModeToggle.textContent = theme === "dark" ? "Light Mode" : "Dark Mode";
+
+    themeIcon.alt = theme === "dark" ? "Light Mode" : "Dark Mode";
+    themeText.textContent = theme === "dark" ? "Light Mode" : "Dark Mode";
+
+    //change the icon image
+    // themeIcon.src = theme === "dark" ? "/assets/images/lightmode.png" : "/assets/images/darkmode.png";
   };
 
   const initializeTheme = () => {
@@ -18,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  //toggle themse
   darkModeToggle.addEventListener("click", () => {
     const currentTheme = document.documentElement.getAttribute("data-theme");
     setTheme(currentTheme === "dark" ? "light" : "dark");

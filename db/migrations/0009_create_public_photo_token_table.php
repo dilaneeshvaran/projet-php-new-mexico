@@ -2,7 +2,7 @@
 
 return "
 
-CREATE TABLE public_photo_token (
+CREATE TABLE IF NOT EXISTS public_photo_token (
     id INT AUTO_INCREMENT PRIMARY KEY,
     photo_id INT NOT NULL,
     token VARCHAR(255) UNIQUE NOT NULL,
