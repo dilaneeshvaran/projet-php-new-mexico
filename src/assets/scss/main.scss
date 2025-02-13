@@ -2,6 +2,9 @@
 @use "vendor/modern-normalize.css";
 @use "partials/globals";
 @use "partials/utilities";
+@use "partials/variables";
+
+@use "components/darkmode";
 
 @use "components/container";
 @use "components/button";
@@ -22,5 +25,3 @@
 @use "components/footer";
 
 @use "components/modal";
-
-@use "components/darkmode";
