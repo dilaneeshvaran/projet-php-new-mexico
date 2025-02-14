@@ -26,7 +26,7 @@
     <?php if (!empty($photos)): ?>
     <ul class="group-photos__list">
         <?php foreach ($photos as $photo): ?>
-        <?php $deleteAccess = ($photo->getUserId() === $userId || $userRole === 'admin'); ?>
+        <?php $deleteAccess = ((int)$photo->getUserId() === (int)$userId || $userRole === 'admin'); ?>
         <li class="group-photos__item">
 
             <div class="group-photos__image">
