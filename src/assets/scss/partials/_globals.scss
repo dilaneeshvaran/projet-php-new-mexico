@@ -68,11 +68,20 @@
 }
 }
 
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
 body {
     font-family: fonts.$font1;
     background-color: var(--background, var(--white));
     color: var(--text-primary, var(--black));
     transition: background-color 0s ease, color 0s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 input {

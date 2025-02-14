@@ -2,19 +2,17 @@
 
 @layer components {
 	.container {
-		margin: 0 2rem;
-		//flex: 1 0 auto;
+		flex: 1 0 auto;
+		margin: 0 auto;
+		padding: 1rem;
+		width: 100%;
 
-
-
-		@each $name, $value in v.$breakpoints {
+		/*@each $name, $value in v.$breakpoints {
 			@media screen and (min-width: $value) {
-				@if ($name =="sm") {
-					margin: auto;
-				}
-
-				max-width: calc($value - 4rem);
+				max-width: $value;
+				padding-left: 2rem;
+				padding-right: 2rem;
 			}
-		}
+		}*/
 	}
 }
