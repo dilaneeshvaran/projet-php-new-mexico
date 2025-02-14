@@ -20,8 +20,9 @@ $currentUrl = $_SERVER['REQUEST_URI'];
     <script src="/assets/main.js"></script>
 </head>
 
+
+
 <body>
-    
 <div class="navbar">
             <a href="/" class="navbar__logo">
                 <img src="/assets/images/logo.png" alt="New Mexico" class="logo">
@@ -50,14 +51,19 @@ $currentUrl = $_SERVER['REQUEST_URI'];
             </div>
         </div>
 
+
     <div class="container">
+        
     <?php echo $content; ?>
+
+
     </div>
-
-
+    
     <footer class="footer">
             <p class="footer__copyright">© 2025 New Mexico - EESHVARAN Dilan & TO Vincent & BAI Aissame</p>
 </footer>
+
+
 
 </body>
 
