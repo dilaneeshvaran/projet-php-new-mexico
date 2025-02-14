@@ -3,9 +3,7 @@
 use App\Core\Router;
 use Dotenv\Dotenv;
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+
 //phpinfo();
 
 $autoloadPath = __DIR__ . '/../vendor/autoload.php';
@@ -17,6 +15,9 @@ require_once $autoloadPath;
 $dotenv = Dotenv::createImmutable(__DIR__.'/../');
 $dotenv->load();
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 // Autoloader for dynamic loading of classes
 spl_autoload_register(function ($class) {
     $classPath = str_replace(['App\\', '\\'], ['../src/', '/'], $class) . '.php';

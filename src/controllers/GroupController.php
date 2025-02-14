@@ -343,55 +343,96 @@ class GroupController {
     }
 
     # SEARCH GROUP
-            public function renderSearchGroupPage(array $errors = [], ?array $groups = []): void
-            {
-                $session = new Session();
+    public function renderSearchGroupPage(): void
+    {
+        $session = new Session();
         if (!$session->isLogged()) {
             header('Location: /login');
             exit();
         }
-                $pageId = 1;
-                $pageData = $this->pageRepository->findOneById($pageId);
+    
+        $pageId = 1;
+        $pageData = $this->pageRepository->findOneById($pageId);
+    
+        $title = $pageData ? $pageData->getTitle() : "Rechercher un groupe";
+        $description = $pageData ? $pageData->getDescription() : "Recherchez un groupe";
+        $content = $pageData ? $pageData->getContent() : "";
+    
+        $csrfToken = $_SESSION['csrf_token'] ?? bin2hex(random_bytes(32));
+        $_SESSION['csrf_token'] = $csrfToken;
+    
+        $groups = [];
+if (isset($_SESSION['search_results'])) {
+    foreach ($_SESSION['search_results'] as $groupData) {
+        $group = new Group();
+        $group->setId($groupData['id']);
+        $group->setName($groupData['name']);
+        $group->setDescription($groupData['description']);
+        $group->setCreatedAt($groupData['created_at']);
+        $group->setAccessType($groupData['access_type']);
+        $group->total_members = $groupData['total_members'];
+        $group->is_member = $groupData['is_member'];
+        $groups[] = $group;
+    }
+    unset($_SESSION['search_results']);
+}
+        $errors = $_SESSION['search_errors'] ?? [];
         
-                //alternative values if $pageData is null
-                $title = $pageData ? $pageData->getTitle() : "Rechercher un groupe";
-                $description = $pageData ? $pageData->getDescription() : "Recherchez un groupe";
-                $content = $pageData ? $pageData->getContent() : "";
-        
-                $csrfToken = $_SESSION['csrf_token'] ?? bin2hex(random_bytes(32));
-                $_SESSION['csrf_token'] = $csrfToken;
-        
-                $view = new View("Group/search_group.php", "front.php");
-                $view->addData("title", $title);
-                $view->addData("description", $description);
-                $view->addData("content", $content);
-                $view->addData("csrfToken", $csrfToken);
-                $view->addData("errors", $errors);
-                $view->addData("groups", $groups);
-                echo $view->render();
-            }
+        unset($_SESSION['search_results'], $_SESSION['search_errors']);
+    
+        $view = new View("Group/search_group.php", "front.php");
+        $view->addData("title", $title);
+        $view->addData("description", $description);
+        $view->addData("content", $content);
+        $view->addData("csrfToken", $csrfToken);
+        $view->addData("errors", $errors);
+        $view->addData("groups", $groups);
+        echo $view->render();
+    }
+    
+    
         
         
-            public function searchGroup(): void
-            {
-                $session = new Session();
-                if (!$session->isLogged()) {
-                    header('Location: /login');
-                    exit();
-                }
+    public function searchGroup(): void
+    {
+        $session = new Session();
+        if (!$session->isLogged()) {
+            header('Location: /login');
+            exit();
+        }
+    
+        $errors = [];
+        $searchGroupName = $_POST['searchGroupName'] ?? '';
+        $userId = $_SESSION['user_id'] ?? null;
+    
+        try {
+            $groups = $this->groupService->getGroupByName($searchGroupName, $userId);
+            $_SESSION['search_results'] = array_map(function ($group) {
+                return [
+                    'id' => $group->getId(),
+                    'name' => $group->getName(),
+                    'description' => $group->getDescription(),
+                    'created_at' => $group->getCreatedAt(),
+                    'access_type' => $group->getAccessType(),
+                    'total_members' => $group->total_members,
+                    'is_member' => $group->is_member
+                ];
+            }, $groups);
             
-                $errors = [];
-                $searchGroupName = $_POST['searchGroupName'] ?? '';
-                $userId = $_SESSION['user_id'] ?? null;
-            
-                try {
-                    $groups = $this->groupService->getGroupByName($searchGroupName, $userId);
-                    $this->renderSearchGroupPage($errors, $groups);
-                } catch (\Exception $e) {
-                    $errors[] = $e->getMessage();
-                    $this->renderSearchGroupPage($errors);
-                }
-            }
+            $_SESSION['search_errors'] = $errors;
+    
+            header("Location: /group/search");
+            exit();
+        } catch (\Exception $e) {
+            $_SESSION['search_results'] = [];
+            $_SESSION['search_errors'] = [$e->getMessage()];
+    
+            header("Location: /group/search");
+            exit();
+        }
+    }
+    
+    
             
 
 

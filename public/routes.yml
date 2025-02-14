@@ -149,9 +149,15 @@
   action: removeMember
 
 #search & join group
+/group/search:
+  controller: GroupController
+  action: renderSearchGroupPage
+  methods: [GET]
+
 /group/search/result:
   controller: GroupController
   action: searchGroup
+  methods: [POST]
 
 /group/join:
   controller: UserGroupController
