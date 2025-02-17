@@ -83,4 +83,4 @@ access php
 docker compose exec php /bin/sh
 ```
 
-## With 💕 by EESHVARAN Dilan & TO Vincent & BAI Aissame
+## With 💕 by EESHVARAN Dilan & TO Vincent
