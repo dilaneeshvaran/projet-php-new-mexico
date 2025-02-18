@@ -38,7 +38,7 @@ spl_autoload_register(function ($class) {
 });
 
 // Ensure the Router file exists
-$routerFilePath = realpath(__DIR__ . '/../src/core/Router.php');
+$routerFilePath = realpath(__DIR__ . '/../src/Core/Router.php');
 if (!$routerFilePath || !file_exists($routerFilePath)) {
     error_log("Router file not found: " . $routerFilePath);
     http_response_code(500);
