@@ -38,7 +38,7 @@ class ForgotPasswordService
 
             $this->resetPasswordTokenRepository->saveResetToken($email, $token, $expiresAt);
 
-            $resetLink = "http://localhost:8000/reset-password/{$token}";
+            $resetLink = "https://thenewmexicophotos.com/reset-password/reset-password/{$token}";
             Mailer::send($email, "Reinitialisation de votre mot de passe", "Voici le lien pour réinitialiser votre mot de passe: {$resetLink}");
             
             //Resend Mailer is not used because the project's php version is not compatible with the Resend library.
