@@ -20,8 +20,7 @@ services:
       - ./vendor:$PHP_USER_VENDOR_DIRECTORY
     ports:
       - $SERVER_PORT:80
-    networks:
-      - app-network
+      - 443:443  # Ajouter le port HTTPS
 
   php:
     container_name: php
@@ -51,7 +50,7 @@ services:
 
   migration:
     container_name: migration
-    restart: unless-stopped
+    restart: "no"
     depends_on:
       - mariadb
     build:
@@ -70,8 +69,8 @@ services:
     volumes:
       - ./db:$PHP_USER_HOME_DIRECTORY
     command: php migrations/run_migrations.php
-    networks:
-      - app-network
+    profiles:
+      - migration
 
   mariadb:
     container_name: mariadb

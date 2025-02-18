@@ -1,23 +1,28 @@
 server {
-  listen 80 default_server;
+    listen 80;
+    server_name thenewmexicophotos.com www.thenewmexicophotos.com;
+    return 301 https://$host$request_uri;
+}
 
-  server_name _;
+server {
+    listen 443 ssl;
+    server_name thenewmexicophotos.com www.thenewmexicophotos.com;
 
-  root ${PHP_USER_PUBLIC_DIRECTORY};
+ # normalement ya les chemins vers certificats
+    # Utiliser la variable d'environnement pour le répertoire racine
+    root ${PHP_USER_PUBLIC_DIRECTORY};
+    index index.php;
 
-  index index.php;
+    # Limiter la taille maximale du corps de la requête à 500 Mo
+    client_max_body_size 500M;
 
-  client_max_body_size 500M;
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
 
-  location ~ \.php$ {
-    fastcgi_pass php:9000;
-    include fastcgi_params;
-    fastcgi_index index.php;
-    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-    fastcgi_param PATH_INFO $fastcgi_path_info;
-  }
-
-  location / {
-    try_files $uri $uri/ /index.php;
-  }
+    location ~ \.php$ {
+        include fastcgi_params;
+        fastcgi_pass php:9000;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
 }
