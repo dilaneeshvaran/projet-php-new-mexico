@@ -5,6 +5,7 @@
 	body .button {
 		@include m.resetA;
 		@include m.resetButton;
+		@include m.flexbox(null, center, center);
 		padding: f.rem(10) f.rem(16);
 		display: inline-block;
 		background-color: var(--black);
@@ -19,7 +20,6 @@
 			background-color: var(--black-hover);
 		}
 
-		//classes modificatrices de couleur
 		&--primary {
 			background-color: var(--primary);
 
@@ -46,11 +46,10 @@
 
 		&__delete {
 			float: right;
-			margin-bottom: 0.5rem;
-			width: 6rem;
-			padding: 0.75rem;
-			border: none;
-			border-radius: 8px;
+			margin-bottom: f.rem(8);
+			width: f.rem(96);
+			padding: f.rem(12);
+			border-radius: f.rem(8);
 			background-color: var(--link-secondary);
 			color: var(--text-primary);
 			font-weight: 500;
@@ -63,7 +62,6 @@
 			}
 		}
 
-		//classes modificatrices de taille
 		&--lg {
 			padding: f.rem(16) f.rem(24);
 			width: 100%;
@@ -76,10 +74,8 @@
 		}
 
 		&__top {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			margin-top: 3rem;
+			@include m.flexbox(row, space-between, center);
+			margin-top: f.rem(48);
 		}
 	}
 }

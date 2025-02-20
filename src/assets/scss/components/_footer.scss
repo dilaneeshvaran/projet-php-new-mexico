@@ -1,15 +1,16 @@
+@use "../partials/functions" as f;
+@use "../partials/mixins" as m;
+@use "../partials/utilities" as u;
 @use "../partials/variables" as *;
 @use "sass:color";
 @use "sass:map";
 
 @layer components {
-
-
     .footer {
         background: var(--surface);
         color: var(--text-secondary);
         text-align: center;
-        padding: 1rem 0;
+        padding: f.rem(16) 0;
         width: 100%;
         flex-shrink: 0;
 

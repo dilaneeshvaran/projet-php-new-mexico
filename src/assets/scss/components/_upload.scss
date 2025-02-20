@@ -1,40 +1,41 @@
 @use "../partials/variables" as *;
-@use "sass:color";
 @use "../partials/functions" as f;
 @use "../partials/mixins" as m;
+@use "../partials/utilities";
+@use "sass:color";
 
 @layer components {
     .upload-photo-form {
         background-color: var(--surface);
-        padding: 2rem;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px var(--shadow);
-        max-width: 600px;
-        margin: 2rem auto;
+        padding: f.rem(32);
+        border-radius: f.rem(8);
+        box-shadow: 0 f.rem(4) f.rem(6) var(--shadow);
+        max-width: f.rem(600);
+        margin: f.rem(32) auto;
 
         .form-title {
             color: var(--text-primary);
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
+            font-size: f.rem(24);
+            margin-bottom: f.rem(24);
             font-weight: 600;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: f.rem(24);
 
             label {
                 display: block;
                 color: var(--text-secondary);
-                margin-bottom: 0.5rem;
+                margin-bottom: f.rem(8);
                 font-weight: 500;
             }
 
             input[type="text"],
             textarea {
                 width: 100%;
-                padding: 0.75rem;
-                border: 1px solid var(--border);
-                border-radius: 6px;
+                padding: f.rem(12);
+                border: f.rem(1) solid var(--border);
+                border-radius: f.rem(6);
                 background-color: var(--background);
                 color: var(--text-primary);
                 transition: border-color 0.2s ease;
@@ -42,20 +43,20 @@
                 &:focus {
                     outline: none;
                     border-color: var(--primary);
-                    box-shadow: 0 0 0 2px color.scale(map-get($colors, "primary"), $alpha: -85%);
+                    box-shadow: 0 0 0 f.rem(2) color.scale(map-get($colors, "primary"), $alpha: -85%);
                 }
             }
 
             textarea {
-                background-color: var(--background);
-                min-height: 120px;
+                min-height: f.rem(120);
                 resize: vertical;
             }
 
             .file-upload {
-                border: 2px dashed var(--border);
-                padding: 1.5rem;
-                border-radius: 6px;
+                @include m.flexbox(column, center, center, f.rem(8));
+                border: f.rem(2) dashed var(--border);
+                padding: f.rem(24);
+                border-radius: f.rem(6);
                 text-align: center;
                 cursor: pointer;
                 transition: border-color 0.2s ease;
@@ -70,37 +71,37 @@
 
                 .upload-icon {
                     color: var(--primary);
-                    font-size: 2rem;
-                    margin-bottom: 1rem;
+                    font-size: f.rem(32);
+                    margin-bottom: f.rem(16);
                 }
 
                 .file-info {
-                    font-size: 0.875rem;
+                    font-size: f.rem(14);
                     color: var(--text-secondary);
-                    margin-top: 0.5rem;
+                    margin-top: f.rem(8);
                 }
 
                 .preview-container {
-                    margin-top: 1rem;
-                    padding: 1rem;
-                    border-radius: 6px;
+                    margin-top: f.rem(16);
+                    padding: f.rem(16);
+                    border-radius: f.rem(6);
                     background-color: var(--background);
 
                     .preview-image {
                         max-width: 100%;
-                        max-height: 300px;
+                        max-height: f.rem(300);
                         object-fit: contain;
-                        border-radius: 4px;
+                        border-radius: f.rem(4);
                         margin: 0 auto;
                         display: block;
                     }
 
                     .file-details {
-                        margin-top: 0.75rem;
-                        padding: 0.5rem;
+                        margin-top: f.rem(12);
+                        padding: f.rem(8);
                         background-color: var(--surface);
-                        border-radius: 4px;
-                        font-size: 0.875rem;
+                        border-radius: f.rem(4);
+                        font-size: f.rem(14);
                         color: var(--text-secondary);
 
                         strong {
@@ -115,15 +116,14 @@
                         color: var(--success, #4CAF50);
                     }
                 }
-
             }
         }
 
         .submit-button {
             background-color: var(--primary);
             color: var(--white);
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
+            padding: f.rem(12) f.rem(24);
+            border-radius: f.rem(6);
             border: none;
             font-weight: 500;
             cursor: pointer;
@@ -135,10 +135,10 @@
         }
 
         .back-link {
-            display: flex;
+            @include m.flexbox(row, null, center);
             color: var(--text-secondary);
             text-decoration: none;
-            margin-top: 0.5rem;
+            margin-top: f.rem(8);
             transition: color 0.2s ease;
             float: right;
 
@@ -147,12 +147,12 @@
             }
         }
 
-        @media (max-width: map-get($breakpoints, "sm")) {
-            padding: 1rem;
-            margin: 1rem;
+        @media (max-width: f.screen("sm")) {
+            padding: f.rem(16);
+            margin: f.rem(16);
 
             .form-title {
-                font-size: 1.25rem;
+                font-size: f.rem(20);
             }
         }
     }

@@ -7,21 +7,19 @@
     .errors {
         background-color: var(--accent);
         color: var(--white);
-        padding: 1rem;
-        border-radius: 6px;
-        margin-bottom: 1rem;
+        padding: f.rem(16);
+        border-radius: f.rem(6);
+        margin-bottom: f.rem(16);
         text-align: left;
-        box-shadow: 0 4px 6px var(--shadow-color);
+        box-shadow: 0 f.rem(4) f.rem(6) var(--shadow-color);
 
         ul {
-            padding: 0;
-            margin: 0;
-            list-style: none;
+            @include m.resetList;
 
             li {
                 color: var(--text-color);
-                padding: 0.5rem 0;
-                border-bottom: 1px solid var(--neutral-600); //separate errors with border
+                padding: f.rem(8) 0;
+                border-bottom: f.rem(1) solid var(--neutral-600); //separate errors with border
             }
 
             li:last-child {
