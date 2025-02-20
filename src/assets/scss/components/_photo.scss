@@ -5,84 +5,61 @@
 
 @layer components {
     .group-photos {
-        padding: 1rem;
+        padding: f.rem(16);
         background-color: var(--background);
-        //min-height: 100vh;
         max-width: 600px;
         margin: 0 auto;
-        margin-top: 2rem;
+        margin-top: f.rem(32);
 
-        @media (min-width: map-get($breakpoints, "md")) {
-            padding: 2rem;
+        @media (min-width: f.screen("md")) {
+            padding: f.rem(32);
         }
 
-
-
         &__navigation {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            @include flexbox(column, null, null, f.rem(16));
+            margin-bottom: f.rem(32);
 
-            @media (min-width: map-get($breakpoints, "sm")) {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            a {
-                display: inline-flex;
-                align-items: center;
-                padding: 0.75rem 1rem;
-                border-radius: 8px;
-                text-decoration: none;
-                font-weight: 500;
-                transition: all 0.2s ease;
+            @media (min-width: f.screen("sm")) {
+                @include flexbox(row, space-between, center);
             }
         }
 
         &__title {
             color: var(--text-primary);
-            font-size: 1.5rem;
+            font-size: f.rem(24);
             font-weight: 600;
-            margin-bottom: 1.5rem;
+            margin-bottom: f.rem(24);
 
-            @media (min-width: map-get($breakpoints, "md")) {
-                font-size: 2rem;
+            @media (min-width: f.screen("md")) {
+                font-size: f.rem(32);
             }
         }
 
         &__error {
             background-color: color.scale(map-get($colors, "accent"), $lightness: 95%);
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
+            border-radius: f.rem(8);
+            padding: f.rem(16);
+            margin-bottom: f.rem(24);
 
             p {
                 color: color.scale(map-get($colors, "accent"), $lightness: -30%);
-                font-size: 0.875rem;
+                font-size: f.rem(14);
                 margin: 0;
                 line-height: 1.5;
             }
         }
 
         &__list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
+            @include resetList;
+            @include flexbox(column, null, null, f.rem(24));
         }
 
         &__item {
             background: var(--surface);
-            border-radius: 12px;
+            border-radius: f.rem(12);
             box-shadow: 0 2px 4px var(--shadow);
             overflow: hidden;
         }
-
-
 
         &__image {
             width: 100%;
@@ -99,12 +76,12 @@
         }
 
         &__content {
-            padding: 1rem;
+            padding: f.rem(16);
 
             p {
                 color: var(--text-secondary);
-                font-size: 0.875rem;
-                margin-bottom: 0.5rem;
+                font-size: f.rem(14);
+                margin-bottom: f.rem(8);
                 line-height: 1.5;
 
                 strong {
@@ -119,56 +96,54 @@
         }
 
         &__actions {
-            padding: 1rem;
+            padding: f.rem(16);
             border-top: 1px solid var(--border);
 
             form {
                 margin: 0;
             }
-
-
         }
 
         &__empty {
             text-align: center;
             color: var(--text-secondary);
-            padding: 3rem 1rem;
+            padding: f.rem(48) f.rem(16);
             background: var(--surface);
-            border-radius: 12px;
+            border-radius: f.rem(12);
             border: 2px dashed var(--border);
         }
 
         &--shared {
             max-width: 1200px;
-            padding: 20px;
+            padding: f.rem(20);
 
             .group-photos__container {
                 background: var(--background-secondary);
-                border-radius: 8px;
-                padding: 20px;
+                border-radius: f.rem(8);
+                padding: f.rem(20);
                 box-shadow: 0 2px 4px var(--shadow);
             }
 
             .group-photos__image {
-                margin-bottom: 20px;
+                margin-bottom: f.rem(20);
 
                 img {
                     max-width: 100%;
                     height: auto;
-                    border-radius: 4px;
+                    border-radius: f.rem(4);
                     display: block;
                 }
             }
 
             .group-photos__details {
                 h1 {
-                    margin-bottom: 10px;
+                    margin-bottom: f.rem(10);
                     color: var(--text-primary);
-                    font-size: 1.5rem;
+                    font-size: f.rem(24);
                     font-weight: 600;
 
-                    @media (min-width: map-get($breakpoints, "md")) {
-                        font-size: 2rem;
+                    @media (min-width: f.screen("md")) {
+                        font-size: f.rem(32);
                     }
                 }
             }
@@ -176,7 +151,7 @@
             .group-photos__description {
                 color: var(--text-secondary);
                 line-height: 1.5;
-                font-size: 0.875rem;
+                font-size: f.rem(14);
             }
         }
     }

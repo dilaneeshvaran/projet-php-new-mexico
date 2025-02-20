@@ -1,95 +1,79 @@
 @use "../partials/variables" as *;
-@use "sass:color";
 @use "../partials/functions" as f;
 @use "../partials/mixins" as *;
+@use "sass:color";
 
 @layer components {
     .form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        //min-height: 100vh;
+        @include flexbox(column, center, center);
         background-color: var(--background);
-        padding: 1rem;
+        padding: f.rem(16);
         margin-top: 0;
 
         &--large {
             .form__container {
-                max-width: 600px;
-                padding: 1.5rem;
+                max-width: f.rem(600);
+                padding: f.rem(24);
                 text-align: left;
 
-                @media (min-width: map-get($breakpoints, "md")) {
-                    padding: 2rem;
+                @media (min-width: screen("md")) {
+                    padding: f.rem(32);
                 }
             }
 
             .form__title {
-                font-size: 1.5rem;
+                font-size: f.rem(24);
                 font-weight: 600;
-                margin-bottom: 0.5rem;
+                margin-bottom: f.rem(8);
             }
 
             .form__area {
-                gap: 1.5rem;
+                gap: f.rem(24);
             }
         }
 
         &__container {
             background: var(--surface);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px var(--shadow-color);
+            padding: f.rem(32);
+            border-radius: f.rem(8);
+            box-shadow: 0 f.rem(4) f.rem(10) var(--shadow-color);
             text-align: center;
-            max-width: 400px;
+            max-width: f.rem(400);
             width: 100%;
 
-            @media (min-width: map-get($breakpoints, "md")) {
-                padding: 2rem;
+            @media (min-width: screen("md")) {
+                padding: f.rem(32);
             }
-
-            /*&__login {
-                margin-top: -15rem;
-            }*/
         }
 
         &__header {
-            margin-bottom: 2rem;
+            margin-bottom: f.rem(32);
         }
 
         &__title {
             color: var(--text-color);
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
+            font-size: f.rem(28);
+            margin-bottom: f.rem(16);
         }
 
-        &__area {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-
-        }
-
+        &__area,
         &__field {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
+            @include flexbox(column, null, null, f.rem(16));
         }
 
         &__label {
             color: var(--text-secondary);
-            font-size: 0.875rem;
+            font-size: f.rem(14);
             font-weight: 500;
-            margin-bottom: 0.5rem;
+            margin-bottom: f.rem(8);
         }
 
         &__input {
             width: 100%;
-            padding: 0.8rem;
+            padding: f.rem(12);
             border: 1px solid var(--grey);
-            border-radius: 6px;
-            font-size: 1rem;
+            border-radius: f.rem(6);
+            font-size: f.rem(16);
             outline: none;
             transition: border-color 0.3s;
             background-color: var(--background);
@@ -97,49 +81,42 @@
 
             &:focus {
                 border-color: var(--primary);
-                box-shadow: 0 0 0 2px color.scale(map-get($colors, "primary"), $alpha: -85%);
+                box-shadow: 0 0 0 f.rem(2) color.scale(map-get($colors, "primary"), $alpha: -85%);
             }
         }
 
         &__textarea {
             @extend .form__input;
-            background-color: var(--background);
-            min-height: 120px;
+            min-height: f.rem(120);
             resize: vertical;
-
         }
 
         &__select {
             @extend .form__input;
-            //background-color: var(--surface);
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 0.75rem center;
-            background-size: 1em;
-            padding-right: 2.5rem;
+            background-position: right f.rem(12) center;
+            background-size: f.rem(16);
+            padding-right: f.rem(40);
         }
 
         &__actions {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-top: 2rem;
+            @include flexbox(column, null, null, f.rem(16));
+            margin-top: f.rem(32);
 
-            @media (min-width: map-get($breakpoints, "sm")) {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
+            @media (min-width: screen("sm")) {
+                @include flexbox(row, space-between, center);
             }
         }
 
         &__submit {
             background-color: var(--primary);
             color: var(--white);
-            border: none;
-            padding: 0.8rem;
-            border-radius: 6px;
-            font-size: 1rem;
+            @include resetButton;
+            padding: f.rem(12);
+            border-radius: f.rem(6);
+            font-size: f.rem(16);
             cursor: pointer;
             transition: background-color 0.3s;
 
@@ -149,16 +126,13 @@
         }
 
         &__links {
-            margin-top: 1.5rem;
-            font-size: 0.9rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.8rem;
+            margin-top: f.rem(24);
+            font-size: f.rem(14);
+            @include flexbox(column, null, center, f.rem(12));
 
             a {
+                @include resetA;
                 color: var(--primary);
-                text-decoration: none;
                 transition: color 0.3s;
 
                 &:hover {
@@ -167,11 +141,15 @@
             }
         }
 
+        &__back,
+        &__delete {
+            text-decoration: none;
+            font-size: f.rem(14);
+            transition: color 0.2s ease;
+        }
+
         &__back {
             color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.875rem;
-            transition: color 0.2s ease;
 
             &:hover {
                 color: var(--text-primary);
@@ -180,9 +158,6 @@
 
         &__delete {
             color: var(--accent);
-            text-decoration: none;
-            font-size: 0.875rem;
-            transition: color 0.2s ease;
 
             &:hover {
                 color: color.scale(map-get($colors, "accent"), $lightness: -10%);
@@ -191,28 +166,28 @@
 
         &__errors {
             background-color: color.scale(map-get($colors, "accent"), $lightness: 95%);
-            border-left: 4px solid var(--accent);
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            border-radius: 0 6px 6px 0;
+            border-left: f.rem(4) solid var(--accent);
+            padding: f.rem(16);
+            margin-bottom: f.rem(24);
+            border-radius: 0 f.rem(6) f.rem(6) 0;
 
             p {
                 color: var(--accent);
                 margin: 0;
-                font-size: 0.875rem;
+                font-size: f.rem(14);
 
                 &:not(:last-child) {
-                    margin-bottom: 0.5rem;
+                    margin-bottom: f.rem(8);
                 }
             }
         }
 
-        @media (max-width: map-get($breakpoints, "sm")) {
-            padding: 1rem;
-            margin: 1rem;
+        @media (max-width: screen("sm")) {
+            padding: f.rem(16);
+            margin: f.rem(16);
 
             .form__title {
-                font-size: 1.25rem;
+                font-size: f.rem(20);
             }
         }
     }

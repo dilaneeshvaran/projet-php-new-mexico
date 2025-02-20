@@ -6,7 +6,7 @@
     <div class="group-photos__navigation">
         <a class="data-table__back-link" href="/group/<?= $group->getId() ?>">Retour</a>
         <?php if ($groupAccess === 'writer'): ?>
-        <a class="link__main" href="/group/<?= $group->getId() ?>/upload">Ajouter une Photo</a>
+        <a class="button button--primary" href="/group/<?= $group->getId() ?>/upload">Ajouter une Photo</a>
         <?php endif; ?>
     </div>
 

@@ -1,10 +1,13 @@
 @use "variables" as v;
 @use "sass:map";
 
+
+//px to rem
 @function rem($pxVal) {
 	@return calc($pxVal / 16) * 1rem;
 }
 
+//breakpoints
 @function screen($val) {
 	@return map-get(v.$breakpoints, $val);
 }

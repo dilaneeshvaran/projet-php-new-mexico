@@ -44,8 +44,10 @@
 	}
 }
 
+//dont have specific darkmode colors in components
+/*
 @mixin dark-mode {
 	[data-theme="dark"] & {
 		@content;
 	}
-}
+}*/
