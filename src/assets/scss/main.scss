@@ -24,3 +24,7 @@
 @use "components/footer";
 
 @use "components/modal";
+
+
+@import 'partials/variables';
+@import 'partials/mixins';

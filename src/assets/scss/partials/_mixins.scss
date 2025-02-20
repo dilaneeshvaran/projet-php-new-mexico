@@ -1,3 +1,5 @@
+@use "variables" as vars; 
+
 @mixin resetA {
 	text-decoration: none;
 	color: inherit;
@@ -49,3 +51,18 @@
 		@content;
 	}
 }
+
+
+// Media queries mobile-first
+@mixin media-min($key) {
+	@media screen and (min-width: map-get(vars.$breakpoints, $key)) {
+	  @content;
+	}
+  }
+  
+  // Media queries desktop-first
+  @mixin media-max($key) {
+	@media screen and (max-width: (map-get(vars.$breakpoints, $key) - 1)) {
+	  @content;
+	}
+  }

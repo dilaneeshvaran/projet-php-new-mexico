@@ -1,18 +1,29 @@
 @use "../partials/variables" as v;
+@use "../partials/mixins" as m;
+@use "sass:math";
 
 @layer components {
-	.container {
-		flex: 1 0 auto;
-		margin: 0 auto;
-		padding: 1rem;
-		width: 100%;
+    .container {
+        width: 100%;
+        margin: 0 auto;
+        padding: 1rem;
+        flex: 1 0 auto;
 
-		/*@each $name, $value in v.$breakpoints {
-			@media screen and (min-width: $value) {
-				max-width: $value;
-				padding-left: 2rem;
-				padding-right: 2rem;
-			}
-		}*/
-	}
+        @include m.media-min('phone') {
+            padding: 1.5rem;
+            max-width: map-get(v.$breakpoints, 'phone') - 32px; // 500px - 32px
+        }
+
+        @include m.media-min('tablet') {
+            $padding: 2rem;
+            max-width: map-get(v.$breakpoints, 'tablet') - math.div($padding, 1rem) * 16px;
+            padding-left: $padding;
+            padding-right: $padding;
+        }
+
+        @include m.media-min('desktop') {
+            max-width: map-get(v.$breakpoints, 'desktop') - 64px; // 1024px - 64px
+            padding: 3rem;
+        }
+    }
 }
