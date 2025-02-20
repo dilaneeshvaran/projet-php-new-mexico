@@ -14,7 +14,7 @@
     <?php $groupId = $this->data['groupId'] ?? null; ?>
     <?php $userRole = $this->data['userRole'] ?? null; ?>
     <?php if ($userRole === 'admin'): ?>
-    <div class="data-table__actions">
+    <div class="data-table__link-actions">
         <form method="POST" action="/group/<?= htmlspecialchars($groupId) ?>/invite-member">
             <input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">

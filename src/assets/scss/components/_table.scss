@@ -97,11 +97,18 @@
                     border-bottom: none;
                 }
             }
+
+            &__actions {
+                @include m.flexbox(row, null, null, f.rem(8), wrap);
+            }
+
         }
 
-        &__actions {
+        &__link-actions {
             @include m.flexbox(row, null, null, f.rem(8), wrap);
         }
+
+
 
         &__button {
             @include m.resetButton;
