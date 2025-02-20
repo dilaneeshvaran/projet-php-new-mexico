@@ -32,6 +32,15 @@
             }
         }
 
+        &__main {
+            background-color: var(--primary);
+            color: var(--white);
+
+            &:hover {
+                background-color: var(--link-hover);
+            }
+        }
+
         &--primary {
             background-color: var(--primary);
             color: var(--white);
