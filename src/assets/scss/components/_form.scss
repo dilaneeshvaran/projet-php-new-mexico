@@ -1,76 +1,71 @@
 @use "../partials/variables" as *;
-@use "sass:color";
 @use "../partials/functions" as f;
-@use "../partials/mixins" as m;
+@use "../partials/mixins" as *;
+@use "sass:color";
 
 @layer components {
     .form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        @include flexbox(column, center, center);
         background-color: var(--background);
         padding: f.rem(16);
-        width: 100%;
-        margin: 0;
+        margin-top: 0;
 
-        &__container {
-            background: var(--surface);
-            padding: f.rem(24);
-            border-radius: f.rem(8);
-            box-shadow: 0 f.rem(4) f.rem(10) var(--shadow-color);
-            width: 100%;
-            max-width: f.rem(400);
-
-            @include m.media-min('md') {
+        &--large {
+            .form__container {
                 max-width: f.rem(600);
-                padding: f.rem(32);
+                padding: f.rem(24);
+                text-align: left;
             }
-            
-            @include m.media-min('lg') {
-                max-width: f.rem(800);
+
+            .form__title {
+                font-size: f.rem(24);
+                font-weight: 600;
+                margin-bottom: f.rem(8);
             }
-        }
 
-        &__title {
-            color: var(--text-color);
-            font-size: f.rem(24);
-            margin-bottom: f.rem(16);
-            text-align: center;
-            font-weight: 600;
-
-            @include m.media-min('md') {
-                font-size: f.rem(28);
-            }
-        }
-
-        &__area {
-            display: flex;
-            flex-direction: column;
-            gap: f.rem(16);
-
-            &--large {
+            .form__area {
                 gap: f.rem(24);
             }
         }
 
+        &__container {
+            background: var(--surface);
+            padding: f.rem(16); // Valeur par défaut pour mobile
+            border-radius: f.rem(8);
+            box-shadow: 0 f.rem(4) f.rem(10) var(--shadow-color);
+            text-align: center;
+            max-width: f.rem(400);
+            width: 100%;
+        }
+
+        &__header {
+            margin-bottom: f.rem(16); // Espacement ajusté pour mobile
+        }
+
+        &__title {
+            color: var(--text-color);
+            font-size: f.rem(20);
+            margin-bottom: f.rem(8);
+        }
+
+        &__area,
         &__field {
-            display: flex;
-            flex-direction: column;
-            gap: f.rem(8);
+            @include flexbox(column, null, null, f.rem(16));
         }
 
         &__label {
             color: var(--text-secondary);
             font-size: f.rem(14);
             font-weight: 500;
+            margin-bottom: f.rem(8);
         }
 
-        &__input, &__textarea, &__select {
+        &__input {
             width: 100%;
             padding: f.rem(12);
             border: 1px solid var(--grey);
-            border-radius: 6px;
-            font-size: 1rem;
+            border-radius: f.rem(6);
+            font-size: f.rem(16);
             outline: none;
             transition: border-color 0.3s;
             background-color: var(--background);
@@ -78,41 +73,42 @@
 
             &:focus {
                 border-color: var(--primary);
-                box-shadow: 0 0 0 2px color.scale(map-get($colors, "primary"), $alpha: -85%);
+                box-shadow: 0 0 0 f.rem(2) color.scale(map-get($colors, "primary"), $alpha: -85%);
             }
         }
 
         &__textarea {
+            @extend .form__input;
             min-height: f.rem(120);
             resize: vertical;
         }
 
         &__select {
+            @extend .form__input;
             appearance: none;
-            background: url("data:image/svg+xml,%3Csvg...") no-repeat right f.rem(12) center/1em;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right f.rem(12) center;
+            background-size: f.rem(16);
             padding-right: f.rem(40);
         }
 
         &__actions {
-            display: flex;
-            flex-direction: column;
-            gap: f.rem(16);
+            @include flexbox(column, null, null, f.rem(16));
             margin-top: f.rem(32);
 
-            @include m.media-min('sm') {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
+            @media (min-width: screen("sm")) {
+                @include flexbox(row, space-between, center);
             }
         }
 
         &__submit {
             background-color: var(--primary);
             color: var(--white);
-            border: none;
+            @include resetButton;
             padding: f.rem(12);
-            border-radius: 6px;
-            font-size: 1rem;
+            border-radius: f.rem(6);
+            font-size: f.rem(16);
             cursor: pointer;
             transition: background-color 0.3s;
 
@@ -121,26 +117,27 @@
             }
         }
 
-        &__links, &__back, &__delete {
-            font-size: f.rem(14);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
         &__links {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: f.rem(12);
             margin-top: f.rem(24);
+            font-size: f.rem(14);
+            @include flexbox(column, null, center, f.rem(12));
 
             a {
+                @include resetA;
                 color: var(--primary);
+                transition: color 0.3s;
 
                 &:hover {
                     color: color.scale(map-get($colors, "primary"), $lightness: -10%);
                 }
             }
+        }
+
+        &__back,
+        &__delete {
+            text-decoration: none;
+            font-size: f.rem(14);
+            transition: color 0.2s ease;
         }
 
         &__back {
@@ -153,9 +150,6 @@
 
         &__delete {
             color: var(--accent);
-            padding: f.rem(8);
-            border: f.rem(1) solid currentColor;
-            border-radius: f.rem(4);
 
             &:hover {
                 color: color.scale(map-get($colors, "accent"), $lightness: -10%);
@@ -177,6 +171,28 @@
                 &:not(:last-child) {
                     margin-bottom: f.rem(8);
                 }
+            }
+        }
+
+        @media (min-width: screen("sm")) {
+            .form__container {
+                padding: f.rem(24);
+            }
+        }
+
+        @media (min-width: screen("md")) {
+            .form__container {
+                padding: f.rem(32);
+            }
+
+            .form__title {
+                font-size: f.rem(28);
+            }
+        }
+
+        @media (min-width: screen("lg")) {
+            .form__container {
+                padding: f.rem(32);
             }
         }
     }

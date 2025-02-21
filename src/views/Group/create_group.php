@@ -26,7 +26,7 @@
             </div>
 
             <div>
-                <label class="form__label" for="access_type">Accèss :</label>
+                <label class="form__label" for="access_type">Accès :</label>
                 <select class="form__select" id="access_type" name="access_type" required>
                     <option value="open">Ouvert</option>
                     <option value="on_invitation">Sur Invitation</option>
