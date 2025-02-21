@@ -1,20 +1,18 @@
+<a href="/group/<?= htmlspecialchars($groupId) ?>/members" class="data-table__back-link ml-2 mb-2">Retour</a>
 
-<a href="/group/<?= htmlspecialchars($groupId) ?>/members" class="data-table__back-link">Retour</a>
+<div class="data-table p-4">
+    <h1 class="data-table__title mb-6">Demandes pour rejoindre</h1>
 
-<div class="data-table">
-    
-    <h1 class="data-table__title">Demandes pour rejoindre</h1>
-
-    <div class="data-table__container">
+    <div class="data-table__container mb-6">
         <table class="data-table__table">
             <thead>
                 <tr>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Email</th>
-                    <th>Inscrit Le</th>
-                    <th>Reçue Le</th>
-                    <th>Actions</th>
+                    <th class="p-4">Nom</th>
+                    <th class="p-4">Prénom</th>
+                    <th class="p-4">Email</th>
+                    <th class="p-4">Inscrit Le</th>
+                    <th class="p-4">Reçue Le</th>
+                    <th class="p-4">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,17 +20,17 @@
                 <?php foreach ($requests as $request): ?>
                 <tr>
                 <?php
-    $createdAt = new DateTime($request['created_at']);
-    $registered_on = new DateTime($request['registered_on']);
-    $formattedCreatedDate = $createdAt->format('d/m/Y à H:i');
-    $formattedRegisteredDate = $registered_on->format('d/m/Y à H:i');
-?>
-                    <td><?= htmlspecialchars($request['firstname']) ?></td>
-                    <td><?= htmlspecialchars($request['lastname']) ?></td>
-                    <td><?= htmlspecialchars($request['email']) ?></td>
-                    <td><?= htmlspecialchars($formattedRegisteredDate) ?></td>
-                    <td><?= htmlspecialchars($formattedCreatedDate) ?></td>
-                    <td>
+                    $createdAt = new DateTime($request['created_at']);
+                    $registered_on = new DateTime($request['registered_on']);
+                    $formattedCreatedDate = $createdAt->format('d/m/Y à H:i');
+                    $formattedRegisteredDate = $registered_on->format('d/m/Y à H:i');
+                ?>
+                    <td class="p-4" data-label="Nom"><?= htmlspecialchars($request['firstname']) ?></td>
+                    <td class="p-4" data-label="Prénom"><?= htmlspecialchars($request['lastname']) ?></td>
+                    <td class="p-4" data-label="Email"><?= htmlspecialchars($request['email']) ?></td>
+                    <td class="p-4" data-label="Inscrit Le"><?= htmlspecialchars($formattedRegisteredDate) ?></td>
+                    <td class="p-4" data-label="Reçue Le"><?= htmlspecialchars($formattedCreatedDate) ?></td>
+                    <td class="p-4" data-label="Actions">
                         <?php if ($request['status'] === 'pending'): ?>
                         <form method="POST"
                             action="/group/<?= htmlspecialchars($groupId) ?>/join-requests/<?= htmlspecialchars($request['id']) ?>/process">
@@ -41,9 +39,9 @@
                             <input type="hidden" name="groupId" value="<?= htmlspecialchars($groupId) ?>">
                             <div class="data-table__actions">
                                 <button type="submit" name="status" value="approved"
-                                    class="data-table__button data-table__button--success">Accepter</button>
+                                    class="data-table__button data-table__button--success p-2 radius-1 mr-2">Accepter</button>
                                 <button type="submit" name="status" value="rejected"
-                                    class="data-table__button data-table__button--danger">Rejecter</button>
+                                    class="data-table__button data-table__button--danger p-2 radius-1">Rejecter</button>
                             </div>
                         </form>
                         <?php else: ?>
@@ -59,7 +57,7 @@
                 <?php endforeach; ?>
                 <?php else: ?>
                 <tr>
-                    <td colspan="6" class="data-table__empty">Aucune demande pour rejoindre le groupe.</td>
+                    <td colspan="6" class="data-table__empty p-8">Aucune demande pour rejoindre le groupe.</td>
                 </tr>
                 <?php endif; ?>
             </tbody>
