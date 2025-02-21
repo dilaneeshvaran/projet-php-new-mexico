@@ -113,7 +113,7 @@
 
                 &.has-file {
                     .upload-icon {
-                        color: var(--success, #4CAF50);
+                        color: var(--success, #4CAF50); //safe fallback
                     }
                 }
             }
