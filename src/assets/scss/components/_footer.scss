@@ -34,7 +34,6 @@
                 padding: 0 f.rem(32);
             }
 
-            // Applique la largeur max en fonction des breakpoints
             @each $breakpoint, $value in v.$breakpoints {
                 @include m.media-min($breakpoint) {
                     max-width: $value;
@@ -42,7 +41,6 @@
             }
         }
 
-        // Reste du code inchangé
         &__content {
             @include m.flexbox($direction: column, $gap: f.rem(16));
 
