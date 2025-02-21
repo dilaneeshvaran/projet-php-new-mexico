@@ -2,58 +2,53 @@
 @use "sass:color";
 @use "../partials/functions" as f;
 @use "../partials/mixins" as m;
+@use "../partials/utilities" as u;
 
 @layer components {
     .group-view {
-        padding: 1rem;
+        padding: f.rem(16);
         background-color: var(--background);
-        //min-height: 100vh;
 
-        @media (min-width: map-get($breakpoints, "md")) {
-            padding: 2rem;
+        @media (min-width: f.screen("md")) {
+            padding: f.rem(32);
         }
 
         &__container {
             max-width: 800px;
             margin: 0 auto;
             background: var(--surface);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px var(--shadow);
-            padding: 1.5rem;
+            border-radius: f.rem(12);
+            box-shadow: 0 f.rem(4) f.rem(6) var(--shadow);
+            padding: f.rem(24);
 
-            @media (min-width: map-get($breakpoints, "md")) {
-                padding: 2rem;
+            @media (min-width: f.screen("md")) {
+                padding: f.rem(32);
             }
         }
 
         &__header {
-            margin-bottom: 2rem;
+            margin-bottom: f.rem(32);
 
             h1 {
                 color: var(--text-primary);
-                font-size: 1.5rem;
+                font-size: f.rem(24);
                 font-weight: 600;
-                margin-bottom: 0.5rem;
+                margin-bottom: f.rem(8);
 
-                @media (min-width: map-get($breakpoints, "md")) {
-                    font-size: 2rem;
+                @media (min-width: f.screen("md")) {
+                    font-size: f.rem(32);
                 }
             }
 
             p {
                 color: var(--text-secondary);
-                font-size: 0.875rem;
+                font-size: f.rem(14);
                 line-height: 1.5;
             }
-
-
-
         }
 
         &__title {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            @include m.flexbox($align: center, $gap: f.rem(8));
 
             h1 {
                 margin-bottom: 0;
@@ -62,28 +57,26 @@
             .crown-icon {
                 display: inline-block;
                 vertical-align: middle;
-                margin-top: 1rem;
+                margin-top: f.rem(16);
             }
         }
 
         &__meta {
-            font-size: 0.875rem;
+            font-size: f.rem(14);
             color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border);
+            margin-bottom: f.rem(24);
+            padding-bottom: f.rem(16);
+            border-bottom: f.rem(1) solid var(--border);
         }
 
         &__actions {
             display: grid;
-            gap: 1rem;
-            margin-top: 2rem;
+            gap: f.rem(16);
+            margin-top: f.rem(32);
 
-            @media (min-width: map-get($breakpoints, "md")) {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            @media (min-width: f.screen("md")) {
+                grid-template-columns: repeat(auto-fit, minmax(f.rem(200), 1fr));
             }
         }
-
     }
-
 }

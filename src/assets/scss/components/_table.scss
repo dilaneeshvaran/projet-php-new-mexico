@@ -1,15 +1,15 @@
-@use "../partials/variables" as *;
+@use "../partials/variables" as vars;
 @use "sass:color";
 @use "../partials/functions" as f;
 @use "../partials/mixins" as m;
-
+@use "../partials/utilities" as u;
 @layer components {
     .data-table {
         padding: 1rem;
         background-color: var(--background);
         min-height: 100vh;
 
-        @media (min-width: map-get($breakpoints, "md")) {
+        @include m.media-min('md') {
             padding: 2rem;
         }
 
@@ -19,7 +19,7 @@
             margin-bottom: 1.5rem;
             font-weight: 600;
 
-            @media (min-width: map-get($breakpoints, "md")) {
+            @include m.media-min('md') {
                 font-size: 2rem;
             }
         }
@@ -37,55 +37,57 @@
             border-collapse: collapse;
             font-size: 0.875rem;
 
-            @media (max-width: map-get($breakpoints, "md")) {
-                thead {
+            // Mobile
+            thead {
+                @include m.media-max('md') {
                     display: none;
                 }
+            }
 
-                tbody {
-                    tr {
-                        display: block;
-                        margin-bottom: 1rem;
-                        border: 1px solid var(--border);
-                        border-radius: 8px;
-                        background: var(--surface);
-                        padding: 0.75rem;
+            tbody tr {
+                @include m.media-max('md') {
+                    display: block;
+                    margin-bottom: 1rem;
+                    border: 1px solid var(--border);
+                    border-radius: 8px;
+                    background: var(--surface);
+                    padding: 0.75rem;
+                }
+            }
+
+            td {
+                @include m.media-max('md') {
+                    display: flex;
+                    align-items: center;
+                    padding: 0.5rem 0;
+                    border: none;
+                    white-space: normal;
+
+                    &::before {
+                        content: attr(data-label);
+                        font-weight: 600;
+                        width: 35%;
+                        min-width: 120px;
+                        color: var(--text-secondary);
+                        margin-right: 1rem;
+                        flex-shrink: 0;
                     }
 
-                    td {
-                        display: flex;
-                        align-items: center;
-                        padding: 0.5rem 0;
-                        border: none;
-                        white-space: normal;
-
-                        &::before {
-                            content: attr(data-label);
-                            font-weight: 600;
-                            width: 35%;
-                            min-width: 120px;
-                            color: var(--text-secondary);
-                            margin-right: 1rem;
-                            flex-shrink: 0;
-                        }
-
-                        &:last-child {
-                            margin-top: 0.5rem;
-                        }
+                    &[data-label="Actions"] {
+                        padding-top: 1rem;
+                        border-top: 1px solid var(--border);
+                        margin-top: 0.5rem;
                     }
                 }
             }
 
-
-            //desktop
-            @media (min-width: map-get($breakpoints, "md")) {
-
-                th,
-                td {
+            // Desktop
+            @include m.media-min('md') {
+                th, td {
                     padding: 1rem;
                     text-align: left;
                     border-bottom: 1px solid var(--border);
-                    white-space: normal;
+                    white-space: nowrap;
                 }
 
                 th {
@@ -100,25 +102,20 @@
             }
         }
 
-
-        @media (max-width: map-get($breakpoints, "md")) {
-            &__button {
-                width: 100%;
-                justify-content: center;
-
-                form {
-                    width: 100%;
-                }
-            }
-        }
-
         &__actions {
             display: flex;
             gap: 0.5rem;
             flex-wrap: wrap;
+
+            @include m.media-max('md') {
+                flex-direction: column;
+                width: 100%;
+                gap: 0.75rem;
+            }
         }
 
         &__button {
+            @include m.resetButton;
             padding: 0.5rem 1rem;
             border: none;
             border-radius: 4px;
@@ -126,42 +123,20 @@
             cursor: pointer;
             transition: background-color 0.3s;
             color: var(--form-label);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
 
-            &--primary {
-                background-color: var(--primary);
-                color: var(--white);
-
-                &:hover {
-                    background-color: var(--link-hover);
-                }
+            @include m.media-max('md') {
+                width: 100%;
+                padding: 0.75rem;
             }
 
-            &--success {
-                background-color: var(--success);
-                color: var(--white);
-
-                &:hover {
-                    background-color: var(--success-600);
-                }
-            }
-
-            &--danger {
-                background-color: var(--red);
-                color: var(--white);
-
-                &:hover {
-                    background-color: var(--red-600);
-                }
-            }
-
-            &--warning {
-                background-color: var(--warning);
-                color: var(--white);
-
-                &:hover {
-                    background-color: var(--warning-600);
-                }
-            }
+            // Variants
+            &--primary { background-color: var(--primary); color: var(--white); }
+            &--success { background-color: var(--success); color: var(--white); }
+            &--danger { background-color: var(--red); color: var(--white); }
+            &--warning { background-color: var(--warning); color: var(--white); }
 
             &:disabled {
                 opacity: 0.5;
@@ -169,8 +144,44 @@
             }
         }
 
+        &__search-form {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+
+            @include m.media-max('sm') {
+                flex-direction: column;
+            }
+
+            input {
+                flex-grow: 1;
+                padding: 0.5rem;
+                border: 1px solid var(--border);
+                border-radius: 4px;
+                font-size: 1rem;
+
+                @include m.media-max('sm') {
+                    font-size: 0.875rem;
+                }
+            }
+
+            button {
+                @extend .data-table__button;
+                @extend .data-table__button--primary;
+                font-size: 1rem;
+
+                @include m.media-max('sm') {
+                    width: 100%;
+                }
+            }
+        }
+
+        // Styles ajoutés
         &__status {
             font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
 
             &--success {
                 color: var(--success);
@@ -187,6 +198,30 @@
             &--info {
                 color: var(--primary);
             }
+
+            &::before {
+                content: "";
+                width: 0.75rem;
+                height: 0.75rem;
+                border-radius: 50%;
+                display: inline-block;
+            }
+
+            &--success::before {
+                background-color: var(--success);
+            }
+
+            &--danger::before {
+                background-color: var(--red);
+            }
+
+            &--warning::before {
+                background-color: var(--warning);
+            }
+
+            &--info::before {
+                background-color: var(--primary);
+            }
         }
 
         &__empty {
@@ -194,57 +229,76 @@
             padding: 2rem;
             color: var(--text-secondary);
             font-size: 0.875rem;
+            border: 1px dashed var(--border);
+            border-radius: 8px;
+            margin: 1rem 0;
+
+            @include m.media-min('md') {
+                padding: 3rem;
+                font-size: 1rem;
+            }
         }
 
         &__color {
             color: var(--error-dark);
+            font-weight: 600;
         }
 
         &__back-link {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
             color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.3s;
+            margin-bottom: 1.5rem;
 
             &:hover {
                 color: var(--text-primary);
+                text-decoration: underline;
             }
 
             &::before {
                 content: "←";
                 margin-right: 0.5rem;
+                transition: margin-right 0.2s;
+            }
+
+            &:hover::before {
+                margin-right: 0.75rem;
+            }
+
+            @include m.media-min('md') {
+                font-size: 1rem;
             }
         }
 
-        &__search-form {
+        &__pagination {
             display: flex;
+            justify-content: center;
             gap: 0.5rem;
-            margin-bottom: 1rem;
-
-            input {
-                flex-grow: 1;
-                padding: 0.5rem;
-                border: 1px solid var(--border);
-                border-radius: 4px;
-                font-size: 1rem;
-            }
+            padding: 1rem 0;
 
             button {
                 @extend .data-table__button;
-                @extend .data-table__button--primary;
-                font-size: 1rem;
-                padding: 0.5rem 1rem;
-            }
+                min-width: 2.5rem;
 
-            @media (max-width: map-get($breakpoints, "sm")) {
-                flex-direction: column;
-
-                input,
-                button {
-                    width: 100%;
+                &.active {
+                    background-color: var(--primary);
+                    color: var(--white);
                 }
             }
+
+            @include m.media-max('sm') {
+                flex-wrap: wrap;
+            }
         }
-    }
+
+        &__loader {
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+    } 
 }

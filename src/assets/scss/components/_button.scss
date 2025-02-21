@@ -1,143 +1,81 @@
 @use "../partials/functions" as f;
 @use "../partials/mixins" as m;
-@use "../partials/variables" as *;
 
 @layer components {
-    body .button {
-        @include m.resetA;
-        @include m.resetButton;
-        
-        // Styles de base (mobile <500px)
-        padding: f.rem(10) f.rem(16);
-        display: inline-block;
-        background-color: var(--black);
-        color: var(--white);
-        font-size: f.rem(16);
-        line-height: f.rem(18);
-        font-weight: 600;
-        border-radius: f.rem(6);
-        transition: all 0.3s;
+	body .button {
+		@include m.resetA;
+		@include m.resetButton;
+		@include m.flexbox(null, center, center);
+		padding: f.rem(10) f.rem(16);
+		display: inline-block;
+		background-color: var(--black);
+		color: var(--white);
+		font-size: f.rem(16);
+		line-height: f.rem(18);
+		font-weight: 600;
+		border-radius: f.rem(6);
+		transition: all 0.3s;
 
-        // Hover mobile
-        &:hover {
-            background-color: var(--black-hover);
-        }
+		&:hover {
+			background-color: var(--black-hover);
+		}
 
-        // Adaptations progressives
-        @include m.media-min('phone') { // >=500px
-            padding: f.rem(12) f.rem(20);
-            font-size: f.rem(17);
-        }
+		&--primary {
+			background-color: var(--primary);
 
-        @include m.media-min('tablet') { // >=768px
-            padding: f.rem(14) f.rem(24);
-            border-radius: f.rem(8);
-        }
+			&:hover {
+				background-color: var(--link-hover);
+			}
+		}
 
-        @include m.media-min('desktop') { // >=1024px
-            font-size: f.rem(18);
-            line-height: f.rem(20);
-        }
+		&--secondary {
+			background-color: var(--grey-500);
 
-        // Modificateurs de couleur
-        &--primary {
-            background-color: var(--primary);
+			&:hover {
+				background-color: var(--grey-400);
+			}
+		}
 
-            &:hover {
-                background-color: var(--link-hover);
-            }
-        }
+		&--danger {
+			background-color: var(--red-500);
 
-        &--secondary {
-            background-color: var(--grey-500);
+			&:hover {
+				background-color: var(--red-400);
+			}
+		}
 
-            @include m.media-min('tablet') {
-                background-color: var(--grey-600);
-            }
+		&__delete {
+			float: right;
+			margin-bottom: f.rem(8);
+			width: f.rem(96);
+			padding: f.rem(12);
+			border-radius: f.rem(8);
+			background-color: var(--link-secondary);
+			color: var(--text-primary);
+			font-weight: 500;
+			cursor: pointer;
+			transition: all 0.2s ease;
 
-            &:hover {
-                background-color: var(--grey-400);
-            }
-        }
+			&:hover {
+				background-color: var(--accent-500);
+				color: var(--surface);
+			}
+		}
 
-        &--danger {
-            background-color: var(--red-500);
+		&--lg {
+			padding: f.rem(16) f.rem(24);
+			width: 100%;
+		}
 
-            @include m.media-min('tablet') {
-                padding: f.rem(12) f.rem(18);
-            }
+		&--sm {
+			padding: f.rem(8) f.rem(12);
+			font-size: f.rem(14);
+			line-height: f.rem(16);
+		}
 
-            &:hover {
-                background-color: var(--red-400);
-            }
-        }
-
-        // Élément delete
-        &__delete {
-            // Mobile first
-            float: none;
-            width: 100%;
-            margin-bottom: f.rem(8);
-            
-            @include m.media-min('phone') {
-                float: right;
-                width: auto;
-                margin-bottom: 0.5rem;
-            }
-
-            padding: f.rem(8);
-            border: none;
-            border-radius: f.rem(8);
-            background-color: var(--link-secondary);
-            color: var(--text-primary);
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-
-            &:hover {
-                background-color: var(--accent-500);
-                color: var(--surface);
-            }
-        }
-
-        // Modificateurs de taille
-        &--lg {
-            // Mobile
-            width: 100%;
-            padding: f.rem(12) f.rem(16);
-
-            // Adaptations
-            @include m.media-min('tablet') {
-                width: auto;
-                padding: f.rem(16) f.rem(24);
-            }
-        }
-
-        &--sm {
-            // Mobile
-            padding: f.rem(6) f.rem(10);
-            font-size: f.rem(14);
-            line-height: f.rem(16);
-
-            @include m.media-min('phone') {
-                padding: f.rem(8) f.rem(12);
-            }
-        }
-
-        // Conteneur top
-        &__top {
-            // Mobile
-            flex-direction: column;
-            gap: f.rem(16);
-            
-            @include m.media-min('tablet') {
-                flex-direction: row;
-                margin-top: 3rem;
-            }
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-    }
+		&__top {
+			@include m.flexbox(row, space-between, center);
+			margin-top: f.rem(48);
+		}
+	}
 }

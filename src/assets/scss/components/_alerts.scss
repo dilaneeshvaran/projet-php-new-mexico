@@ -1,7 +1,8 @@
 @use "../partials/variables" as *;
 @use "sass:color";
 @use "../partials/mixins" as m;
-
+@use "../partials/functions" as f;
+@use "../partials/utilities" as *;
 
 @layer components {
 

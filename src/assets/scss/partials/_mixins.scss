@@ -13,7 +13,7 @@
 
 @mixin resetButton {
 	border: none;
-	background-color: transparent;
+	//background-color: transparent;
 	padding: 0;
 	cursor: pointer;
 }
@@ -51,18 +51,18 @@
 		@content;
 	}
 }
-
-
-// Media queries mobile-first
+// Mobile-first (min-width)
 @mixin media-min($key) {
-	@media screen and (min-width: map-get(vars.$breakpoints, $key)) {
+	$breakpoint: map-get(vars.$breakpoints, $key);
+	@media screen and (min-width: $breakpoint) {
 	  @content;
 	}
   }
   
-  // Media queries desktop-first
+  // Desktop-first (max-width)
   @mixin media-max($key) {
-	@media screen and (max-width: (map-get(vars.$breakpoints, $key) - 1)) {
+	$breakpoint: map-get(vars.$breakpoints, $key);
+	@media screen and (max-width: ($breakpoint - 1px)) {
 	  @content;
 	}
   }

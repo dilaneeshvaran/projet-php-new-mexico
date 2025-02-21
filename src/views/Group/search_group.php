@@ -25,8 +25,8 @@
                     <th>Nom</th>
                     <th>Description</th>
                     <th>Crée le</th>
-                    <th>Accèss</th>
-                    <th>Membres Totale</th>
+                    <th>Accès</th>
+                    <th>Membres Totaux</th>
                     <th>Action</th>
                 </tr>
             </thead>

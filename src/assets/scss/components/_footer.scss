@@ -1,20 +1,65 @@
-@use "../partials/variables" as *;
+@use "../partials/variables" as v;
+@use "../partials/mixins" as m;
+@use "../partials/functions" as f;
 @use "sass:color";
 @use "sass:map";
 
 @layer components {
-
-
     .footer {
+        // Styles de base (mobile)
         background: var(--surface);
         color: var(--text-secondary);
         text-align: center;
         padding: 1rem 0;
         width: 100%;
         flex-shrink: 0;
+        box-sizing: border-box;
+
+        // Conteneur interne pour gérer la largeur max
+        &__container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 f.rem(16);
+
+            @include m.media-min('sm') {
+                padding: 0 f.rem(20);
+            }
+
+            @include m.media-min('md') {
+                @include m.flexbox($justify: space-between, $align: center);
+                padding: 0 f.rem(24);
+            }
+
+            @include m.media-min('lg') {
+                padding: 0 f.rem(32);
+            }
+
+            // Applique la largeur max en fonction des breakpoints
+            @each $breakpoint, $value in v.$breakpoints {
+                @include m.media-min($breakpoint) {
+                    max-width: $value;
+                }
+            }
+        }
+
+        // Reste du code inchangé
+        &__content {
+            @include m.flexbox($direction: column, $gap: f.rem(16));
+
+            @include m.media-min('md') {
+                flex-direction: row;
+                gap: f.rem(32);
+            }
+        }
 
         &__copyright {
             margin: 0;
+            font-size: f.rem(14);
+            opacity: 0.8;
+
+            @include m.media-min('md') {
+                font-size: f.rem(16);
+            }
         }
     }
 }

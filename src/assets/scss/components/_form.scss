@@ -1,92 +1,73 @@
 @use "../partials/variables" as *;
 @use "sass:color";
 @use "../partials/functions" as f;
-@use "../partials/mixins" as *;
+@use "../partials/mixins" as m;
 
 @layer components {
     .form {
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        //min-height: 100vh;
         background-color: var(--background);
-        padding: 1rem;
-        margin-top: 0;
-
-        &--large {
-            .form__container {
-                max-width: 600px;
-                padding: 1.5rem;
-                text-align: left;
-
-                @media (min-width: map-get($breakpoints, "md")) {
-                    padding: 2rem;
-                }
-            }
-
-            .form__title {
-                font-size: 1.5rem;
-                font-weight: 600;
-                margin-bottom: 0.5rem;
-            }
-
-            .form__area {
-                gap: 1.5rem;
-            }
-        }
+        padding: f.rem(16);
+        width: 100%;
+        margin: 0;
 
         &__container {
             background: var(--surface);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px var(--shadow-color);
-            text-align: center;
-            max-width: 400px;
+            padding: f.rem(24);
+            border-radius: f.rem(8);
+            box-shadow: 0 f.rem(4) f.rem(10) var(--shadow-color);
             width: 100%;
+            max-width: f.rem(400);
 
-            @media (min-width: map-get($breakpoints, "md")) {
-                padding: 2rem;
+            @include m.media-min('md') {
+                max-width: f.rem(600);
+                padding: f.rem(32);
             }
-
-            /*&__login {
-                margin-top: -15rem;
-            }*/
-        }
-
-        &__header {
-            margin-bottom: 2rem;
+            
+            @include m.media-min('lg') {
+                max-width: f.rem(800);
+            }
         }
 
         &__title {
             color: var(--text-color);
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
+            font-size: f.rem(24);
+            margin-bottom: f.rem(16);
+            text-align: center;
+            font-weight: 600;
+
+            @include m.media-min('md') {
+                font-size: f.rem(28);
+            }
         }
 
         &__area {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: f.rem(16);
 
+            &--large {
+                gap: f.rem(24);
+            }
         }
 
         &__field {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: f.rem(8);
         }
 
         &__label {
             color: var(--text-secondary);
-            font-size: 0.875rem;
+            font-size: f.rem(14);
             font-weight: 500;
-            margin-bottom: 0.5rem;
         }
 
-        &__input {
+        &__input, &__textarea, &__select {
             width: 100%;
-            padding: 0.8rem;
+            padding: f.rem(12);
             border: 1px solid var(--grey);
             border-radius: 6px;
             font-size: 1rem;
@@ -102,31 +83,23 @@
         }
 
         &__textarea {
-            @extend .form__input;
-            background-color: var(--background);
-            min-height: 120px;
+            min-height: f.rem(120);
             resize: vertical;
-
         }
 
         &__select {
-            @extend .form__input;
-            //background-color: var(--surface);
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 0.75rem center;
-            background-size: 1em;
-            padding-right: 2.5rem;
+            background: url("data:image/svg+xml,%3Csvg...") no-repeat right f.rem(12) center/1em;
+            padding-right: f.rem(40);
         }
 
         &__actions {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
-            margin-top: 2rem;
+            gap: f.rem(16);
+            margin-top: f.rem(32);
 
-            @media (min-width: map-get($breakpoints, "sm")) {
+            @include m.media-min('sm') {
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
@@ -137,7 +110,7 @@
             background-color: var(--primary);
             color: var(--white);
             border: none;
-            padding: 0.8rem;
+            padding: f.rem(12);
             border-radius: 6px;
             font-size: 1rem;
             cursor: pointer;
@@ -148,18 +121,21 @@
             }
         }
 
+        &__links, &__back, &__delete {
+            font-size: f.rem(14);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
         &__links {
-            margin-top: 1.5rem;
-            font-size: 0.9rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.8rem;
+            gap: f.rem(12);
+            margin-top: f.rem(24);
 
             a {
                 color: var(--primary);
-                text-decoration: none;
-                transition: color 0.3s;
 
                 &:hover {
                     color: color.scale(map-get($colors, "primary"), $lightness: -10%);
@@ -169,9 +145,6 @@
 
         &__back {
             color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.875rem;
-            transition: color 0.2s ease;
 
             &:hover {
                 color: var(--text-primary);
@@ -180,9 +153,9 @@
 
         &__delete {
             color: var(--accent);
-            text-decoration: none;
-            font-size: 0.875rem;
-            transition: color 0.2s ease;
+            padding: f.rem(8);
+            border: f.rem(1) solid currentColor;
+            border-radius: f.rem(4);
 
             &:hover {
                 color: color.scale(map-get($colors, "accent"), $lightness: -10%);
@@ -191,28 +164,19 @@
 
         &__errors {
             background-color: color.scale(map-get($colors, "accent"), $lightness: 95%);
-            border-left: 4px solid var(--accent);
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            border-radius: 0 6px 6px 0;
+            border-left: f.rem(4) solid var(--accent);
+            padding: f.rem(16);
+            margin-bottom: f.rem(24);
+            border-radius: 0 f.rem(6) f.rem(6) 0;
 
             p {
                 color: var(--accent);
                 margin: 0;
-                font-size: 0.875rem;
+                font-size: f.rem(14);
 
                 &:not(:last-child) {
-                    margin-bottom: 0.5rem;
+                    margin-bottom: f.rem(8);
                 }
-            }
-        }
-
-        @media (max-width: map-get($breakpoints, "sm")) {
-            padding: 1rem;
-            margin: 1rem;
-
-            .form__title {
-                font-size: 1.25rem;
             }
         }
     }
