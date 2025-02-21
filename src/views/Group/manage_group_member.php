@@ -44,7 +44,7 @@
         </table>
     </div>
 
-    <div class="data-table__actions">
+    <div class="data-table__link-actions">
         <form method="POST" action="/group/<?= $groupId ?>/member/<?= $memberId ?>/update-access">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken) ?>">
             <input type="hidden" name="memberId" value="<?= $memberId ?>">

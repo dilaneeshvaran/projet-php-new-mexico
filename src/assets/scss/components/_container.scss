@@ -7,12 +7,6 @@
 		padding: 1rem;
 		width: 100%;
 
-		/*@each $name, $value in v.$breakpoints {
-			@media screen and (min-width: $value) {
-				max-width: $value;
-				padding-left: 2rem;
-				padding-right: 2rem;
-			}
-		}*/
+
 	}
 }

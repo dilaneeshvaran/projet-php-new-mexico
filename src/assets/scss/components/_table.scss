@@ -101,7 +101,6 @@
             &__actions {
                 @include m.flexbox(row, null, null, f.rem(8), wrap);
             }
-
         }
 
         &__link-actions {
