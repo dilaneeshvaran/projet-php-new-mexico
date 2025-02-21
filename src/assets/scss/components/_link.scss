@@ -1,30 +1,26 @@
 @use "../partials/functions" as f;
 @use "../partials/mixins" as m;
-@use "sass:color";
+@use "../partials/utilities" as u;
 @use "../partials/variables" as *;
-
+@use "sass:color";
+@use "sass:map";
 
 @layer components {
     .link {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        margin-bottom: 2rem;
+        @include m.flexbox(column, null, center, f.rem(16));
+        margin-bottom: f.rem(32);
         display: inline-flex;
-        align-items: center;
-        padding: 0.75rem 1rem;
-        border-radius: 8px;
+        padding: f.rem(12) f.rem(16);
+        border-radius: f.rem(8);
         text-decoration: none;
         font-weight: 500;
         transition: all 0.2s ease;
 
-        @media (min-width: map-get($breakpoints, "sm")) {
+        @media (min-width: f.screen("sm")) {
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
         }
-
-
 
         &__back {
             background-color: var(--link-secondary);
@@ -64,9 +60,4 @@
             }
         }
     }
-
-
-
-    // classes modificatrices de taille
-
 }
