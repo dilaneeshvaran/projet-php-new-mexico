@@ -31,6 +31,10 @@
 			@media (min-width: f.screen("sm")) {
 				font-size: f.rem(20);
 			}
+
+			@media (max-width: f.screen("sm")) {
+				display: none;
+			}
 		}
 
 		&__logo {

@@ -51,7 +51,7 @@
             border-radius: f.rem(8);
             font-weight: 500;
             transition: all 0.2s ease;
-            max-width: f.rem(150);
+            width: fit-content;
             margin: 0 auto;
 
             &:hover {
